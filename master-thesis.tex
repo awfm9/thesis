@@ -14,51 +14,61 @@
 
 \section{Introduction}
 
-The concept of Bitcoin as a "peer-to-peer electronic cash system" was introduced
-by an anonymous author under the pseudonym of Satoshi Nakamoto in October 2008.
-Since then, the potential of the underlying blockchain technology to serve as
-a trustless mechanism to find consensus on the state of an underlying system has
-found many applications.\\
+The concept of Bitcoin as a "peer-to-peer electronic cash system" was introduced by an anonymous author under the pseudonym of Satoshi Nakamoto in October 2008. Since then, the potential of the underlying blockchain technology to serve as a trustless mechanism to find consensus on the state of an underlying system has spread to many applications.\\
 
-The main value proposition of a blockchain platform is its ability to ensure
-the integrity of the consensus in a verifiable and transparent manner. While the
-software and business ecosystem developed around a blockchain project are
-susceptible to the same risks as typical software and business projects, the
-core platform has its own, unique set of risks.\\
+The main value proposition of a blockchain platform is its ability to ensure the integrity of the consensus in a verifiable and transparent manner. While the software and business ecosystem developed around a blockchain project are susceptible to the same risks as typical software and business projects, the core platform has its own, unique set of risks.\\
 
-This paper explores the various aspects of consensus that are required to
-guarantee the continued security of the system state of a blockchain network.\\
+This paper explores the various aspects of consensus that are required to guarantee the continued security of the system state on a blockchain network.\\
 
 \section{Consensus}
 
-When identifying risks, the usual approach dictates that assets which are
-vulnerable are identified and analyzed. For a blockchain network, this
-proposition is a more difficult one; the network is constituted by thousands of
-nodes which communicate in a peer-to-peer fashion. There is no single tangible
-asset or actor that impacts the security of network state.\\
+When identifying risks, the usual approach dictates that we identify the assets which are vulnerable and use them as a basis for our analysis. For a blockchain network, this proposition is a difficult one; the network is composed by thousands of nodes which communicate in a peer-to-peer fashion. While each node can be compromised in its own right, there is no single tangible asset or actor that impacts the security of network state as a wholie.\\
 
-Rather, the consensus as an abstract concept is the asset that needs to be
-protected. At first glance, we are therefore trying to protect a theoretical
-model from possible flaws. This necessitates the mathematical exploration of
-weaknesses in the model and ways to safeguard against them.\\
+Rather, we could say that the consensus as an abstract concept is the asset that needs to be protected. As a first observation, we are therefore trying to secure a theoretical model against possible flaws. This necessitates the mathematical exploration of weaknesses in the model and the discovery of ways to safeguard against them.\\
 
-However, considering the subject from a more comprehensive perspective, a
-blockchain network is governed by the rules encoded in the software of the
-project. It is thus possible to affect the reliability of the consensus by
-modifying the software and changing the rules. This can be done by interfering
-with the project governance directly, or by manipulating it through social
-means.\\
+However, if we consider the subject from a more comprehensive perspective, the consensus is not only made up of a game theoretical model. In order for the formed consensus to be meaningful, we also need the rules encoded into the software to stay close to the original intention and we need to make sure that all participants who so desire can participate in the consensus.\\
 
-We therefore identify three categories of attacks on the consensus of a
-blockchain system: theoretical attacks targeting the game theory model of the
-consensus algorithm, organizational attacks targeting the governance of the
-project and social attacks targeting the community around the project.\\
+It is thus possible to disrupt the consensus of a blockchain platform on a more abstract level by getting participants to drop out of the consensus-forming network or by interfering with the project governance in a way that the rules encoded in the software break with the desires of the consensus majority. This leaves blockchain networks open to a number of out-of-band or social attacks.\\
 
-\subsection{Game Theory}
+In the following, we categorize possible attacks on the consensus into one of three categories: attacks targeting the game theory of the consensus algorithm, attacks which target the governance of the consensus algorithm rules and attacks which target the participation in the consensus algorithm execution.\\
 
-\subsection{Governance}
+\section{Game Theory}
 
-\subsection{Community}
+\subsection{Censorship}
+
+51\% Attack
+
+\subsection{Economic Equilibrium}
+
+Selfish Mining
+
+\subsection{Double Spend Attack}
+
+Long Range Attack
+
+\section{Participation}
+
+\subsection{Single Node}
+
+Eclipse Attack
+
+\subsection{Group of Nodes}
+
+Partition Attack
+
+Delay Attack
+
+\subsection{Demographics}
+
+Illegal Material Attack
+
+\section{Governance}
+
+\subsection{Community Sentiment}
+
+\subsection{Software Code}
+
+\subsection{Project Roadmap}
 
 \section{Theoretical}
 
