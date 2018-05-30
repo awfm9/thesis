@@ -18,21 +18,23 @@ The concept of Bitcoin as a "peer-to-peer electronic cash system" was introduced
 
 The main value proposition of a blockchain platform is its ability to ensure the integrity of the consensus in a verifiable and transparent manner. While the software and business ecosystem developed around a blockchain project are susceptible to the same risks as typical software and business projects, the core platform has its own, unique set of risks.\\
 
-This paper explores the various aspects of consensus that are required to guarantee the continued security of the system state on a blockchain network.\\
+This paper explores the various aspects around blockchain consensus systems that are required to guarantee the continued security of the system state.\\
 
 \section{Consensus}
 
 \subsection{Weaknesses}
 
-When identifying risks, the usual approach dictates that we identify the assets which are vulnerable and use them as a basis for our analysis. For a blockchain network, this proposition is a difficult one; the network is composed by thousands of nodes which communicate in a peer-to-peer fashion. While each node can be compromised in its own right, there is no single tangible asset or actor that impacts the security of the network state as a whole.\\
+When identifying risks, the usual approach dictates that we identify assets which are vulnerable to use them as a basis for the analysis. For a blockchain network, this proposition is a difficult one; the network is composed by thousands of nodes which communicate in a peer-to-peer fashion. While each node can be compromised in its own right, there is no single tangible asset or actor that impacts the security of the network state as a whole.\\
 
-Rather, we could say that the consensus as an abstract concept is the asset that needs to be protected. As a first observation, we are therefore trying to secure a theoretical model against possible flaws. This necessitates the mathematical exploration of weaknesses in the model and the discovery of ways to safeguard against them.\\
+However, we could define the consensus itself as an abstract concept which needs to be protected. This leads us to the first family of weaknesses, where we look for flaws in the theoretical model used for the blockchain consensus. It requires exploration of the possible exploits in the fields of mathematics, more specifically game theory, and information science, in particular distributed systems.\\
 
-However, if we consider the subject from a more comprehensive perspective, the consensus is not only made up of a game theoretical model. In order for the formed consensus to be meaningful, we also need the rules encoded into the software to stay close to the original intention and we need to make sure that all participants who so desire can participate in the consensus.\\
+Beyond these obvious flaws, we can consider the subject from a more comprehensive perspective. Indeed, the blockchain consensus is composed of three aspects: the algorithm implementing the theoretical model for the consensus, the parties which participate in the forming of the consensus and the governance mechanisms which dictate the rules of the consensus.\\
 
-The consensus of a blockchain platform can therefore be disrupted on a more abstract level by getting participants to drop out of the consensus-forming network or by interfering with the project governance to direct it away from the original intention of the consensus. This leaves blockchain networks open to a number of out-of-band or social attacks.\\
+This means that a blockchain consensus platform could be attacked even if the theoretical model was perfectly secure. On the technical level, threats exist that are specific to blockchain platforms and exploits could be used to disrupt the access to the state in its full integrity.\\
 
-In the following, we thus categorize possible attacks on the consensus into one of three categories: attacks which target the theoretical foundation of the consensus, attacks which target the participation in the consensus and attacks which target the governance of the consensus.\\
+Finally, the project governing a blockchain project can be disrupted in a number of ways, including a number of social engineering and manipulation vectors. This could lead to a situation where the rules of the consensus no longer follow the vision of the majority, leading from an exodus of the users from the platform and putting into question the consensus validity as a whole.\\
+
+The paper will use these three different attack categories to differentiate the possible attacks on the consensus: theoretical attacks, technical attacks and social attacks.\\
 
 \subsection{Impact}
 
