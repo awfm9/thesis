@@ -38,27 +38,15 @@ The paper will use these three different attack categories to differentiate the 
 
 \subsection{Impact}
 
-When analysing traditional information technology assets, we usually evaluate the impact of an exploited weakness in terms of the impact it has on confidentiality, integrity and availability of information. In a blockchain network, these three aspects are slightly different.\\
+When analysing traditional information technology assets, we usually evaluate the severity of a risk in terms of the impact it has on confidentiality, integrity and availability. In a blockchain network, these three aspects can not be directly translated; some aspects are theoretically guaranteed by blockchain technology, while others are simply not applicable.\\
 
-Transparency is a cornerstone of blockchain technology and usually, all participants of the network have access to all the data in order to form consensus of the state. While exceptions exist, confidentiality is not an adequate measurement of the impact of disrupted consensus.\\
+We therefore propose an alternative system of classification for the impact of consensus failures or disruptions on blockchain networks: accessibility, validity and reliability.\\
 
-When talking about integrity, blockchain technology theoretically guarantees that the consensus state is reliable. However, if there was to be a weakness to the consensus algorithm, the integrity of the consensus itself could be questioned. As such, we can interpret integrity to mean the validity of the consenus, and we will use that nomencloture to clearly differentiate.\\
+Accessibility describes the ability of a participant of the blockchain consensus network to access the correct system state. Validity describes whether the consensus state that is recognized by the network participants is valid. Reliability describes the confidence that the currently known consensus state will remain stable over time.\\
 
-Finally, the blockchain network offers a highly redundant representation of the consensus state, which makes it readily available under most circumstances. However, it is possible to disrupt the access of certain nodes or even groups of nodes to the correct consensus state or to the functionaliny of the platform. We will term this impact as accessibility to make it clear it's different from the usual availability criterium.\\
+The impacts of a risk in the context of our risk management framework will thus be described in these three categories.\\
 
-In addition to the two aspects of impact that find an interpretation in the context of blockchain technology, which are how valid is the consensus state and how sure can I be that I am seeing the correct consensus state, we can add another factor that represents a time dimension to the equation. How reliable will the consensus state be in the future? We term this as stability.\\
-
-We therefore propose to estimate the impact of a consensus weakness in terms of its effects on the validity, accessability and stability of the consensus state.\\
-
-\section{Reach}
-
-Next to the classification of the impact, we can also establish a reach for various exploits of the consensus state weaknesses. This can happen in two dimensions: spread and degree.\\
-
-The spread of an exploit's impact talks about the subset of nodes affected. It can either be a single victim (one node or user), a group of victims (a certain demographic or a segment of the network) or all of the nodes.\\
-
-The degree of an exploit's impact talks about the level that each affected node is impacted. It can be partial (only some operations don't work, or only some nodes of the group are affected) or complete (all operations stop working, or all nodes of the group are equally affected).\\
-
-\section{Game Theory}
+\section{Theoretical}
 
 51\% Attack
 
@@ -69,7 +57,7 @@ Long Range Attack
 (Censorship, Economic Equilibrium, Double Spend)
 
 
-\section{Participation}
+\section{Technical}
 
 Eclipse Attack
 
@@ -79,7 +67,7 @@ Delay Attack
 
 Illegal Material
 
-\section{Governance}
+\section{Social}
 
 \subsection{Community Sentiment}
 
