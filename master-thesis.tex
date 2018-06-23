@@ -5,6 +5,7 @@
 \usepackage{csquotes}
 
 \setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{2}
 
 \title{Risk Management for Blockchain Consensus}
 \author{Max Wolter}
@@ -76,19 +77,15 @@ The approach can be summarized as follows:
 
 \subsection{Hash Power}
 
-Miner exploiting hash power majority in proof-of-work to execute double spend.\\
-
 \subsubsection{Vulnerability}
 
 One big vulnerability of any blockchain consensus protocol is the creation of an alternative history by a malicious actor which outgrows the currently shared network history, therefore allowing him to replace the consensus state with his own version of the history. For proof-of-work consensus protocols, this consists in the acquisition of more than fifty percent of hash power by one network participant. Even the acquisition of a significant minority hash power will enable certain attacks to be executed with a non-zero success rate.\\
 
 \subsubsection{Threat}
 
-The described vulnerability can be exploite by a malicious miner or by a mining pool operator. He can execute two different attacks: he can either double spend some of his funds to generate a financial gain for himself, or he can use his position to censor transactions of third parties to cause financial loss or generate a profit through out-of-band means.\\
-
-The attacker can:
+The described vulnerability can be exploited by a malicious miner or by a mining pool operator. He can execute a number of attacks, but most of them fall into one of the following:
 \begin{enumerate}
-  \item Reverse transactions that he sends
+  \item Reverse own transactions
   \item Prevent transactions from gaining confirmations
   \item Prevent other miners from generating blocks
   \item Revert historical blocks
@@ -120,8 +117,6 @@ Solutions are:
 
 \subsection{Block Withholding}
 
-Miner exploiting block propagation in proof-of-work to execute selfish mining.\\
-
 \subsubsection{Vulnerability}
 
 The vulnerability targeted in the context of selfish mining is subtle. Nodes can choose what to propagate on the network; by withholding knowledge on a valid block, an informational asymmetry can be created on the network. This informational asymmetry presents the vulnerability.\\
@@ -142,39 +137,109 @@ One proposed solution to this weakness is the propagation of all competing branc
 
 \subsection{Nothing-At-Stake}
 
-The nothing-at-stake problem describes an issue with the construction of proof-of-stake consensus algorithms, where the amount of tokens held in a certain way grant a proportional amount of transaction validation power in the network. If a malicious validator creates a block with a conflicting history, then subsequent miners will not be incentivized to contradict it; rather, they would be best served to create a subsequent block for all versions of the blockchain history, because generating blocks is negligibly cheap.\\
+\subsubsection{Vulnerability}
 
-In the event of conflicting histories, it is not an optimal strategy to try and converge on a common history, as nothing can be lost by generating blocks for the wrong blockchain history - hence the name of the problem. This makes any malicious attempt to double spend or otherwise abuse the validator position free. This means that every version of the history persists and conflicts are not resolved, defeating the purpose of the consensus algorithm.\\
+In the context of a proof-of-stake consensus algorithm, validators invest a negligible amount of resources into the generation of new blocks. This means that they can generate blocks for competing versions of the consensus state, thus weakening the consensus finding algorithm. This constitutes a serious vulnerability and is known as the nothing-at-stake problem.\\
 
-Currently used solutions for the problem are many. Some blockchains use so-called slashing conditions, which punish validators for creating blocks on an invalid blockchain history. Other networks allow the network to exclude the cheating validators from the process in the future, depriving them of future rewards.\\
+\subsubsection{Threat}
+
+Each validator on a proof-of-stake network is incentivized to create blocks for all competing histories of the consensus stake, as this allows them to guarantee the reward linked to the generation of blocks. If they wouldn't generate a block for a fork, but this fork would end up being the accepted history, they would lose their block awards on all other forks.\\
+
+This allows attacks similar to the hash power attacks in a proof-of-work consensus, but at a much lower cost and without any risk. Practically no resources will be wasted in creating the competing history and all validators would extend the desired competing history. This means that even a low stake, and thus share in the block generation, would allow the attacker's fork to win eventually, as he would only generate blocks for the history he is interested in.\\
+
+\subsubsection{Impact}
+
+The nothing-at-stake problem affects the consensus state drastically, as it undermines the whole point of the consensus algorithm: finding consensus on one state. Rather, in this case, all the states are extended and consensus is not found as they remain in conflict until a malicious user favours a specific state.\\
+
+This can undermine the entire history of the consensus state and completely disrupt its stability. Each consensus finding process is following the consensus rules, but the attacker is the one who can choose the emerging consensus, thus also invalidating the validity of the consensus going forward.\\
+
+\subsubsection{Controls}
+
+Some networks instate a blacklist for validators who are caught creating blocks on an invalid or malicious blockchain history. This approach is imperfect and hard to enforce consistently, but it increases the costs of any attacks from negligible to a real amount. However, it doesn't fix the fundamental issue.\\
+
+A more coherent solution is the introduction of so-called slashing conditions. In this model, each validator has to deposit a certain amount of funds in order to be elligible to generate blocks. If a validator continues extending the losing version of a blockchain, he will also lose part of his locked up funds. This will make each validator fully responsible for choosing the most correct fork of the history or incur a significant loss.\\
 
 \subsection{Long Range}
 
-Long range attacks are a category of attacks on proof-of-stake chains that allow an attacker or a group of attackers to recreate the history of the blockchain. All is needed is to find a point in time, which can be far back in the history of the blockchain, where the attackers control a sufficient amount of the stakes which define the validators.\\
+\subsubsection{Vulnerability}
 
-Once this point in time is found, they can rebuild the blockchain in a short amount of time to become as long and longer as the current longest blockchain history, as generating blocks with proof-of-stake is cheap. This will allow them to rewrite the entire history of transactions, invalidating any transactions beyond the chosen time.\\
+As costs for generating blocks in a proof-of-stake algorithm are negligible, any validator can generate as many blocks as he wants. This allows the recreation of part of all of the blockchain history. A malicious attacker can thus take over the network from any point of the blockchain history where he held a sufficient amount of block generation power to overpower the competing validators.\\
 
-A first counter to is to limit the amount of blocks that can be rewritten to a certain number, thus defining all blocks further back to be final and unchangeable. However, this still leaves ambigious states. In order to allow proper bootstrapping of nodes and catching up when falling behind too far, there needs to be a trusted mechanism to transmit the correct history out-of-band of the blockchain. This concept is called weak subjectivity.\\
+\subsubsection{Threat}
+
+A malicious validator only needs to acquire a sufficient stake on the network once in order to be able recreate the entire history from that point forward. This includes the ability to include conspiring validators a posteriori.\\
+
+The attacks they can then execute are many, as they can write the entire history according to their whim, excluding and thus censoring any transaction they want and double spending any transaction that was outgoing from their funds.\\
+
+\subsubsection{Impact}
+
+A long range attack can invalidate any history of the consensus state and create new state for all addresses controlled by the attacker. It thus completely crushes the stability of the consensus.\\
+
+Additionally, it allows the attackers to censor and thus disrupt accessibility of the consensus, making the blockchain network unusable for its designed purpose.\\
+
+\subsubsection{Controls}
+
+One approach is to introduce checkpoints or to limit the number of blocks that can be rewritten, thus creating an upper bound for how much of the history can be rewritten. This creates the concept of finality, which means that a block can never be changed after a certain point in time and can thus be considered final.\\
+
+Proper bootstrapping of nodes and catching up when falling too far behind the network consensus state still leaves a vulnerability in that case, though. There needs to be a trusted mechanism to transmit the correct history out-of-band of the blockchain. This concept is called weak subjectivity.\\
 
 \section{Technical}
 
-Eclipse Attack
+\subsection{Eclipse}
 
-Partition Attack
+\subsection{Partition}
 
-Delay Attack
-
-Illegal Material
+\subsection{Delay}
 
 \section{Social}
 
 \subsection{Arbitrary Content}
 
+\subsubsection{Vulnerability}
+
+Many blockchain platforms allow nodes to include arbitrary data into the transaction, which constitutes a clear vulnerability.\\
+
+\subsubsection{Threat}
+
+A malicious actor, of any form, who would desire to disrupt a blockchain network could inject illegal material into a blockchain, which would then exist in immutable form for the lifetime of the consensus state. This same actor could then use the existence of illegal material in the consensus state to scare other people away from the platform.\\
+
+\subsubsection{Impact}
+
+Having illegal material embedded into the blockchain is not any more of a legal issue that having hidden material in an image you load from a website, which is why the attack is part of the social category. However, scaring people away from a blockchain network affects the accessibility of the consensus.\\
+
 \subsection{Community Manipulation}
 
-\subsection{Bribery}
+\subsubsection{Vulnerability}
 
-\section{Interdependencies}
+Blockchain networks are based on consensus between network participants that is reflected in the consensus rules and reached through the consensus algorithm. However, if you manage to influence the group of people who contribute to the consensus finding (miners or validators), you can influence the consensus rules and changes to them.\\
+
+\subsubsection{Threat}
+
+While blockchain consensus protocols allow decentralized consensus according to predefined rules, these consensus rules can always be changed by changing the code of the nodes participating in the network. A malicious party can use censorship of media channels and other social media manipulation tactics to influence the perceived consensus of the community and thus counteract the initially intended consensus rules.\\
+
+\subsubsection{Impact}
+
+Changes to consensus rules are difficult to achieve, but as past events have shown, they are not impossible. Depending on the original design, a change in the consensus rules has a high probability of affecting the validity of the consensus after the change has been done.\\
+
+Additionally, consensus rules can be drastic enough to affect the past blockchain history, even though it's unlikely that the impact will be big here. Finally, by implementing rules that many network participants don't agree with or which affect the functioning of the blockchain platform, the accessibility of the consensus can be hampered as well.\\
+
+\subsubsection{Controls}
+
+As a first step, a consensus platform needs clear values to govern the surrounding software project and a transparent decision-making process that can be audited by anyone. It is thus important to ensure that all big discussion platforms are democratically governed.\\
+
+Alternatively, an official discussion platform that is governed through decisions made at the heart of the consensus itself would make every network participant a true stakeholder in how the community and the project is run, thus avoiding any form of hostile takeover to influence processes.\\
+
+\subsection{Bribes \& Refunds}
+
+\subsubsection{Vulnerability}
+
+Consensus is achieved on blockchain networks through the use of economic incentives. If a malicious actor tries to act against the consensus rules, he will usually incur a more or less severe economic punishment. However, the fact that such a loss can be countered by out-of-band payments makes the system vulnerable to bribery.\\
+
+\subsubsection{Threat}
+
+\subsubsection{Impact}
+
+\subsubsection{Controls}
 
 \section{Case Study}
 
