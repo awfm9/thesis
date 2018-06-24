@@ -1,4 +1,4 @@
-\documentclass[11pt,a4paper,draft]{article}
+\documentclass[11pt,a4paper]{article}
 
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
@@ -152,7 +152,7 @@ On a basic level, this undermines the efficiency of finding consensus on the blo
 
 While not strictly an attack with a specific victim, the nothing-at-stake problem still represents a significant risk for the security of the blockchain network, as it undermines the fundamental functioning of the consensus finding algorithm. Validators extend all branches of the blockchain history, thus never resolving conflicts and not fulfilling the basic premise of a blockchain network to have a single shared consensus state.\\
 
-Even when not exploited, a blockchain network in this state can no longer be considered as providing its security guarantees. The efficiency of the consensus finding is completely deteriorated and the existence of multiple blockchain history versions undermines the validity of the consensus by failing to resolve conflicts as designed.\\
+Even when not exploited, a blockchain network in this state can no longer be considered as providing its security guarantees. The efficiency of the consensus finding is completely deteriorated and the existence of multiple blockchain history versions completely undermines the efficiency of the consensus by failing to resolve conflicts as designed.\\
 
 While some early proof-of-stake networks don't address the issue, others chose a technical mitigation, which attempts to create blacklists on each node when detecting validators on malicious branches. Unfortunately, this approach is an out-of-band solution and not complete.\\
 
@@ -247,47 +247,49 @@ October 2018.
 
 \section{Risks}
 
-\begin{tabular}{| p{3cm} | p{5cm} | p{5cm} |}
+\begin{tabular}{| l | l | l |}
   \hline
   \multicolumn{3}{| l |}{\textbf{A.1 Theoretical Risks}}\\
   \hline
-  \multicolumn{3}{| l |}{A.1.1 Hash Power Attacks}\\
+  \multicolumn{3}{| l |}{\underline{\smash{A.1.1 Hashrate Distribution}}}\\
   \hline
-    \textit{Majority Attack} & Reverse own transactions, prevent transactions, prevent block generation, revert blocks & Validity, Efficiency, Accessibility\\
+    \textit{Double Spending} & Reverse own transactions & Validity\\
   \hline
-    \textit{Minority Attack} & Reverse own transactions, throttle transactions & Validity, Accessibility\\
+    \textit{Censoring Transactions} & Throttle \& block transactions & Accessibility\\
   \hline
-  \multicolumn{3}{| l |}{A.1.2 Block Withholding Attacks}\\
+    \textit{Rewriting History} & Replace blockchain history version & Validity\\
+  \hline
+  \multicolumn{3}{| l |}{\underline{\smash{A.1.2 Block Propagation}}}\\
   \hline
     \textit{Finney Attack} & Reverse own transactions & Validity\\
   \hline
-    \textit{Block Discarding} & Waste network resources & Efficiency\\
+    \textit{Block Discarding} & Disrupt economic equilibrium & Efficiency\\
   \hline
-    \textit{Selfish Mining} & Waste network resources & Efficienty\\
+    \textit{Selfish Mining} & Disrupt economic equilibrium & Efficienty\\
   \hline
-  \multicolumn{3}{| l |}{A.1.3 Cheap Validation Attacks}\\
+  \multicolumn{3}{| l |}{\underline{\smash{A.1.3 Cheap Validation}}}\\
   \hline
-    \textit{Fork Staking} & Undermine conflict resolution & Efficiency\\
+    \textit{Nothing-At-Stake} & Undermine conflict resolution & Efficiency\\
   \hline
-    \textit{Long Range Attack} & Reverse own transactions, invalidate past transactions & Validity, Accessibility\\
-  \hline
-  \multicolumn{3}{| l |}{A.1.4 Long Range Attacks}\\
+    \textit{Long-Range Attack} & Reverse blockchain history & Validity\\
   \hline
   \multicolumn{3}{| l |}{\textbf{A.2 Technical Risks}}\\
   \hline
-  \multicolumn{3}{| l |}{A.2.1 Network Partitioning Attacks}\\
+  \multicolumn{3}{| l |}{\underline{\smash{A.2.1 Network Topology}}}\\
   \hline
-  \multicolumn{3}{| l |}{A.2.2 Node Isolation Attacks}\\
+    \textit{Eclipse Attack} & &\\
   \hline
-  \multicolumn{3}{| l |}{A.2.3 Communication Delay Attacks}\\
+    \textit{Balance Attack} & &\\
   \hline
   \multicolumn{3}{| l |}{\textbf{A.3 Social Risks}}\\
   \hline
-  \multicolumn{3}{| l |}{A.3.1 Arbitrary Content Attacks}\\
+  \multicolumn{3}{| l |}{\underline{A.3.1 Out-Of-Band Incentives}}\\
   \hline
-  \multicolumn{3}{| l |}{A.3.2 Community Manipulation Attacks}\\
+    \textit{Bribery Attack} & &\\
   \hline
-  \multicolumn{3}{| l |}{A.3.3 Governance Structure Attacks}\\
+  \multicolumn{3}{| l |}{\underline{\smash{A.3.2 Community Influence}}}\\
+  \hline
+  \multicolumn{3}{| l |}{\underline{\smash{A.3.3 Media Coverage}}}\\
   \hline
 \end{tabular}
 
