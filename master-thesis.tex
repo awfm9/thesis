@@ -2,7 +2,7 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
-\usepackage{csquotes}
+\usepackage[nottoc,numbib]{tocbibind}
 
 \setcounter{secnumdepth}{2}
 \setcounter{tocdepth}{2}
@@ -15,7 +15,6 @@
 
 \maketitle
 \begin{abstract}
-
 \end{abstract}
 \newpage
 
@@ -24,7 +23,7 @@
 
 \section{Introduction}
 
-The concept of Bitcoin as a "peer-to-peer electronic cash system" was introduced by an anonymous author under the pseudonym of Satoshi Nakamoto in October 2008. Since then, the potential of the underlying blockchain technology to serve as a trustless mechanism to find consensus on the state of an underlying system has spread to many applications.\\
+The concept of Bitcoin as a "peer-to-peer electronic cash system" was introduced by an anonymous author under the pseudonym of Satoshi Nakamoto in October 2008 \cite{bitcoin}. Since then, the potential of the underlying blockchain technology to serve as a trustless mechanism to find consensus on the state of an underlying system has spread to many applications.\\
 
 The main value proposition of a blockchain platform is its ability to ensure the integrity of the consensus in a verifiable and transparent manner. While the software and business ecosystem developed around a blockchain project are susceptible to the same risks as typical software and business projects, the core platform has its own, unique set of risks.\\
 
@@ -52,26 +51,21 @@ The paper will use these three different attack categories to differentiate the 
 
 \subsection{Security Criteria}
 
-When analysing traditional information technology assets, we usually evaluate the severity of a risk in terms of the impact it has on confidentiality, integrity and availability. These three aspects can not be directly translated into the world of blockchain consensus. This paper proposes the following security criteria to make the evaluation of risks to blockchain consensus more meaningful: stability, validity and accessibility.\\
+When analysing traditional information technology assets, we usually evaluate the severity of a risk in terms of the impact it has on confidentiality, integrity and availability. These three aspects can not be directly translated into the world of blockchain consensus. This paper proposes the following security criteria to make the evaluation of risks to blockchain consensus more meaningful: validity, efficiency and accessibility.\\
 
-Stability refers to the desired immutability of the consensus state. Even though small changes to the recent history of a consensus state are normal, especially during periods of temporary contention, the risk that data from the established history can be changed after it's considered reliable should be negligible. As an example, if an attacker manages to change the recipient of the funds in a given transaction at a later point in time, the stability of the consensus is no longer given.\\
+Validity refers to the desired immutability of the consensus state. Even though small changes to the recent history of a consensus state are normal, especially during periods of temporary contention, the risk that data from the established history can be changed after it's considered reliable should be negligible. As an example, if an attacker manages to change the recipient of the funds in a given transaction at a later point in time, the validity of the consensus is no longer given.\\
 
-Validity refers to the ongoing process of finding consensus in the blockchain network and whether it can still be considered valid according to the established consensus rules. If the process is disrupted or producing incorrect or undesirable results, the consensus algorithm can no longer fulfill its original purpose. As such, if the blockchain network no longer produces valid and meaningful state changes, the validity of the consensus is broken.\\
+Efficiency refers to the ongoing process of finding consensus in the blockchain network and whether it can still be considered sufficient according to the established consensus rules. If the process is disrupted or producing incorrect or undesirable results, the efficiency at which the consensus algorithm can fulfill its original purpose diminishes. As such, once the efficiency of consensus finding is affected, the state changes it produces are less meaningful and the consensus can be considered broken on some level.\\
 
 Accessibility refers to the ability of network participants to participate both in the consensus finding of the blockchain network, as well as the ability to use the blockchain network for its designed purpose. If a user is denied participation in the consensus finding or cannot transact on the network, the accessability of the consensus is lowered and no longer serves its original purpose.\\
 
 \subsection{Analysis}
 
-This paper uses the systematic approach to risk analysis as established by Eric Dubois, Patrick Heymans, Nicolas Meyer and Raimundas Matulalevicius in 2010. Each risk targets the consensus itself as the vulnerable, abstract asset. A risk is composed by a vulnerability which is exploited by a threat agent to execute an attack.\\
+This paper uses a systematic definition of the information system security risk management domain, where a risk is considered as an event which leads to an impact on the security criteria of an asset. We alternatively use the term of exploit instead of event throughout this paper.\\
 
-This risk is then evaluated according to the impact on the security criteria established earlier. Finally, a number of mitigation possibilities are proposed as possible controls to manage the given risk.\\
+An exploit (or event) is defined as a threat agent using an attack method to exploit a vulnerability in an asset. Additionally, we propose a differentiation between the attack method and the attack that can be executed after a successful exploit, as these are often distinct in the area of blockchain.\\
 
-The approach can be summarized as follows:
-\begin{enumerate}
-  \item Threat agent exploits vulnerability in consensus algorithm to execute attack.
-  \item Risk impacts stability, validity and accessibility of consensus.
-  \item Controls can reduce the probability or the impact of the risk.
-\end{enumerate}
+Once the attacks have been elaborated, their impact on the security criteria of the consensus state are evaluated. Does the attack affect the validity, efficiency or the accessibility of the consensus state? Finally, we discuss a number of controls allowing for the mitigation of some of the impact on the security of the consensus state.\\
 
 \section{Theoretical}
 
@@ -90,6 +84,8 @@ The described vulnerability can be exploited by a malicious miner or by a mining
   \item Prevent other miners from generating blocks
   \item Revert historical blocks
 \end{enumerate}
+
+\subsubsection{Attacks}
 
 \subsubsection{Impact}
 
@@ -125,6 +121,8 @@ The vulnerability targeted in the context of selfish mining is subtle. Nodes can
 
 A miner or mining pool operator can hide a valid block mined by himself from the network and start mining the next block in secret. This will give him a higher probability of extending the longest valid chain as compared to the rest of the network, thus earning him a disproportionate award.\\
 
+\subsubsection{Attacks}
+
 \subsubsection{Impact}
 
 Just as the attack, the impact of the attack is subtle. The law of diminishing returns will lead to a market where inefficient miners will be forced to quit due to marginal profits. The selfish miner will be able to maintain his profitability longer, thus outcompeting other miners and gaining a disproportionate share of the network hash power.\\
@@ -146,6 +144,8 @@ In the context of a proof-of-stake consensus algorithm, validators invest a negl
 Each validator on a proof-of-stake network is incentivized to create blocks for all competing histories of the consensus stake, as this allows them to guarantee the reward linked to the generation of blocks. If they wouldn't generate a block for a fork, but this fork would end up being the accepted history, they would lose their block awards on all other forks.\\
 
 This allows attacks similar to the hash power attacks in a proof-of-work consensus, but at a much lower cost and without any risk. Practically no resources will be wasted in creating the competing history and all validators would extend the desired competing history. This means that even a low stake, and thus share in the block generation, would allow the attacker's fork to win eventually, as he would only generate blocks for the history he is interested in.\\
+
+\subsubsection{Attacks}
 
 \subsubsection{Impact}
 
@@ -171,6 +171,8 @@ A malicious validator only needs to acquire a sufficient stake on the network on
 
 The attacks they can then execute are many, as they can write the entire history according to their whim, excluding and thus censoring any transaction they want and double spending any transaction that was outgoing from their funds.\\
 
+\subsubsection{Attacks}
+
 \subsubsection{Impact}
 
 A long range attack can invalidate any history of the consensus state and create new state for all addresses controlled by the attacker. It thus completely crushes the stability of the consensus.\\
@@ -185,9 +187,32 @@ Proper bootstrapping of nodes and catching up when falling too far behind the ne
 
 \section{Technical}
 
-\subsection{Eclipse}
+\subsection{Network Partitioning}
 
-\subsection{Partition}
+\subsubsection{Vulnerability}
+
+Blockchain networks generally rely on rudimentary peer-to-peer gossip protocols to propagate messages, such as blocks and transactions, through the network. By isolating nodes or by creating artificial subgroups of nodes, the view of the consensus state can be manipulated.\\
+
+\subsubsection{Threat}
+
+A number of attacks are possible by exploiting the network topology of blockchain networks.\\
+
+In an eclipse attack, the attacker monopolizes all connections of a victim node, therefore controlling the view the node has on the consensus state. This can be exploited for a number of attacks:\\
+\begin{enumerate}
+  \item Engineer block races, costing the attacked miner resources.
+  \item Splitting mining power, enabling easier 51\% attacks.
+  \item Supporting selfish mining, costing the attacked and gaining more.
+  \item 0-confirmation double spend.
+  \item N-confirmation double spend.
+\end{enumerate}
+
+\subsubsection{Attacks}
+
+\subsubsection{Impact}
+
+As network partitioning attacks are based on
+
+\subsubsection{Controls}
 
 \subsection{Delay}
 
@@ -251,16 +276,31 @@ Consensus is achieved on blockchain networks through the use of economic incenti
 
 \section{Conclusion}
 
-\cite{item}
-
+\newpage
 \begin{thebibliography}{9}
 
-\bibitem{item}
-author,
-"name",
-link,
-date.
+\bibitem{bitcoin}
+Satoshi Nakamoto,
+"Bitcoin: A Peer-to-Peer Electronic Cash System",
+https://bitcoin.org/bitcoin.pdf,
+October 2018.
 
 \end{thebibliography}
+
+\newpage
+\appendix
+
+\section{Risks}
+
+\begin{tabular}{| l | l | l |}
+  \hline
+  \multicolumn{3}{| l |}{A.1 Theoretical Risks}\\
+  \hline
+  \multicolumn{3}{| l |}{A.2 Technical Risks}\\
+  \hline
+  \multicolumn{3}{| l |}{A.3 Social Risks}\\
+  \hline
+\end{tabular}
+
 
 \end{document}
