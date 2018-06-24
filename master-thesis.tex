@@ -61,11 +61,13 @@ Accessibility refers to the ability of network participants to participate both 
 
 \subsection{Analysis}
 
-This paper uses a systematic definition of the information system security risk management domain, where a risk is considered as an event which leads to an impact on the security criteria of an asset. We alternatively use the term of exploit instead of event throughout this paper.\\
+Our method for defining risks is based on a systemic definition of the information security risk management domain, which we extend with the distinction between an attack method and the attack itself. This will help us to define the risks to blockchain consensus systems more precisely.\\
 
-An exploit (or event) is defined as a threat agent using an attack method to exploit a vulnerability in an asset. Additionally, we propose a differentiation between the attack method and the attack that can be executed after a successful exploit, as these are often distinct in the area of blockchain.\\
+A risk is the possibility of an event occurring which could lead to an impact on the security criteria of an asset. In our case, the security criteria have been defined as the validity, efficiency and accessibility and the single asset we are interested in is the consensus state. An event is defined as a threat agent using an attack method to exploit a vulnerability in order to execute an attack.\\
 
-Once the attacks have been elaborated, their impact on the security criteria of the consensus state are evaluated. Does the attack affect the validity, efficiency or the accessibility of the consensus state? Finally, we discuss a number of controls allowing for the mitigation of some of the impact on the security of the consensus state.\\
+In the context, the mere exploitation of a vulnerability in a certain way can lead to a collapse of the security criteria of the consensus state. We thus evaluate the impact on security criteria on the level of attack methods, even though a single attack method can lead to several distinct attacks. In a way, the effects of a breach in security are immediate for the consensus state, even when no attacks have been executed to target a specific victim yet.\\
+
+Finally, we discuss possible mitigation strategies. Some of them work by closing the vulnerability, while others address the issues by reducing the impact, while another set simply monitors and prevents the attacks actively. We list all of the identified controls for the security of the consensus state.\\
 
 \section{Theoretical}
 
@@ -292,13 +294,47 @@ October 2018.
 
 \section{Risks}
 
-\begin{tabular}{| l | l | l |}
+\begin{tabular}{| p{3cm} | p{5cm} | p{5cm} |}
   \hline
-  \multicolumn{3}{| l |}{A.1 Theoretical Risks}\\
+  \multicolumn{3}{| l |}{\textbf{A.1 Theoretical Risks}}\\
   \hline
-  \multicolumn{3}{| l |}{A.2 Technical Risks}\\
+  \multicolumn{3}{| l |}{A.1.1 Hash Power Attacks}\\
   \hline
-  \multicolumn{3}{| l |}{A.3 Social Risks}\\
+    \textit{Majority Attack} & Reverse own transactions, prevent transactions, prevent block generation, revert blocks & Validity, Efficiency, Accessibility\\
+  \hline
+    \textit{Minority Attack} & Reverse own transactions, throttle transactions & Validity, Accessibility\\
+  \hline
+  \multicolumn{3}{| l |}{A.1.2 Block Withholding Attacks}\\
+  \hline
+    \textit{Finney Attack} & Reverse own transactions & Validity\\
+  \hline
+    \textit{Pool Withholding} & Waste network resources & Efficiency\\
+  \hline
+    \textit{Selfish Mining} & Waste network resources & Efficienty\\
+  \hline
+  \multicolumn{3}{| l |}{A.1.3 Cheap Validation Attacks}\\
+  \hline
+    \textit{Multi-split Staking} & Undermine conflict resolution & Efficiency\\
+  \hline
+    \textit{Long Range Attack} & Reverse own transactions, invalidate past transactions & Validity, Accessibility\\
+  \hline
+  \multicolumn{3}{| l |}{A.1.4 Long Range Attacks}\\
+  \hline
+  \multicolumn{3}{| l |}{\textbf{A.2 Technical Risks}}\\
+  \hline
+  \multicolumn{3}{| l |}{A.2.1 Network Partitioning Attacks}\\
+  \hline
+  \multicolumn{3}{| l |}{A.2.2 Node Isolation Attacks}\\
+  \hline
+  \multicolumn{3}{| l |}{A.2.3 Communication Delay Attacks}\\
+  \hline
+  \multicolumn{3}{| l |}{\textbf{A.3 Social Risks}}\\
+  \hline
+  \multicolumn{3}{| l |}{A.3.1 Arbitrary Content Attacks}\\
+  \hline
+  \multicolumn{3}{| l |}{A.3.2 Community Manipulation Attacks}\\
+  \hline
+  \multicolumn{3}{| l |}{A.3.3 Governance Structure Attacks}\\
   \hline
 \end{tabular}
 
