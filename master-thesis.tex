@@ -164,19 +164,19 @@ As costs for generating blocks in a proof-of-stake algorithm are negligible, any
 
 The impact of this attack method is similar to a majority hash power attack on a proof-of-stake network, which the difference of requiring negligible time to execute mostly the same attacks, making it significantly more severe. It completely undermines the validity, the accessibility and the efficiency of the blockchain network.\\
 
-One solution to limit the impact of a long-range attack is the introduction of checkpoints or a limit on the number of blocks that can be rewritten. This creates an upper bound on how far into the past history can be rewritten and introduces the concept of finality, which means that a block can never be changed after a certain point in time and can thus be considered final.\\
+It can further be compounded by stake bleeding, which makes the attacking validator sacrifice his stake on the currently longest chain to slow down its growth and increase his probability of catching up with the validation power he managed to acquire at a point in the past. If the attack is successful, it means he will retrieve all of his tokens, as he will still have them on his alternative blockchain history version.\\
+
+One solution to limit the impact of a long-range attack is the introduction of a moving checkpoint, which is a limit on the number of blocks that can be rewritten. This creates an upper bound on how far into the past history can be rewritten and introduces the concept of finality, which means that a block can never be changed after a certain point in time and can thus be considered final.\\
 
 However, this approach does not address the need for new or reconnecting nodes to synchronize with the network over a long blockchain history. This leaves this relevant subset of nodes vulnerable. It can be addressed by introducing an out-of-band history verification of the blockchain, such as pulling checkpoints from a distributed network of trusted nodes. This concept is known as weak subjectivity.\\
+
+Finally, key-evolving cryptography can be used to make sure that each private key can only be used to sign once, thus making it impossible to acquire past keys from validators to increase the share of validation power. Such approaches are still experimental and in the early stages of research.\\
 
 \section{Technical Vulnerabilities}
 
 \subsection{Network Partitioning}
 
-\subsubsection{Vulnerability}
-
 Blockchain networks generally rely on rudimentary peer-to-peer gossip protocols to propagate messages, such as blocks and transactions, through the network. By isolating nodes or by creating artificial subgroups of nodes, the view of the consensus state can be manipulated.\\
-
-\subsubsection{Threat}
 
 A number of attacks are possible by exploiting the network topology of blockchain networks.\\
 
@@ -189,13 +189,9 @@ In an eclipse attack, the attacker monopolizes all connections of a victim node,
   \item N-confirmation double spend.
 \end{enumerate}
 
-\subsubsection{Attacks}
+\subsubsection{Eclipse Attack}
 
-\subsubsection{Impact}
-
-As network partitioning attacks are based on
-
-\subsubsection{Controls}
+\subsubsection{Balance Attack}
 
 \subsection{Message Delaying}
 
@@ -203,59 +199,35 @@ As network partitioning attacks are based on
 
 \subsection{Content Insertion}
 
-\subsubsection{Vulnerability}
-
 Many blockchain platforms allow nodes to include arbitrary data into the transaction, which constitutes a clear vulnerability.\\
 
-\subsubsection{Threat}
-
 A malicious actor, of any form, who would desire to disrupt a blockchain network could inject illegal material into a blockchain, which would then exist in immutable form for the lifetime of the consensus state. This same actor could then use the existence of illegal material in the consensus state to scare other people away from the platform.\\
-
-\subsubsection{Impact}
 
 Having illegal material embedded into the blockchain is not any more of a legal issue that having hidden material in an image you load from a website, which is why the attack is part of the social category. However, scaring people away from a blockchain network affects the accessibility of the consensus.\\
 
 \subsection{Community Manipulation}
 
-\subsubsection{Vulnerability}
-
 Blockchain networks are based on consensus between network participants that is reflected in the consensus rules and reached through the consensus algorithm. However, if you manage to influence the group of people who contribute to the consensus finding (miners or validators), you can influence the consensus rules and changes to them.\\
 
-\subsubsection{Threat}
-
 While blockchain consensus protocols allow decentralized consensus according to predefined rules, these consensus rules can always be changed by changing the code of the nodes participating in the network. A malicious party can use censorship of media channels and other social media manipulation tactics to influence the perceived consensus of the community and thus counteract the initially intended consensus rules.\\
-
-\subsubsection{Impact}
 
 Changes to consensus rules are difficult to achieve, but as past events have shown, they are not impossible. Depending on the original design, a change in the consensus rules has a high probability of affecting the validity of the consensus after the change has been done.\\
 
 Additionally, consensus rules can be drastic enough to affect the past blockchain history, even though it's unlikely that the impact will be big here. Finally, by implementing rules that many network participants don't agree with or which affect the functioning of the blockchain platform, the accessibility of the consensus can be hampered as well.\\
 
-\subsubsection{Controls}
-
 As a first step, a consensus platform needs clear values to govern the surrounding software project and a transparent decision-making process that can be audited by anyone. It is thus important to ensure that all big discussion platforms are democratically governed.\\
 
 Alternatively, an official discussion platform that is governed through decisions made at the heart of the consensus itself would make every network participant a true stakeholder in how the community and the project is run, thus avoiding any form of hostile takeover to influence processes.\\
 
-\subsection{Bribes \& Refunds}
-
-\subsubsection{Vulnerability}
+\subsection{Out-Of-Band Incentives}
 
 Consensus is achieved on blockchain networks through the use of economic incentives. If a malicious actor tries to act against the consensus rules, he will usually incur a more or less severe economic punishment. However, the fact that such a loss can be countered by out-of-band payments makes the system vulnerable to bribery.\\
 
-\subsubsection{Threat}
-
-\subsubsection{Impact}
-
-\subsubsection{Controls}
-
 \section{Case Study}
 
-\subsection{Analysis}
+\subsection{Risk Analysis}
 
-\subsection{Evaluation}
-
-\subsection{Mitigation}
+\subsection{Security Recommendations}
 
 \section{Conclusion}
 
