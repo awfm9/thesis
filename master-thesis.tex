@@ -33,41 +33,41 @@ This paper explores the applicability of the traditional information security ri
 
 \subsection{Asset Identification}
 
-When identifying risks, the usual approach dictates that we identify assets which are vulnerable and use them as a basis for the analysis. For a blockchain network, this proposition is a difficult one; the network is composed by thousands of nodes which communicate in a peer-to-peer fashion. While each node can be compromised in its own right, there is no single tangible asset or actor that impacts the security of the network state as a whole.\\
+When identifying risks, the usual approach dictates that we identify assets which are vulnerable and use them as a basis for the analysis. For a blockchain network, this proposition is a difficult one; the network is composed by thousands of nodes which communicate in a peer-to-peer fashion. While each node can be compromised in its own right, there is no single tangible asset or actor that impacts the security of the consensus state as a whole. The same can be said for the periphery, consisting of infrastructure, tools and solutions built around the blockchain network.\\
 
-However, we could define the consensus itself as an abstract concept which needs to be protected. This leads us to the first family of weaknesses, where we look for flaws in the theoretical model used for the blockchain consensus. It requires exploration of the possible exploits in the fields of mathematics, more specifically game theory, and information science, in particular distributed systems.\\
+Our approach posits that we can define the abstract concept of the consensus state itself as the asset which needs to be protected. In that context, we can focus on vulnerabilities that are unique to blockchain networks. We can establish our own security criteria which should be fulfilled in order for the consensus state to be considered secure. At the end, can evaluate the potential risks for the consensus state in terms of impact on these criteria.\\
 
-As the possible vulnerabilities and attacks change with the type of consensus algorithm, we will distinguish between the two most common consensus algorithms: proof-of-work (PoW) and proof-of-stake (PoS). Other models, such as the proof-of-authority (PoA), delegated proof-of-stake (DPoS), directed-acyclical-graph (DAG) and others are either derivatives of the previous models or have not been explored in enough depth yet to properly identify possible vulnerabilities.\\
-
-\subsection{Vulnerability Categories}
-
-Beyond the flaws in the theoretical model, we can consider the subject from a more comprehensive perspective. Indeed, the blockchain consensus is composed of three aspects: the algorithm implementing the theoretical model for the consensus, the parties which participate in the forming of the consensus and the governance mechanisms which dictate the rules of the consensus.\\
-
-This means that a blockchain consensus platform could be attacked even if the theoretical model was perfectly secure. On the technical level, threats exist that are specific to blockchain platforms and exploits could be used to disrupt the access to the state in its full integrity.\\
-
-Finally, the project governing a blockchain project can be disrupted in a number of ways, including a number of social engineering and manipulation vectors. This could lead to a situation where the rules of the consensus no longer follow the vision of the majority, leading from an exodus of the users from the platform and putting into question the consensus validity as a whole.\\
-
-The paper will use these three different attack categories to differentiate the possible attacks on the consensus: theoretical attacks, technical attacks and social attacks.\\
+There are various algorithms used to achieved consensus in blockchain networks. Where the type of consensus algorithm is relevant, we will focus on the two most common algorithms: proof-of-work (PoW) and proof-of-stake (PoS). Other models, such as the directed-acyclical-graph (DAG) approach or derivatives of the PoS approach, have not been explored in sufficient depth in scientific literature to provide a meaningful analysis.\\
 
 \subsection{Security Criteria}
 
-When analysing traditional information technology assets, we usually evaluate the severity of a risk in terms of the impact it has on confidentiality, integrity and availability. These three aspects can not be directly translated into the world of blockchain consensus. This paper proposes the following security criteria to make the evaluation of risks to blockchain consensus more meaningful: validity, efficiency and accessibility.\\
+As alluded to earlier, the usual security criteria of confidentiality, integrity and availability are not a good fit for the abstract concept of the consensus state in a blockchain network. We can, however, establish our own security criteria which make sense in the context of blockchain networks. The foundation for these criteria should be found in the basic process of consensus finding on the network.\\
 
-Validity refers to the desired immutability of the consensus state. Even though small changes to the recent history of a consensus state are normal, especially during periods of temporary contention, the risk that data from the established history can be changed after it's considered reliable should be negligible. As an example, if an attacker manages to change the recipient of the funds in a given transaction at a later point in time, the validity of the consensus is no longer given.\\
+A first step in establishing a shared consensus state between the participants of a blockchain network is their ability to participate in the consensus algorithm. When network participants cannot play their desired role in the process, the transparency \& openess of the blockchain network is diminished. We call this first security criterium the accessibility of the consensus state.\\
 
-Efficiency refers to the ongoing process of consensus finding on blockchain networks. If the process is disrupted or producing incorrect results, the efficiency at which the consensus algorithm can fulfill its original purpose diminishes. As such, once the efficiency of consensus finding is affected, the state changes it produces are less heavy and the consensus can be considered less stable.\\
+A second step in the process of finding consensus between network participants is the correct execution of the consensus algorithm over time. When weaknesses undermine the immutability or reliability of the blockchain history, a core property of the blockchain network is broken. We call this second security criterium the validity of the consensus state.\\
 
-Accessibility refers to the ability of network participants to participate both in the consensus finding of the blockchain network, as well as the ability to use the blockchain network for its designed purpose. If a user is denied participation in the consensus finding or cannot transact on the network, the accessability of the consensus is lowered and no longer serves its original purpose.\\
+Finally, the blockchain network should make optimal use of the resources at its disposal and treat all participants equally. If there are disruptions to the economic equilibrium used to enforce the consensus rules, the security guarantees of the blockchain network are diminished. We call this third security criterium the efficiency of the consensus state.\\
+
+\subsection{Vulnerability Categories}
+
+The most obvious category of vulnerabilities on blockchain platforms are based on the flaws that are inherent in the theoretical models of consensus finding. In this category, we explore possible exploits that rely on work in the field of mathematics, more specifically game theory, and information science, in particular in regards to distributed systems. All of these risks are confined to the model of consensus. We will define these intrinsic aspects as theoretical vulnerabilities.\\
+
+Beyond these, however, there are technical means to disrupt the consensus state that are outside of the direct theoretical model. Certain attacks can exploits aspects of the peer-to-peer topology underlying the blockchain network in order to disrupt or manipulate the consensus state. We will describe these out-of-bound aspects as technical vulnerabilities.\\
+
+Last but not least, a blockchain network is still governed by software that encodes the consensus rules, and this software is still written by humans. This means that the direction of a blockchain project, including the evolution of the consensus rules, is subject to the weaknesses of human governance and community factors. We call these aspects the social vulnerabilities.\\
 
 \subsection{Risk Analysis}
 
-Our method for defining risks is based on a systemic definition of the information security risk management domain, which we extend with the distinction between an attack method and the attack itself. This will help us to define the risks to blockchain consensus systems more precisely.\\
+Our method for analysing risks is based on a systemic definition of the information security risk management domain. This nomencloture defines a risk as an event, occurring with a certain probability, leading to a certain impact on the security criteria of our asset. An event, in return, is a threat agent using an attack method to exploit a vulnerability.\\
 
-A risk is the possibility of an event occurring which could lead to an impact on the security criteria of an asset. In our case, the security criteria have been defined as the validity, efficiency and accessibility and the single asset we are interested in is the consensus state. An event is defined as a threat agent using an attack method to exploit a vulnerability in order to execute an attack.\\
+In this paper, we propose to extend the framework slightly to make a clear distinction between the attack method and the attacks themselves. Indeed, one attack method applied to one vulnerability can open the door to the execution of a variety of attacks in the context of blockchain. In general, this means that we address the vulnerability directly, rather than handling each attack on its own.\\
 
-In the context, the mere exploitation of a vulnerability in a certain way can lead to a collapse of the security criteria of the consensus state. We thus evaluate the impact on security criteria on the level of attack methods, even though a single attack method can lead to several distinct attacks. In a way, the effects of a breach in security are immediate for the consensus state, even when no attacks have been executed to target a specific victim yet.\\
+We therefore establish the following definition as the basis for our risk analysis: a risk is the event with certain probability of a threat agent using an attack method to exploit a vulnerability of the blockchain network in order to execute an attack, impacting the validity, accessibility or efficiency of the consensus state.\\
 
-Finally, we discuss possible mitigation strategies. Some of them work by closing the vulnerability, while others address the issues by reducing the impact, while another set simply monitors and prevents the attacks actively. We list all of the identified controls for the security of the consensus state.\\
+\subsection{Mitigation Controls}
+
+In the context of blockchain networks, the mere exploitation of a vulnerability can lead to the collapse of the security criteria of the consensus state, thus making the blockchain network useless for its intended purposes, even if an attack isn't necessarily executed. In general, this means that controls need to mitigate vulnerabilities or attack methods, rather than just avoid attacks.\\
 
 \section{Theoretical Risks}
 
