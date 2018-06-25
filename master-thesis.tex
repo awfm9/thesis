@@ -479,16 +479,16 @@ March 2018.
 
   \multicolumn{3}{| l |}{\underline{\smash{A.1.1 Hashrate Distribution}}}\\
   \hline
-    \textit{Double Spending} & Reverse own transactions & Validity\\
+    \textit{Double Spending} & Double spend against victim & Validity\\
   \hline
-    \textit{Censoring Transactions} & Block transactions & Accessibility\\
+    \textit{Censoring Transactions} & Block victim transactions & Accessibility\\
   \hline
     \textit{Rewriting History} & Rewrite consensus state history & Validity\\
   \hline
 
   \multicolumn{3}{| l |}{\underline{\smash{A.1.2 Block Propagation}}}\\
   \hline
-    \textit{Finney Attack} & Reverse own transactions & Validity\\
+    \textit{Finney Attack} & Double spend against victim & Validity\\
   \hline
     \textit{Block Discarding} & Disrupt economic equilibrium & Efficiency\\
   \hline
@@ -497,9 +497,9 @@ March 2018.
 
   \multicolumn{3}{| l |}{\underline{\smash{A.1.3 Cheap Validation}}}\\
   \hline
-    \textit{Nothing-At-Stake} & Undermine conflict resolution & Efficiency\\
+    \textit{Nothing-At-Stake} & Disrupt conflict resolution & Efficiency\\
   \hline
-    \textit{Long-Range Attack} & Reverse blockchain history & Validity\\
+    \textit{Long-Range Attack} & Reverse consensus state history & Validity\\
   \hline
 
   \multicolumn{3}{| l |}{\textbf{A.2 Technical Risks}}\\
@@ -507,23 +507,47 @@ March 2018.
 
   \multicolumn{3}{| l |}{\underline{\smash{A.2.1 Network Topology}}}\\
   \hline
-    \textit{Eclipse Attack} & &\\
+    \textit{Eclipse Attack} & Double spend against victim & Validity\\
   \hline
-    \textit{Balance Attack} & &\\
+    \textit{Eclipse Attack} & Disrupt victim block generation & Efficiency\\
+  \hline
+    \textit{Balance Attack} & Double spend against victim & Validity\\
+  \hline
+    \textit{Balance Attack} & Disrupt victim block generation & Efficiency\\
   \hline
 
   \multicolumn{3}{| l |}{\textbf{A.3 Social Risks}}\\
   \hline
 
-  \multicolumn{3}{| l |}{\underline{\smash{A.3.1 Out-Of-Band Incentives}}}\\
+  \multicolumn{3}{| l |}{\underline{\smash{A.3.1 Content Insertion}}}\\
   \hline
-    \textit{Bribery Attack} & &\\
+    \textit{Illegal Content} & Create usage barrier & Accessibility\\
+  \hline
+    \textit{Data Volume} & Create usage barrier & Accessibility\\
   \hline
 
-  \multicolumn{3}{| l |}{\underline{\smash{A.3.2 Community Influence}}}\\
+  \multicolumn{3}{| l |}{\underline{\smash{A.3.2 Community Manipulation}}}\\
+  \hline
+    \textit{Personality Cult} & Manipulate consensus rules & Efficiency\\
+  \hline
+    \textit{Personality Cult} & Create usage barrier & Accessibility\\
+  \hline
+    \textit{Censorship \& Astroturfing} & Manipulate consensus rules & Efficiency\\
+  \hline
+    \textit{Censorship \& Astroturfing} & Create usage barriers & Accessibility\\
   \hline
 
-  \multicolumn{3}{| l |}{\underline{\smash{A.3.3 Media Coverage}}}\\
+  \multicolumn{3}{| l |}{\underline{\smash{A.3.3 Out-Of-Band Incentives}}}\\
+  \hline
+    \textit{Hashrate Renting} & Double spend against victim & Validity\\
+  \hline
+    \textit{Hashrate Renting} & Block victim transactions & Accessibility\\
+  \hline
+    \textit{Contractual Bribery} & Double spend against victim & Validity\\
+  \hline
+    \textit{Contractual Bribery} & Disrupt economic equilibrium & Efficiency\\
+  \hline
+    \textit{Contractual Bribery} & Block victim transactions & Accessibility\\
   \hline
 
 \end{tabular}
@@ -536,28 +560,83 @@ March 2018.
 
   \textbf{B.1 Hashrate Distribution}\\
   \hline
-  \textit{B.1.0.1 Automatic Hashrate Balancing}\\
+  \textit{B.1.1 Automatic Hashrate Balancing}\\
   \hline
-  \textit{B.1.0.2 Alternative chain selection rule}\\
+  \textit{B.1.2 Alternative chain selection rule}\\
   \hline
-
-  \underline{\smash{B.1.1 Double Spending}}\\
+  \textit{B.1.3 Relay conflicting transactions}\\
   \hline
-  \textit{B.1.1.1 Relay conflicting transactions}\\
+  \textit{B.1.4 Monitor network memory pools}\\
   \hline
-  \textit{B.1.1.2 Monitor network memory pools}\\
+  \textit{B.1.5 Wait for confirmations}\\
   \hline
-  \textit{B.1.1.3 Wait for confirmations}\\
+  \textit{B.1.6 Anonymous transactions}\\
   \hline
-
-  \underline{\smash{B.1.2 Censoring Transactions}}\\
-  \hline
-  \textit{B.1.2.4 Anonymous transactions}\\
+  \textit{B.1.7 Introduce checkpoints}\\
   \hline
 
-  \underline{\smash{B.1.3 Rewriting History}}\\
+  \textbf{B.2 Block Propagation}\\
   \hline
-  \textit{B.1.3.5 Blockchain checkpoints}\\
+  \textit{B.2.1 Wait for confirmations}\\
+  \hline
+  \textit{B.2.2 Reward block finding in pools}\\
+  \hline
+  \textit{B.2.3 Relay all blockchain heads}\\
+  \hline
+  \textit{B.2.4 Randomize head mining algorithm}\\
+  \hline
+
+  \textbf{B.3 Cheap validation}\\
+  \hline
+  \textit{B.3.1 Blacklist misbehaving validators}\\
+  \hline
+  \textit{B.3.2 Introduce slashing conditions}\\
+  \hline
+  \textit{B.3.3 Introduce moving checkpoints}\\
+  \hline
+  \textit{B.3.4 Introduce out-of-band checkpoint validation}\\
+  \hline
+  \textit{B.3.5 Implement key-evolving signatures}\\
+  \hline
+
+  \textbf{B.4 Network Topology}\\
+  \hline
+  \textit{B.4.1 Disable incoming transactions}\\
+  \hline
+  \textit{B.4.2 Connect to trusted nodes}\\
+  \hline
+  \textit{B.4.3 Randomize connection selection}\\
+  \hline
+  \textit{B.4.4 Favorize old connections}\\
+  \hline
+  \textit{B.4.5 Encrypt network communication}\\
+  \hline
+
+  \textbf{B.5 Content Insertion}\\
+  \hline
+  \textit{B.5.1 Allow selective pruning}\\
+  \hline
+  \textit{B.5.2 Create light synchronization protocol}\\
+  \hline
+  \textit{B.5.3 Limit data size}\\
+  \hline
+
+  \textbf{B.6 Community Manipulation}\\
+  \hline
+  \textit{B.6.1 Define project values}\\
+  \hline
+  \textit{B.6.2 Make governance transparent}\\
+  \hline
+  \textit{B.6.3 Create anonymous discussion platform}\\
+  \hline
+  \textit{B.6.4 Moderate social media platforms}\\
+  \hline
+
+  \textbf{B.7 Out-Of-Band Incentives}\\
+  \hline
+  \textit{B.7.1 Detection \& counter-bribery}\\
+  \hline
+  \textit{B.7.2 Use expensive PoW algorithm}\\
   \hline
 
 \end{tabular}
