@@ -285,13 +285,176 @@ The only discussed controls to avoid such bribery at this point is to create a p
 
 \section{Case Study}
 
+\subsection{Context Definition}
+
+The established risks for blockchain networks and their consensus state security have been established through research in the previous section. A summary of the identified risks is available in Appendix A for easy reference. The controls related to the mitigation of these strategies is available in Appendix B in the same way.\\
+
+We will use these created references to execute a risk management approach for a real blockchain project. During our analysis, we will be using the simple method of equating risk score to probability times impact, which each of them on a scale of one to five. We will then propose a number of controls in our recommendations to mitigate the biggest risks.\\
+
+Probability
+\begin{itemize}
+  \item 5 - Always
+  \item 4 - Likely
+  \item 3 - Possible
+  \item 2 - Unlikely
+  \item 1 - Never
+\end{itemize}
+
+Impact
+\begin{itemize}
+  \item 5 - Critical
+  \item 4 - Significant
+  \item 3 - Moderate
+  \item 2 - Marginal
+  \item 1 - Negligible
+\end{itemize}
+
+The risk management will be done for a real blockchain platform, Alvalor, which is currently under active development. Little public public information is available, but the author is familiar with the technical design. This will allow the results of this paper to be put into practice and have a real use beyond the academic value.\\
+
+Alvalor is a minimalist blockchain network based on a simple proof-of-work mechanism. For our purposes, the transactions can be considered as limited, conveying no additional data other than the transfer details, thus rendering them fixed in size. Once the project launches, the hashrate of the blockchain network should be comparatively low.\\
+
+On the foundational layer, which is the one relevant for our analysis, it can thus be compared to a multitude of other small blockhain projects and a lot of considerations should be applicable to a decent range of them. The recommendations at the end of the section could therefore be translated and used widely.\\
+
 \subsection{Risk Analysis}
 
-\subsection{Security Recommendations}
+\subsubsection{Identification}
+
+In its current design, Alvalor uses a simple proof-of-work consensus algorithm, which means that all risks from A.1.1 and A.1.2 are applicable, while risks of section A.1.3 are not.\\
+
+The network topology is based on a simple gossip protocol in a peer-to-peer network and therefore is subject to all of the risks listed under A.2.\\
+
+No content insertion is possible, so section A.3.1 can be discarded. The community and project governance is organic, which makes it less susceptible to some of the factors listed under A.3.2, but we will still consider them for the sake of completeness. Finally, out-of-band incentives are possible, so we will also include A.3.3 in our considerations.\\
+
+This leaves us with the following list of risks to consider:
+\begin{enumerate}
+  \item Double spending
+  \item Censoring transactions
+  \item Rewriting history
+  \item Finney attack
+  \item Block discarding
+  \item Selfish mining
+  \item Eclipse attack
+  \item Balance attack
+  \item Personality cult
+  \item Censorship \& astroturfing
+  \item Hashrate renting
+  \item Contractual bribery
+\end{enumerate}
+
+\subsubsection{Assessment}
+
+\textbf{Double spending.}
+Probability: 4
+Impact: 2
+Score: 8\\
+
+\textbf{Censoring transactions.}
+Probability: 2
+Impact: 4
+Score: 8\\
+
+\textbf{Rewriting history.}
+Probability: 1
+Impact: 5
+Score: 5\\
+
+\textbf{Finney attack.}
+Probability: 2
+Impact: 2
+Score: 4\\
+
+\textbf{Block discarding.}
+Probability: 3
+Impact: 1
+Score: 3\\
+
+\textbf{Selfish mining.}
+Probability: 3
+Impact: 3
+Score: 9\\
+
+\textbf{Eclipse attack.}
+Probability: 2
+Impact: 2
+Score: 4\\
+
+\textbf{Balance attack.}
+Probability: 1
+Impact: 3
+Score: 3\\
+
+\textbf{Personality cult.}
+Probability: 3
+Impact: 3
+Score: 9\\
+
+\textbf{Censorship \& astroturfing.}
+Probability: 2
+Impact: 4
+Score: 8\\
+
+\textbf{Hashrate renting.}
+Probability: 3
+Impact: 2
+Score: 6\\
+
+\textbf{Contractual bribery.}
+Probability: 2
+Impact: 3
+Score: 6\\
+
+\subsubsection{Triage}
+
+We define the following ranges for criticality of risks:
+\begin{itemize}
+  \item Low: 1-4
+  \item Medium: 5-7
+  \item High: 8+
+\begin{itemize}
+
+In our risk treatment, we choose to only deal with risks of medium or high criticality. We are therefore left with the following risks to address:
+
+High criticality
+\begin{itemize}
+  \item Selfish mining: 9
+  \item Personality cult: 9
+  \item Double spending: 8
+  \item Censoring transactions: 8
+  \item Censorship \& astroturfing: 8
+\end{itemize}
+
+Medium criticality
+\begin{itemize}
+  \item Hashrate renting: 6
+  \item Contractual bribery: 6
+  \item Rewriting history: 5
+\end{itemize}
+
+\subsection{Security Conclusions}
+
+\subsubsection{Observations}
+
+Our first observation is that the fundamental stability of the proof-of-work consensus algorithm is one of the main concerns in the light of more recent discoveries in terms of vulnerabilities of the theoretical model.\\
+
+The second observation is that social vulnerabilities, which are not part of most blockchain's security considerations, rank on the same level as these fundamental issues.\\
+
+The third observation is that out-of-band incentives are a non-negligible risk to the stability of blockchain security guarantees and should be a part of the threat model surrounding blockchain platforms.\\
+
+\subsubsection{Recommendations}
+
+In order to mitigate hash power and block propagation risks, we recommend the implementation of the following controls: relay conflicting transactions, waiting for confirmations, introduce automatic checkpoints, relay all valid blocks.\\
+
+While not directly mitigating all risks, it puts the power into the hand of the users and miners, which will be able to design and compete on the best strategies, while making the best tradeoff for their respective situation. A good default implementation of such strategies should be provided for non-power users.\\
+
+In order to mitigate community manipulation, we recommend the implementation of the following controls: define project values, purse transparent governance, create idea platform.\\
+
+The idea platform for the project should take into account both the need for democratic and auditable moderation, as well as offering the possibility to discuss ideas purely on merrit and content in an anonymous way. More research should be done to discover additional controls to counter social disruption of the project.\\
+
+We do not recommend any current controls for the mitigation of out-of-bound. However, we recommend to define these risks as relevant concern in the threat model for the project and to lead ongoing research efforts to discover more efficient controls to mitigate the related risks.\\
 
 \section{Conclusion}
 
-This paper has taken a look at risk management for blockchain platforms from the perspective of protecting the security of the blockchain consensus and thus ensuring the security guarantees that make blockchain networks uniquely useful in the modern information technology world.\\
+This paper took a look at risk management for blockchain networks from the perspective of protecting the security of the blockchain consensus and thus ensuring the security guarantees that make blockchain networks uniquely useful in the modern information technology world.\\
 
 One interesting observation was that the author found vaste amounts of research literature on the theoretical soundness of the security model, a growing body of academic literature on the technical aspects of the peer-to-peer network, but almost no consideration for the social aspects of blockchain security.\\
 
