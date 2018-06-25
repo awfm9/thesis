@@ -178,26 +178,29 @@ Finally, key-evolving cryptography can be used to make sure that each private ke
 
 \section{Technical Vulnerabilities}
 
-\subsection{Network Partitioning}
+\subsection{Network Topology}
 
-Blockchain networks generally rely on rudimentary peer-to-peer gossip protocols to propagate messages, such as blocks and transactions, through the network. By isolating nodes or by creating artificial subgroups of nodes, the view of the consensus state can be manipulated.\\
+Blockchain networks generally rely on rudimentary peer-to-peer gossip protocols to propagate messages, such as blocks and transactions, to all of the nodes. This network topology can be exploited to isolate certain nodes on the network and control what messages they receive. This allows an attacker to manipulate the view of the consensus state for the victims.\\
 
-A number of attacks are possible by exploiting the network topology of blockchain networks.\\
-
-In an eclipse attack, the attacker monopolizes all connections of a victim node, therefore controlling the view the node has on the consensus state. This can be exploited for a number of attacks:\\
-\begin{enumerate}
-  \item Engineer block races, costing the attacked miner resources.
-  \item Splitting mining power, enabling easier 51\% attacks.
-  \item Supporting selfish mining, costing the attacked and gaining more.
-  \item 0-confirmation double spend.
-  \item N-confirmation double spend.
-\end{enumerate}
+Similarly, rather than controlling a victims connection, an attacker could simply control certain edges of the network topology that have significance, severing it into various partitions. This would make the attacker the sole relay of messages, allowing him to choose which messages to let through from one partition to another, and by how much to delay them.\\
 
 \subsubsection{Eclipse Attack}
 
+During an eclipse attack, the attacker monopolizes all the connections of the targeted node, effectively controlling exactly which messages are relayed to the node. This allows a number of exploits to be executed in a second step.\\
+
+The attacker can effectively waste mining effort of the network by eclipsing miners and thus diminishing the efficiency of the consensus state. He can make the affected node believe that transactions happened when they didn't, hampering accessibility.\\
+
+One countermeasure is to disable incoming connections and choose a number of specific outgoing connections to trusted nodes. This approaches, however, can not scale to the entire blockchain network, as it would make it impossible for new nodes to join the network and it would introduce a certain degree of centralization to the network, offering a new attack vector.\\
+
+A more sophisticated set of countermeasures involve advanced algorithms when deciding which connections to allow, such as: randomizing address selection, randomly address expiry, skewing preference to older known addresses, banning suspect messages and more. In combination, they eliminate the risk of a node having all its connections monopolized by a single adversary, thus countering the attack.\\
+
 \subsubsection{Balance Attack}
 
-\subsection{Message Delaying}
+The balance attack doesn't involve isolating a node or a group of nodes from the main network; rather, it attempts to become the only relay for messages between different partitions of the blockchain network by placing the attacker's nodes at important edges of the network graph. This requires in-depth knowledge about the hashrate distribution and the communication topology of the underlying peer-to-peer network.\\
+
+Rather than manipulating the view of the victims, the attacker can then play different network partitions against each other by deciding which progression of the blockhcain history to propagate and which one to delay or censor. While more difficult to exploit.\\
+
+Tackling a balance attack is possible by withholding information about the network from the attacker, by making it harder to execute the required initial steps, such as BGP hijacking or DNS poisoning. Indeed, creating a more anonymous network with encrypted messages and unknown hashrates between miners would contribute greatly to mitigating the risks presented.\\
 
 \section{Social Vulnerabilities}
 
