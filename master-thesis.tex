@@ -230,6 +230,26 @@ Alternatively, an official discussion platform that is governed through decision
 
 Consensus is achieved on blockchain networks through the use of economic incentives. If a malicious actor tries to act against the consensus rules, he will usually incur a more or less severe economic punishment. However, the fact that such a loss can be countered by out-of-band payments makes the system vulnerable to bribery.\\
 
+If a coalition of malicious actors, controlling less than a hash power majority, intends to compromise the network, they can incentivize the other actors to acquire their hash power and thus execute the desired attack.\\
+
+\subsubsection{Hashrate Renting}
+
+The simplest form of acquiring extra mining power is through direct payments in return for a certain hashrate. This can be done by using a cloud hashing provider, which will usually charge a premium of around 3\% on top of the expected earning capacity. Trust issues with this setup can be overcome by introducing a negative fee mining pool, where the operator actually controls the hash rate, but overpays the miners for their hashrate.\\
+
+This attack allows an attacker to lower the threshold for a successful attack on the validity of the blockhchain history.\\
+
+As a miner accepting a bribe has no inherent economic downside and no consensus rules are broken, it is difficult to counter such simple bribery. However, there is a party with incentive to stop the bribery, even beyond the potential victim: the miners who created blocks on the blockchain history that should be reversed, as they would lose their reward. A possible countermeasure would thus be for them to counter-bribe miners at a sufficient amount to make mining on top of the attacker's branch too risky. As their history would already be longer, these bribes would be significantly lower than the bribes on the competing branch.\\
+
+\subsubsection{Contractual Bribery}
+
+A more advanced form of bribing miners is by doing it through a contractual agreement that is enforced on the blockchain. A simple version would simply create the desired forks with included bribery transactions; miners seeking profit would then mine this fork as it will make the competing history dominant, allowing them to receive the bribes contained in the transactions.\\
+
+A more advanced version uses one blockchain network with a smart contract to reward miners for solutions, while another blockchain network is the one the attack is run against. This will over-incentivize the creation of solutions that favour the attacker's intent, thus disrupting the economic equilibrium of the network and the underlying security guarantees.\\
+
+Next to guaranteeing the attacker to outpace the public blockchain history with his private blockchain history if all miners behave rationally, this constellation can be profitable in an of itself, as it allows the attacker to outpace all other miners on the network, even with less than majority hash power, thus allowing him to censor competing blocks and receive all of the rewards.\\
+
+The only discussed controls to avoid such bribery at this point is to create a proof-of-work algorithm that is difficult to verify in the context of smart contracts. However, this can effectively be overcome. There is no known effective counter at this point.\\
+
 \section{Case Study}
 
 \subsection{Risk Analysis}
