@@ -65,6 +65,8 @@ In this paper, we propose to extend the framework slightly to make a clear disti
 
 We therefore establish the following definition as the basis for our risk analysis: a risk is the event with certain probability of a threat agent using an attack method to exploit a vulnerability of the blockchain network in order to execute an attack, impacting the validity, accessibility or efficiency of the consensus state.\\
 
+In general, attacks require either access to block generators (miners or validators), or they can be executed by an outside party; however, the threat agent is not identified as part of our analysis. Identification of the threat agent adds little value to risk management in the context of blockchain networks, which attempt to provide global security properties, and is thus beyond the scope of this paper.\\
+
 \subsection{Mitigation Controls}
 
 In the context of blockchain networks, the mere exploitation of a vulnerability can lead to the collapse of the security criteria of the consensus state, thus making the blockchain network useless for its intended purposes, even if an attack isn't necessarily executed. In general, this means that controls need to mitigate vulnerabilities or attack methods, rather than just avoid attacks.\\
@@ -75,38 +77,39 @@ In the context of blockchain networks, the mere exploitation of a vulnerability 
 
 The security of proof-of-work blockchains relies on the the miners, which compete in a lottery to generate the next block in order to obtain the related reward. Through this design, all miners are incentivized to work on the latest valid version of the blockchain history, as they would otherwise run a higher risk of not obtaining said reward.\\
 
-However, this also presents a significant vulnerability for the blockchain network as a whole. If a single miner manages to overwhelm all other miners combined with his hash power, he can dictate the history of the blockchain and generate all blocks by himself. Obtaining a majority of the hash power thus opens the door to a number of possible attacks which break the security guarantees of the consensus state.\\
+However, this also creates a fundamental vulnerability of the blockchain network. If a single miner manages to overwhelm the combined hash power of all other miners, he can monopolize the block generation and thus control the consensus state changes. Obtaining a majority of the hash power undermines the security model and enables a multitude of serious attack vectors..\\
 
-Due to the nature of the proof-of-work algorithm, which is a memoryless process, there is also significant variance. This means that a number of attacks are even possible with a relevant minority portion of hash power on the network, allowing a malicious miner to execute them with a non-zero probability of success.\\
-
-In general, the threat agent in this case is a miner or the operator of a mining pool, as control over the creation of the blocks is necessary in order to use the vulnerability.\\
+Due to the nature of the proof-of-work algorithm, which is a memoryless process, there is also significant variance during block discovery. This means that a number of attacks remain possible with a smaller share of the hash power on the network, allowing a malicious minority miner to exploit the vulnerability with a non-zero probability of success.\\
 
 Once an attacker is able to interfer with the basic mechanism of consensus finding on the blockchain network, all security criteria are affected to a certain degree. The history can be changed, thus affecting validity of the consensus state. The blocks of other participants can be invalidated, thus decreasing the efficiency of consensus finding. Finally, transactions can be censored, thus disrupting accessibility to the consensus functionality.\\
 
+In the end, the hash power vulnerability leaves little room for navigating once a majority of hash power has been acquired by an attacker. As it breaks the fundamental process of consensus fuinding, it presents the most immediate risk for proof-of-work blockchain networks, especially for smaller projects which have a comparatively smaller total amount of hash power.\\
+
+In cases where an attacker obtains an absolute majority of hash power of the network, none of these strategies are effective as he can rebuild any amount of blockchain history with a one hundred percent probability. As most miners participate in mining pools, on solution would be a mechanism to balance hash power across pools with an automated software tool.\\
+
+A final possibility to control the vulnerability itself would be to modify the selection algorithm for the valid chain. It would fundamentally change the network to not follow the longest valid chain of proof-of-work, but instead to take into account other factors, such as the significance of transactions included in the chain. This can be complemented by binding transactions to a specific chain. However, it's difficult to predict the impact of such changes to the economic equilibrium and thus the security guarantees of the blockchain network.\\
+
 \subsubsection{Double Spending}
 
-The double spend attack breaks the most fundamental purpose of blockchain consensus, but only does so for specific targeted transactions. It allows the attacker to convey one version of consensus state to the victim, where the victim receives the desired funds of a transaction. This consensus state is later replace it with another version of the consensus state, which keeps the funds in the attacker's pockets.\\
+The double spend attack breaks the most fundamental purpose of blockchain consensus, but only does so for specific targeted transactions. It allows the attacker to convey one version of consensus state to the victim, where the victim receives the desired funds of a transaction. This consensus state is later reversed by replacing it with another version of the consensus state, which keeps the funds in the attacker's pocket. The attack thus selectively breaks the validity of the consensus state.\\
 
-A simple version of this attack is the zero-confirmation double spend, where the malicious miner simple includes a different version of the transaction in his block than the one submitted to the network when paying the victim. This can be done by either spreading both versions to the network or by withholding the second version until the payment has been accepted.\\
+A simple version of this attack is the zero-confirmation double spend, where the malicious miner simple includes a different version of the transaction in his block than the one submitted to the network when paying the victim. This can be done by either spreading both versions to the network or by withholding the second version for inclusion in the block.\\
 
-The attack can be counter-acted in two ways. First, the nodes on the blockchain network can be configured to relay conflicting transactions in the memory pool, thus allowing the detection of double spending. The same result can be achieved by creating a network of observers on the blockchain network to achieve a good view of all transactions propagated in different parts of the network.\\
+The attack can be detected and thus mitigated in two ways. First, the nodes on the blockchain network can be configured to relay conflicting transactions in the memory pool, thus allowing the detection of double spending. The same result can be achieved by creating a network of observers on the blockchain network to achieve a good view of all propagated transactions.\\
 
-A simpler solution, which however affects the speed of being able to accept payments, involves waiting for the pending transaction to be confirmed, or even to be confirmed several times by the desired number of sequential blocks. As the probability of being able to outperform the whole network diminishes exponentially with the number of confirmations, the adequate number can be derived from a simple formula.\\
-
-However, in the case that an attacker obtains an absolute majority of hash power of the network, none of these strategies are effective as he can rebuild the desired length of blockchain history for the consensus state with a one hundred percent probability. In that case, the only available control would be a mechanism to balance hash power across mining pools through automated software.\\
+This solution, however, does not work in case the miner is withholding the conflicting transaction until the block is mined. A simpler solution involves waiting for the pending transaction to be confirmed by a number of subsequent blocks. As the probability of being able to outperform the whole network diminishes exponentially with the number of confirmations, the adequate number can be derived from a simple formula.\\
 
 \subsubsection{Censoring Transactions}
 
-A miner can decide which transactions to include or exclude in each block. This naturally gives him the ability to throttle transactions of certain market participants. Once his hash power reaches absolute majority, he would even be able to build the blockchain history on his own, allowing him to censor all transactions and all blocks by network participants other than himself.\\
+A miner can decide which transactions to include or exclude in each block. This naturally gives him the ability to throttle transactions of certain market participants. Once his hash power reaches absolute majority, he is able to generate the blockchain history on his own, allowing him to censor all transactions and all blocks by network participants other than himself. This attack therefore undermines the accessibility of the blockchain network.\\
 
-Once more, the primary goal should be to avoid the acquisition of a hash power majority by any party, possibly through auto-balancing of pools. Another approach to avoid censorship would be the introduction of anonymous transactions, which makes it at least impossible to target specific network participants.\\
+A possible approach to mitigate targeted censorship is the introduction of anonymous transactions. While still being able to achieve complete censorship with a hash power majority, the attacker can't target specific parties. Rather, the network would be affected as a whole, reducing its usefulness and thus making it harder for the attacker to achieve a monetary gain.\\
 
 \subsubsection{Rewriting History}
 
-If a miner were to acquire a majority of hash power on the network, he could execute an attack to damage the blockchain network viability itself by simply rewriting the history and making it invalid going far back into history. This would destroy the value proposition of the platform and spell its doom.\\
+If a miner were to acquire a majority of hash power on the network, he could execute an attack to damage the blockchain network viability itself by simply rewriting the history and making it invalid going far back into history. This would destroy the value proposition of the platform and spell its doom. This would destroy the consensus state validity.\\
 
-In order to avoid this possibility, especially for blockchains that are vulnerable due to a low amount of total hash power, checkpoints can be introduced into the software. A rewrite of history that does not include certain checkpoint blocks will simply be considered invalid by nodes on the network, thus hindering rewrites beyond a certain point.\\
-
+In order to avoid this possibility, especially for blockchains that are vulnerable due to a low amount of total hash power, checkpoints can be introduced into the node software. A rewrite of history that does not include certain checkpoint blocks will simply be considered invalid by nodes on the network, thus hindering rewrites beyond a certain point.\\
 
 \subsection{Block Propagation}
 
@@ -255,9 +258,9 @@ October 2018.
   \hline
     \textit{Double Spending} & Reverse own transactions & Validity\\
   \hline
-    \textit{Censoring Transactions} & Throttle \& block transactions & Accessibility\\
+    \textit{Censoring Transactions} & Block transactions & Accessibility\\
   \hline
-    \textit{Rewriting History} & Replace blockchain history version & Validity\\
+    \textit{Rewriting History} & Rewrite consensus state history & Validity\\
   \hline
   \multicolumn{3}{| l |}{\underline{\smash{A.1.2 Block Propagation}}}\\
   \hline
@@ -283,7 +286,7 @@ October 2018.
   \hline
   \multicolumn{3}{| l |}{\textbf{A.3 Social Risks}}\\
   \hline
-  \multicolumn{3}{| l |}{\underline{A.3.1 Out-Of-Band Incentives}}\\
+  \multicolumn{3}{| l |}{\underline{\smash{A.3.1 Out-Of-Band Incentives}}}\\
   \hline
     \textit{Bribery Attack} & &\\
   \hline
@@ -293,5 +296,33 @@ October 2018.
   \hline
 \end{tabular}
 
+\newpage
+\section{Controls}
+
+\begin{tabular}{| l |}
+  \hline
+  \textbf{B.1 Hashrate Distribution}\\
+  \hline
+  \textit{B.1.0.1 Automatic Hashrate Balancing}\\
+  \hline
+  \textit{B.1.0.2 Alternative chain selection rule}\\
+  \hline
+  \underline{\smash{B.1.1 Double Spending}}\\
+  \hline
+  \textit{B.1.1.1 Relay conflicting transactions}\\
+  \hline
+  \textit{B.1.1.2 Monitor network memory pools}\\
+  \hline
+  \textit{B.1.1.3 Wait for confirmations}\\
+  \hline
+  \underline{\smash{B.1.2 Censoring Transactions}}\\
+  \hline
+  \textit{B.1.2.4 Anonymous transactions}\\
+  \hline
+  \underline{\smash{B.1.3 Rewriting History}}\\
+  \hline
+  \textit{B.1.3.5 Blockchain checkpoints}\\
+  \hline
+\end{tabular}
 
 \end{document}
