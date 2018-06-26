@@ -1,26 +1,76 @@
-\documentclass[11pt,a4paper]{article}
+\documentclass[12pt,a4paper]{article}
 
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
+\usepackage{abstract}
 \usepackage[nottoc,numbib]{tocbibind}
-\usepackage{url}
+\usepackage[acronym,toc]{glossaries}
 \usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{csquotes}
+
+\renewcommand{\abstractname}{}
+\renewcommand{\absnamepos}{empty}
 
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{3}
 
-\title{Risk Management for Blockchain Consensus}
-\author{Max Wolter}
-\date{June 2018}
+\makeglossaries
+
+\newglossaryentry{term}
+{
+name=term,
+description={Term description}
+}
+
+\newacronym{acr}{ACR}{Acronym}
 
 \begin{document}
 
-\maketitle
-\begin{abstract}
-\end{abstract}
+\begin{center}
+  Risk Management for Blockchain Consensus\\
+  Max Wolter\\
+  0060218257\\
+  max@alvalor.org\\
+  June 2018\\
+  \includegraphics[scale=0.4]{logo_uni.jpg}\\
+  This thesis is presented for the degree of\\
+  \textit{Master of Information Systems Security Management}\\
+  University of Luxembourg\\
+  Faculty of Science, Technology and Communication\\
+  Academic Year: 2017 - 2018\\
+  Supervisor: Dr Nicolas Mayer\\
+\end{center}
+
 \newpage
 
-\doublespacing
+\vspace{4cm}
+
+\section*{Abstract}
+
+\begin{abstract}
+  This paper explores the feasability of a modern risk management approach in the context of blockchain consensus networks. A framework is created on the basis of a theoretical, technical and social analysis of vulnerabilities on blockchain networks. The result is then applied to a real-world blockchain project with a method similar to popular risk management approaches.
+\end{abstract}
+
+\newpage
+
+\section*{Declaration of honesty}
+
+I hereby declare that, except where specic reference is made to the work of
+others, the contents of this thesis are original and have not been submitted
+in whole or in part for consideration for any other degree or qualication
+in this or any other university. This thesis is the result of my own work
+and includes nothing which is the outcome of work done in collaboration,
+except where specically indicated in the text.\\
+
+\begin{displayquote}
+  \textit{Max Wolter}
+\end{displayquote}
+
+\newpage
+
+\onehalfspacing
 \tableofcontents
 \singlespacing
 \newpage
@@ -692,6 +742,12 @@ Nabeel Gillani, Ann Yuan, Martin Saveski, Soroush Vosoughi and Deb Roy,
 April 2018.
 
 \end{thebibliography}
+
+\newpage
+\printglossary[type=\acronymtype]
+
+\newpage
+\printglossary
 
 \newpage
 \appendix
