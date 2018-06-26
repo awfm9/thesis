@@ -227,11 +227,11 @@ By including significant amounts of data into the blockchain, the consensus stat
 
 The problem can be solved by implementing light synchronization protocols, which prune all data after verification, which is a viable security tradeoff. Additionally, limiting factors to the amount of data that can be inserted in the blockchain can be added to the consensus rules.\\
 
-\subsection{Community Manipulation}
+\subsection{Community Organization}
 
-Blockchain networks are based on consensus between network participants that is reflected in the consensus rules and reached through the consensus algorithm. However, if you manage to influence the group of people who contribute to the consensus finding (miners or validators), you can influence the consensus rules and changes to them.\\
+Blockchain networks are based on consensus rules enforced in a trustless manner between network participants. However, these consensus rules still need to be encoded in the software running the nodes of the network. If you manage to manipulate the governance of the project, you can change the direction of the project and the consensus rules themselves.\\
 
-While blockchain consensus protocols allow decentralized consensus according to predefined rules, these consensus rules can always be changed by changing the code of the nodes participating in the network. A malicious party can use censorship of media channels and other social media manipulation tactics to influence the perceived consensus of the community and thus counteract the initially intended consensus rules.\\
+Most blockchain projects are governed in a supposedly democratic way. This means that the community around a project is crucial for the exchange of ideas and the discussion of the roadmap. This makes blockchain networks arguable more susceptible to the manipulation of public opinion than any other project.\\
 
 Changes to consensus rules are difficult to achieve, but as past events have shown, they are not impossible. Depending on the original design, a change in the consensus rules has a high probability of affecting the validity of the consensus after the change has been done.\\
 
@@ -243,21 +243,21 @@ Alternatively, an official discussion platform that is governed through decision
 
 \subsubsection{Personality Cult}
 
-All humans are subject to the appeal-to-authority fallacy; they will give opinions pushed by people perceived as experts on a topic more weight than the average person. This can be abused by malicious actors to coopt or manipulate people in positions of authority to push forward their own agenda.\\
+According to authority principle of persuasion defined by Dr. Robert Cialdini \cite{persuasion}, people attribute higher value to the opinion of experts. The principle of liking states that people prefer to follow those they like. Combining them, we could create personas in a blockchain community that appeals to a wide range of individuals, helping to shape their opinion in a way favourable to the attacker.\\
 
-In order to counter this, we can employ venues of discussion where ideas are proposed, discussed and voted upon anonymously, thus keeping the focus on the content and not on the personalities.\\
+Cialdini suggest that a good defense against the authority princilpe is questioning whether the authority is attributed due to merit. Unfortunately, evaluating this is the context of blockchain technology is a difficult matter for the average user. Similarly, in order to counter the liking principle, it is recommended to separate request from requester. Both of these imply making community members responsible for the well-being of the community.\\
 
-\subsubsection{Idea Censorship}
+However, as the governing body behind a blockchain project, awareness raising and pushing responsibility onto your users is not an attractive approach to ensure security. As such, we would suggest that eliminating the source of the persuasion success is a more objectively viable approach. A platform should be created where ideas and reputation are both present, but separated. Ideas are discussed based anonymously purely on content and merit, while user profiles gather reputation.\\
 
-An effective way to propagate certain ideas is to censor any ideas that are opposed to the agenda that an attacker tries to promote. This creates the impression that the promoted idea is prevalant, lending it increasing support as humans are susceptible to the social proof mechanism.
+\subsubsection{Opinion Shaping}
 
-This can be countered by creating an official discussion venue for a blockchain network, where all decisions are taken in the most transparent manner possible, are auditable by everyone and the decision-makers are democratically accountable.\\
+Two other principles exposed by Cialdini are those of commitment and social proof. Human beings are driven to stay consistent in their choices once committed to a decision, as they become part of their identity. In times of uncertainty, they also refer to the social consensus as an indicator for making and confirming choices.\\
 
-\subsubsection{Astroturfing Channels}
+Abusing the latter principle, social media platforms can be manipulated by using censorship and astroturfing \cite{astroturf} as tools to simulate a social consenus that doesn't exist and which is conductive to the desired agenda of the attacker. The former principle then causes these positions to get more and more stable, making it increasingly difficult to break the cycle and create open dialogue about ideas.\\
 
-Astroturfing is the complementary opposite of censorship; when taken too far, censorship will not generate the desired traction, as people will not see much support for the propagated ideas, even if the competing ideas are not visible. Astroturfing creates the appearance of grassroots support for ideas by generating a multitude of content to support them.\\
+Countermeasures to the censorship of ideas opposed to the desired agenda consist of keeping a transparent log of all governance decisions and moderation actions in order to create a complete audit trail. This can then be analyzed for bias and consistency with rules.\\
 
-Moderation is a crucial tool in order to counter unauthentic content. Unfortunately, the sophistication of artificial intelligence solutions is increasing rapidly and it might soon be impossible to distinguish humans from robots.\\
+Countering the spread of unauthentic content is more difficult as botnets becomes increasingly sophisticated and impactful with the sheer size of social media networks. Some algorithms exclude users when they cross a certain threshold, but are not very reliable. A promising approach is the analysis of discussions to attribute an authenticity score.\\
 
 \subsection{Out-Of-Band Incentives}
 
