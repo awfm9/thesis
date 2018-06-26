@@ -1,7 +1,14 @@
+*.acn
+*.acr
+*.alg
 *.aux
 *.fdb*
 *.fls
+*.glg
+*.glo
+*.gls*
+*.gz
+*.ist
 *.log
 *.pdf
-*.gz
 *.toc
