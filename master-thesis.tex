@@ -3,7 +3,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage{abstract}
-\usepackage[nottoc,numbib]{tocbibind}
+\usepackage[nottoc]{tocbibind}
 \usepackage[acronym,toc]{glossaries}
 \usepackage{setspace}
 \usepackage{graphicx}
@@ -28,19 +28,24 @@ description={Term description}
 
 \begin{document}
 
+\thispagestyle{empty}
+
 \begin{center}
-  Risk Management for Blockchain Consensus\\
-  Max Wolter\\
-  0060218257\\
-  max@alvalor.org\\
-  June 2018\\
-  \includegraphics[scale=0.4]{logo_uni.jpg}\\
-  This thesis is presented for the degree of\\
-  \textit{Master of Information Systems Security Management}\\
-  University of Luxembourg\\
-  Faculty of Science, Technology and Communication\\
-  Academic Year: 2017 - 2018\\
-  Supervisor: Dr Nicolas Mayer\\
+  {\huge Risk Management for\\Blockchain Consensus}\\
+  \vspace{1cm}
+  {\large Max Wolter\\0060218257\\max@alvalor.org}\\
+  \vspace{1cm}
+  {\Large June 2018}\\
+  \vspace{2cm}
+  \includegraphics[scale=0.25]{logo_uni.jpg}\\
+  \vspace{1.5cm}
+  {\Large University of Luxembourg\\
+  Faculty of Science, Technology and Communication}\\
+  \vspace{1cm}
+  {\large This thesis is presented for the degree of\\
+  \textit{Master of Information Systems Security Management}}\\
+  \vspace{1cm}
+  {\large Academic Year: 2017 - 2018\\Supervisor: Dr Nicolas Mayer}\\
 \end{center}
 
 \newpage
@@ -57,13 +62,8 @@ description={Term description}
 
 \section*{Declaration of honesty}
 
-I hereby declare that, except where specic reference is made to the work of
-others, the contents of this thesis are original and have not been submitted
-in whole or in part for consideration for any other degree or qualication
-in this or any other university. This thesis is the result of my own work
-and includes nothing which is the outcome of work done in collaboration,
-except where specically indicated in the text.\\
-
+I hereby declare that, except where specic reference is made to the work of others, the contents of this thesis are original and have not been submitted in whole or in part for consideration for any other degree or qualication in this or any other university. This thesis is the result of my own work and includes nothing which is the outcome of work done in collaboration, except where specically indicated in the text.\\
+\vspace{4cm}
 \begin{displayquote}
   \textit{Max Wolter}
 \end{displayquote}
@@ -71,7 +71,9 @@ except where specically indicated in the text.\\
 \newpage
 
 \onehalfspacing
+\linespread{1.5}
 \tableofcontents
+\linespread{1}
 \singlespacing
 \newpage
 
@@ -79,19 +81,19 @@ except where specically indicated in the text.\\
 
 The concept of a blockchain consensus network was introduced in the form of Bitcoin in 2008 by an anonymous author under the name of Satoshi Nakamoto \cite{bitcoin}. Since then, the potential of the underlying blockchain technology to serve as a trustless mechanism to find consensus on the state of an underlying system has spread to many applications beyond the maintenance of a ledger of account balances.\\
 
-The main value proposition of a blockchain platform is its ability to ensure the security of the consensus state in a verifiable and transparent manner. While the software and business ecosystem developed around a blockchain project are susceptible to the same information security risks as typical software and business projects, the core platform has its own unique security properties.\\
+The main value proposition of a blockchain network is its ability to ensure the security of the consensus state in a verifiable and transparent manner. While the software \& business ecosystem developed around a blockchain project are susceptible to the same information security risks as typical software and business projects, the core platform has its own unique security properties.\\
 
-This paper explores the applicability of the traditional information security risk management approach to the context of blockchain consensus. It makes an attempt to integrate the current research litterature in the blockchain space with the more mature sphere of information security risk management.\\
+This paper explores the applicability of a traditional information security risk management approach to the context of blockchain consensus. It makes an attempt to integrate the current research litterature in the blockchain space with the more mature sphere of information security risk management.\\
 
 In a first step, we explore current academic literature to establish a framework which applies the principles of modern risk management methodologies to the context of blockchain consensus. We define the scope and conditions under which we examine the topic and use them as a basis to evaluate a number of relevant vulnerabilities and risks.\\
 
-As the second step, we create a case study by applying our framework to a real-world blockchain network. We use the established risks to identify vulnerabilities and exploits for the project, assess the related probability and impact and finally propose a number of controls and additional measures to be taken from our catalogue in order to improve the security of the underlying blockchain consensus.\\
+As the second step, we create a case study by applying our framework to a real-world blockchain network. We use the established risks to identify vulnerabilities and exploits for the project, assess the related probability \& impact and finally propose a number of controls and additional measures to be taken from our catalogue in order to improve the security of the underlying blockchain consensus.\\
 
 \section{Framework}
 
 \subsection{Asset Identification}
 
-When identifying risks, the usual approach dictates that we identify assets which are vulnerable and use them as a basis for the analysis. For a blockchain network, this proposition is a difficult one; the network is composed by thousands of nodes which communicate in a peer-to-peer fashion. While each node can be compromised in its own right, there is no single tangible asset or actor that impacts the security of the consensus state as a whole. The same can be said for the periphery, consisting of infrastructure, tools and solutions built around the blockchain network.\\
+When identifying risks, the usual approach dictates that we identify assets which are vulnerable and use them as a basis for the analysis \cite{iso}. For a blockchain network, this proposition is a difficult one; the network is composed by thousands of nodes which communicate in a peer-to-peer fashion. While each node can be compromised in its own right, there is no single tangible asset or actor that impacts the security of the consensus state as a whole. The same can be said for the periphery, consisting of infrastructure, tools and solutions built around the blockchain network.\\
 
 Our approach posits that we can define the abstract concept of the consensus state itself as the asset which needs to be protected. In that context, we can focus on vulnerabilities that are unique to blockchain networks. We can establish our own security criteria which should be fulfilled in order for the consensus state to be considered secure. At the end, can evaluate the potential risks for the consensus state in terms of impact on these criteria.\\
 
@@ -109,7 +111,7 @@ Finally, the blockchain network should make optimal use of the resources at its 
 
 \subsection{Vulnerability Categories}
 
-The most obvious category of vulnerabilities on blockchain platforms are based on the flaws that are inherent in the theoretical models of consensus finding. In this category, we explore possible exploits that rely on work in the field of mathematics, more specifically game theory, and information science, in particular in regards to distributed systems. All of these risks are confined to the model of consensus. We will define these intrinsic aspects as theoretical vulnerabilities.\\
+The most obvious category of vulnerabilities on blockchain networks are based on the flaws that are inherent in the theoretical models of consensus finding. In this category, we explore possible exploits that rely on work in the field of mathematics, more specifically game theory, and information science, in particular in regards to distributed systems. All of these risks are confined to the model of consensus. We will define these intrinsic aspects as theoretical vulnerabilities.\\
 
 Beyond these, however, there are technical means to disrupt the consensus state that are outside of the direct theoretical model. Certain attacks can exploits aspects of the peer-to-peer topology underlying the blockchain network in order to disrupt or manipulate the consensus state. We will describe these out-of-bound aspects as technical vulnerabilities.\\
 
@@ -263,7 +265,7 @@ Tackling a balance attack is possible by withholding information about the netwo
 
 \subsection{Content Insertion}
 
-Many blockchain platforms allow nodes to include arbitrary data into the transaction, which constitutes a clear vulnerability.\\
+Many blockchain networks allow nodes to include arbitrary data into the transaction, which constitutes a clear vulnerability.\\
 
 A malicious actor, of any form, who would desire to disrupt a blockchain network could inject illegal material into a blockchain, which would then exist in immutable form for the lifetime of the consensus state. This same actor could then use the existence of illegal material in the consensus state to scare other people away from the platform.\\
 
@@ -289,7 +291,7 @@ Most blockchain projects are governed in a supposedly democratic way. This means
 
 Changes to consensus rules are difficult to achieve, but as past events have shown, they are not impossible. Depending on the original design, a change in the consensus rules has a high probability of affecting the validity of the consensus after the change has been done.\\
 
-Additionally, consensus rules can be drastic enough to affect the past blockchain history, even though it's unlikely that the impact will be big here. Finally, by implementing rules that many network participants don't agree with or which affect the functioning of the blockchain platform, the accessibility of the consensus can be hampered as well.\\
+Additionally, consensus rules can be drastic enough to affect the past blockchain history, even though it's unlikely that the impact will be big here. Finally, by implementing rules that many network participants don't agree with or which affect the functioning of the blockchain network, the accessibility of the consensus can be hampered as well.\\
 
 As a first step, a consensus platform needs clear values to govern the surrounding software project and a transparent decision-making process that can be audited by anyone. It is thus important to ensure that all big discussion platforms are democratically governed.\\
 
@@ -363,7 +365,7 @@ Impact
   \item 1 - Negligible
 \end{itemize}
 
-The risk management will be done for a real blockchain platform, Alvalor, which is currently under active development. Little public public information is available, but the author is familiar with the technical design. This will allow the results of this paper to be put into practice and have a real use beyond the academic value.\\
+The risk management will be done for a real blockchain network, Alvalor, which is currently under active development. Little public public information is available, but the author is familiar with the technical design. This will allow the results of this paper to be put into practice and have a real use beyond the academic value.\\
 
 Alvalor is a minimalist blockchain network based on a simple proof-of-work mechanism. For our purposes, the transactions can be considered as limited, conveying no additional data other than the transfer details, thus rendering them fixed in size. Once the project launches, the hashrate of the blockchain network should be comparatively low.\\
 
@@ -492,7 +494,7 @@ Our first observation is that the fundamental stability of the proof-of-work con
 
 The second observation is that social vulnerabilities, which are not part of most blockchain's security considerations, rank on the same level as these fundamental issues.\\
 
-The third observation is that out-of-band incentives are a non-negligible risk to the stability of blockchain security guarantees and should be a part of the threat model surrounding blockchain platforms.\\
+The third observation is that out-of-band incentives are a non-negligible risk to the stability of blockchain security guarantees and should be a part of the threat model surrounding blockchain networks.\\
 
 \subsubsection{Recommendations}
 
@@ -518,6 +520,12 @@ In conclusion, it can be said that, as blockchain networks will grow in signific
 
 \newpage
 \begin{thebibliography}{9}
+
+\bibitem{iso}
+International Standards Organization,
+"Information technology -- Security techniques -- Code of practice for information security controls",
+ISO/IEC 27002,
+June 2005.
 
 \bibitem{influence}
 Robert B. Cialdini,
