@@ -131,7 +131,13 @@ In general, attacks require either access to block generators (miners or validat
 
 \subsection{Mitigation Controls}
 
-In the context of blockchain networks, the mere exploitation of a vulnerability can lead to the collapse of the security criteria of the consensus state, thus making the blockchain network useless for its intended purposes, even if an attack isn't necessarily executed. In general, this means that controls need to mitigate vulnerabilities or attack methods, rather than just avoid attacks.\\
+In general, the collapse of one security criterion will open up the door to a number of attacks which can be executed, regardless of the technique used to exploit the vulnerability. This means that the exploit of a vulnerability is the first component in any risk, while the execution of the attack is the second step.\\
+
+Often, the stability of one criterion is contingent on the stability of another. For instance, a narrow and short term impact on immutability of specific transactions in the consensus state allows the execution of double spend attacks. In contrast, a wide and long term impact on immutability allows the reversal of any history and thus also enables retroactive censorship of transactions, thus disrupting openness as well.\\
+
+Similarly, a narrow impact on openness could simply mean that a network participant can not execute any transactions. In some cases, however, depriving a network participant of access to the current consensus state also allows us to present a manipulated view to him, which can be used to trick him into accepting double spends, thus affecting, from his subjective perspective, immutability.\\
+
+It can therefore be said that the mere exploitation of a vulnerability can lead to the collapse of the security criteria of the consensus state, thus making the blockchain network useless for its intended purposes, even if an attack isn't necessarily executed. In general, this means that controls need to mitigate vulnerabilities or attack methods, rather than just dealing with the attacks themselves.\\
 
 \section{Theoretical Vulnerabilities}
 
