@@ -24,7 +24,9 @@ name=term,
 description={Term description}
 }
 
-\newacronym{acr}{ACR}{Acronym}
+\newacronym{pow}{PoW}{proof-of-work}
+\newacronym{pos}{PoS}{proof-of-stake}
+\newacronym{dag}{DAG}{directed acyclical graph}
 
 \begin{document}
 
@@ -93,27 +95,29 @@ As the second step, we create a case study by applying our framework to a real-w
 
 When identifying risks, the usual approach dictates that we identify assets which are vulnerable and use them as a basis for the analysis \cite{iso}. For a blockchain network, this proposition is a difficult one; the network is composed by thousands of nodes which communicate in a peer-to-peer fashion. While each node can be compromised in its own right, there is no single tangible asset or actor that impacts the security of the consensus state as a whole. The same can be said for the periphery, consisting of infrastructure, tools and solutions built around the blockchain network.\\
 
-Our approach posits that we can define the abstract concept of the consensus state itself as the asset which needs to be protected. In that context, we can focus on vulnerabilities that are unique to blockchain networks. We can establish our own security criteria which should be fulfilled in order for the consensus state to be considered secure. At the end, can evaluate the potential risks for the consensus state in terms of impact on these criteria.\\
+Our approach posits that we can define the abstract concept of the consensus state itself as the asset which needs to be protected. In that context, we can focus on vulnerabilities that are unique to blockchain networks. We can then establish our own security criteria which should be fulfilled in order for the consensus state to be considered secure. At the end, can evaluate the potential risks to the consensus state in terms of impact on these criteria.\\
 
-There are various algorithms used to achieved consensus in blockchain networks. Where the type of consensus algorithm is relevant, we will focus on the two most common algorithms: proof-of-work (PoW) and proof-of-stake (PoS). Other models, such as the directed-acyclical-graph (DAG) approach or derivatives of the PoS approach, have not been explored in sufficient depth in scientific literature to provide a meaningful analysis.\\
+There are various algorithms used to achieved consensus in blockchain networks. Where the type of consensus algorithm is relevant, we will focus on the two most common algorithms: \acrfull{pow} and \acrfull{pos}. Other models, such as the \acrfull{dag} approach or derivatives of the \acrshort{pos} approach, have not been explored in sufficient depth in scientific literature to provide a meaningful analysis.\\
 
 \subsection{Security Criteria}
 
-As alluded to earlier, the usual security criteria of confidentiality, integrity and availability are not a good fit for the abstract concept of the consensus state in a blockchain network. We can, however, establish our own security criteria which make sense in the context of blockchain networks. The foundation for these criteria should be found in the basic process of consensus finding on the network.\\
+As alluded to earlier, the usual security criteria of confidentiality, integrity and availability are not a good fit for the abstract concept of the consensus state in a blockchain network. We can, however, establish our own security criteria which make sense in the context of blockchain networks. The foundation for these criteria should be found in the basic process of consensus finding and on the security guarantees that blockchain networks try to provide.\\
 
-A first step in establishing a shared consensus state between the participants of a blockchain network is their ability to participate in the consensus algorithm. When network participants cannot play their desired role in the process, the transparency \& openess of the blockchain network is diminished. We call this first security criterium the accessibility of the consensus state.\\
+Fundamentally, blockchain networks are supposed to provide and open, (mostly) transparent \& global platform for potentially malicious participants to find consensus on the state of the system in a trustless manner. It does so by employing cryptography to prove events that happened in the past and economic incentives to cause events to happen in the future. This implies a number of properties which have to be conserved in order to provide the desired environment.\\
 
-A second step in the process of finding consensus between network participants is the correct execution of the consensus algorithm over time. When weaknesses undermine the immutability or reliability of the blockchain history, a core property of the blockchain network is broken. We call this second security criterium the validity of the consensus state.\\
+First, immutability is crucial to the functioning of blockchain networks. Once the participants have agreed on a certain part of the history of the consensus state, they need to be able to rely on it in the future. If the blockchain history was to change after supposedly being agreed upon, the participants could no longer rely on the validity of the consensus state.\\
 
-Finally, the blockchain network should make optimal use of the resources at its disposal and treat all participants equally. If there are disruptions to the economic equilibrium used to enforce the consensus rules, the security guarantees of the blockchain network are diminished. We call this third security criterium the efficiency of the consensus state.\\
+Second, openness is important as the platform is only useful if any participant can take part in the consensus finding of the blockchain network. Anybody needs to be able to execute transactions on the network and verify the correctness of the transactions executed by other participants. The consensus rules should apply to the same extend to everyone participating on the blockchain network.\\
+
+Third, the balance of the economic equilibrium is crucial to ensure the soundness of the theoretical model underpinning the network. If one participant is disproportionally rewarded for his contribution to the security of the blockchain network, the resources in the system are no longer distributed equally and leads to an imbalance in the equilibrium, which, over time, will undermine the viability of the model.\\
 
 \subsection{Vulnerability Categories}
 
-The most obvious category of vulnerabilities on blockchain networks are based on the flaws that are inherent in the theoretical models of consensus finding. In this category, we explore possible exploits that rely on work in the field of mathematics, more specifically game theory, and information science, in particular in regards to distributed systems. All of these risks are confined to the model of consensus. We will define these intrinsic aspects as theoretical vulnerabilities.\\
+The most obvious category of vulnerabilities on blockchain networks are based on the flaws that are inherent in the theoretical models of consensus finding. In this respect, we explore possible exploits that rely on work in the field of mathematics, more specifically game theory, and information science, in particular in regards to distributed systems. All of these risks are confined to the model of consensus. We will define these intrinsic aspects as theoretical vulnerabilities.\\
 
-Beyond these, however, there are technical means to disrupt the consensus state that are outside of the direct theoretical model. Certain attacks can exploits aspects of the peer-to-peer topology underlying the blockchain network in order to disrupt or manipulate the consensus state. We will describe these out-of-bound aspects as technical vulnerabilities.\\
+Beyond these, however, there are technical means to disrupt the consensus state that are outside of the direct theoretical model. Certain attacks can exploits aspects of the peer-to-peer topology underlying the blockchain network in order to disrupt or manipulate the consensus state from the exterior. We will describe these out-of-bound aspects as technical vulnerabilities.\\
 
-Last but not least, a blockchain network is still governed by software that encodes the consensus rules, and this software is still written by humans. This means that the direction of a blockchain project, including the evolution of the consensus rules, is subject to the weaknesses of human governance and community factors. We call these aspects the social vulnerabilities.\\
+Last but not least, a blockchain network is run by software which encodes the consensus rules, and this software is written by humans working for projects governed by humans. This means that the direction of a blockchain project, including the evolution of the consensus rules and algorithm, is subject to the weaknesses of human psychology and online communities. We call these aspects the social vulnerabilities.\\
 
 \subsection{Risk Analysis}
 
