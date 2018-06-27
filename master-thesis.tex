@@ -18,22 +18,48 @@
 
 \makeglossaries
 
-\newglossaryentry{term}
+\newglossaryentry{double}
 {
-name=double spend,
-description={A double spend is the action of spending the same funds on a blockchain network more than once. Fundamentally, this is the problem that consensus algorithms try to solve by deciding between conflicting transactions. A successful double spend allows a malicious actor to trick a recipient of a transaction into delivering value for funds that will later become void.}
+name=Double spend,
+description={A double spend is the action of spending the same funds on a blockchain network more than once. Fundamentally, this is the problem that consensus algorithms try to solve by deciding between conflicting transactions. A successful double spend allows a malicious actor to trick a recipient of a transaction into delivering value for funds that will later become void}
+}
+
+\newglossaryentry{blockchain}
+{
+name=Blockchain network,
+description={A blockchain network is a peer-to-peer network where the participants run a consensus algorithm with a number of consensus rules in order to find agreement on the state of the data in the system.}
+}
+
+\newglossaryentry{consensus}
+{
+name=Consensus state,
+description={The consensus state of a blockchain network describes the part of the state which all participants have agreed on in their common blockchain history and which is therefore shared amongst all participants on the network.}
+}
+
+\newglossaryentry{miner}
+{
+name=Miner,
+description={A miner is a block generator in a proof-of-work blockchain network. A miner will execute a hash algorithm repeatedly to find a valid solution for the block header puzzle, thus the comparison to "mining".}
+}
+
+\newglossaryentry{pool}
+{
+name=Mining pool,
+description={When mining alone, miners are subject to significant variance between block discoveries. Pooling hashrate allows them to diminish variance and receive income at more predictable intervals. Some protocols were specifically designed to make communal mining possible with auditable reward distributions.}
 }
 
 \newacronym{pow}{PoW}{proof-of-work}
 \newacronym{pos}{PoS}{proof-of-stake}
 \newacronym{dag}{DAG}{directed acyclical graph}
+\newacronym{fud}{FUD}{fear, doubt and uncertainty}
+\newacronym{p2p}{P2P}{peer-to-peer}
 
 \begin{document}
 
 \thispagestyle{empty}
 
 \begin{center}
-  {\huge Risk Management for\\Blockchain Consensus}\\
+  {\huge Risk Management for\\Blockchain Networks}\\
   \vspace{1cm}
   {\large Max Wolter\\0060218257\\max@alvalor.org}\\
   \vspace{1cm}
@@ -57,7 +83,7 @@ description={A double spend is the action of spending the same funds on a blockc
 \section*{Abstract}
 
 \begin{abstract}
-  This paper explores the feasability of a modern risk management approach in the context of blockchain consensus networks. A framework is created on the basis of a theoretical, technical and social analysis of vulnerabilities on blockchain networks. The result is then applied to a real-world blockchain project with a method similar to popular risk management approaches.
+  This paper explores the feasability of a modern risk management approach in the context of blockchain consensus networks. A framework is created on the basis of a theoretical, technical and social analysis of vulnerabilities on \gls{blockchain}s. The result is then applied to a real-world blockchain project with a method similar to popular risk management approaches.
 \end{abstract}
 
 \newpage
@@ -79,151 +105,163 @@ I hereby declare that, except where specic reference is made to the work of othe
 
 \section{Introduction}
 
-The concept of a blockchain consensus network was introduced in the form of Bitcoin in 2008 by an anonymous author under the name of Satoshi Nakamoto \cite{bitcoin}. Since then, the potential of the underlying blockchain technology to serve as a trustless mechanism to find consensus on the state of an underlying system has spread to many applications beyond the maintenance of a ledger of account balances.\\
+The concept of a \gls{blockchain} was introduced in the form of Bitcoin in 2008 by an anonymous author under the name of Satoshi Nakamoto \cite{bitcoin}. Since then, the potential of the underlying blockchain technology to serve as a trustless mechanism to find consensus on the state of an underlying system has spread to many applications beyond the maintenance of a ledger of account balances.\\
 
-The main value proposition of a blockchain network is its ability to ensure the security of the consensus state in a verifiable and transparent manner. While the software \& business ecosystem developed around a blockchain project are susceptible to the same information security risks as typical software and business projects, the core platform has its own unique security properties.\\
+The main value proposition of a \gls{blockchain} is its ability to ensure the security of the \gls{consensus} in a verifiable and transparent manner. While the software \& business ecosystem developed around a blockchain project are susceptible to the same information security risks as typical software and business projects, the core platform has its own unique security properties.\\
 
-This paper explores the applicability of a traditional information security risk management approach to the context of blockchain consensus. It makes an attempt to integrate the current research litterature in the blockchain space with the more mature sphere of information security risk management.\\
+This paper explores the applicability of a traditional information security risk management approach to the context of \glspl{blockchain}. It makes an attempt to integrate the current research litterature in the blockchain space with the more mature sphere of information security risk management.\\
 
-In a first step, we explore current academic literature to establish a framework which applies the principles of modern risk management methodologies to the context of blockchain consensus. We define the scope and conditions under which we examine the topic and use them as a basis to evaluate a number of relevant vulnerabilities and risks.\\
+In a first step, we explore current academic literature to establish a framework which applies the principles of modern risk management methodologies to the context of \glspl{blockchain}. We define the scope and conditions under which we examine the topic and use them as a basis to evaluate a number of relevant vulnerabilities and risks.\\
 
-As the second step, we create a case study by applying our framework to a real-world blockchain network. We use the established risks to identify vulnerabilities and exploits for the project, assess the related probability \& impact and finally propose a number of controls and additional measures to be taken from our catalogue in order to improve the security of the underlying blockchain consensus.\\
+As the second step, a small case study applies the framework to a real-world \gls{blockchain}. We use the established risks to identify vulnerabilities and exploits for the project, assess the related probability \& impact and finally recommend a number of measures to improve the security of the \gls{blockchain} underlying the \gls{consensus}.\\
 
 \section{Framework}
 
 \subsection{Asset Identification}
 
-When identifying risks, the usual approach dictates that we identify assets which are vulnerable and use them as a basis for the analysis \cite{iso}. For a blockchain network, this proposition is a difficult one; the network is composed by thousands of nodes which communicate in a peer-to-peer fashion. While each node can be compromised in its own right, there is no single tangible asset or actor that impacts the security of the consensus state as a whole. The same can be said for the periphery, consisting of infrastructure, tools and solutions built around the blockchain network.\\
+When identifying risks, the usual approach dictates that we identify assets which are vulnerable and use them as a basis for the analysis \cite{iso}. For a \gls{blockchain}, this proposition is a difficult one; the network is composed of thousands of nodes which communicate in a peer-to-peer fashion. While each node can be compromised in its own right, there is no single tangible asset or actor that impacts the security of the \gls{consensus} as a whole. The same can be said for the periphery, consisting of infrastructure, tools and solutions built around the \gls{blockchain}.\\
 
-Our approach posits that we can define the abstract concept of the consensus state itself as the asset which needs to be protected. In that context, we can focus on vulnerabilities that are unique to blockchain networks. We can then establish our own security criteria which should be fulfilled in order for the consensus state to be considered secure. At the end, can evaluate the potential risks to the consensus state in terms of impact on these criteria.\\
+Our approach posits that we can define the abstract concept of the \gls{consensus} itself as the asset which needs to be protected. In that context, we can focus on vulnerabilities that are unique to \glspl{blockchain}. We can then establish our own security criteria which should be fulfilled in order for the \gls{consensus} to be considered secure. At the end, can evaluate the potential risks to the \gls{consensus} in terms of impact on these criteria.\\
 
-There are various algorithms used to achieved consensus in blockchain networks. Where the type of consensus algorithm is relevant, we will focus on the two most common algorithms: \acrfull{pow} and \acrfull{pos}. Other models, such as the \acrfull{dag} approach or derivatives of the \acrshort{pos} approach, have not been explored in sufficient depth in scientific literature to provide a meaningful analysis.\\
+There are various algorithms used to achieved consensus in \glspl{blockchain}. Where the type of consensus algorithm is relevant, we will focus on the two most common algorithms: \acrfull{pow} and \acrfull{pos}. Other models, such as the \acrfull{dag} approach or derivatives of the \acrshort{pos} approach, have not been explored in sufficient depth in scientific literature to provide a meaningful analysis.\\
 
 \subsection{Security Criteria}
 
-As alluded to earlier, the usual security criteria of confidentiality, integrity and availability are not a good fit for the abstract concept of the consensus state in a blockchain network. We can, however, establish our own security criteria which make sense in the context of blockchain networks. The foundation for these criteria should be found in the basic process of consensus finding and on the security guarantees that blockchain networks try to provide.\\
+As alluded to earlier, the usual security criteria of confidentiality, integrity and availability are not a good fit for the abstract concept of the \gls{consensus} in a \gls{blockchain}. We can, however, establish our own security criteria which make sense in the context of \glspl{blockchain}. The foundation for these criteria should be found in the basic process of consensus finding and on the security guarantees that a \gls{blockchain} tries to provide.\\
 
-Fundamentally, blockchain networks are supposed to provide and open, (mostly) transparent \& global platform for potentially malicious participants to find consensus on the state of the system in a trustless manner. It does so by employing cryptography to prove events that happened in the past and economic incentives to cause events to happen in the future. This implies a number of properties which have to be conserved in order to provide the desired environment.\\
+Fundamentally, a \gls{blockchain} are provides and open, (mostly) transparent \& global platform for potentially malicious participants to find consensus on the state of the system in a trustless manner. It does so by employing cryptography to prove events that happened in the past and economic incentives to cause events to happen in the future \cite{crypto}. This implies a number of properties which have to be conserved in order to provide the desired environment.\\
 
-First, immutability is crucial to the functioning of blockchain networks. Once the participants have agreed on a certain part of the history of the consensus state, they need to be able to rely on it in the future. If the blockchain history was to change after supposedly being agreed upon, the participants could no longer rely on the validity of the consensus state.\\
+First, we need to conserve the integrity of the cryptography which protects the events in the past. Once the participants have agreed on a the history of the \gls{consensus}, it needs to be reliable. One important security criterion for a \gls{blockchain} is therefore the \textbf{immutability} of its \gls{consensus}.\\
 
-Second, openness is important as the platform is only useful if any participant can take part in the consensus finding of the blockchain network. Anybody needs to be able to execute transactions on the network and verify the correctness of the transactions executed by other participants. The consensus rules should apply to the same extend to everyone participating on the blockchain network.\\
+Second, we need to make sure that all participants of the \gls{blockchain} can access the \gls{consensus} in the designed way. This implies being able to read the latest valid \gls{consensus} and being able to write to the \gls{consensus} according to the consensus rules. We call this criterion the \textbf{accessibility} of the \gls{consensus}.
 
-Third, the balance of the economic equilibrium is crucial to ensure the soundness of the theoretical model underpinning the network. If one participant is disproportionally rewarded for his contribution to the security of the blockchain network, the resources in the system are no longer distributed equally and leads to an imbalance in the equilibrium, which, over time, will undermine the viability of the model.\\
+Last but not least, we need to conserve the balance between the cryptography and the economics of the platform in order to conserve a viable theoretical model. Disrupting the economic equilibrium of a \gls{blockchain} will undermine its incentive structure and make the security guarantees weaker. We call this aspect the \textbf{stability} of the \gls{consensus}.
 
 \subsection{Vulnerability Categories}
 
-The most obvious category of vulnerabilities on blockchain networks are based on the flaws that are inherent in the theoretical models of consensus finding. In this respect, we explore possible exploits that rely on work in the field of mathematics, more specifically game theory, and information science, in particular in regards to distributed systems. All of these risks are confined to the model of consensus. We will define these intrinsic aspects as theoretical vulnerabilities.\\
+\Glspl{blockchain} can have flaws inherent in the theoretical models of the \gls{consensus}. In this respect, possible exploits which rely on work in the field of mathematics, more specifically game theory, and information science, in particular in regards to distributed systems, can be explored. This category of risks is confined to the internal model of the \gls{consensus}, so these intrinsic aspects will be defined as \textbf{theoretical} vulnerabilities.\\
 
-Beyond these, however, there are technical means to disrupt the consensus state that are outside of the direct theoretical model. Certain attacks can exploits aspects of the peer-to-peer topology underlying the blockchain network in order to disrupt or manipulate the consensus state from the exterior. We will describe these out-of-bound aspects as technical vulnerabilities.\\
+It is also possible to exploit technical means outside of the immediate model to disrupt the \gls{consensus}. One prime target could be \acrfull{p2p} topology underlying the \gls{blockchain}, where disrupting the characteristics of the network can undermine assumptions of the overlayed theoretical model. We will describe these external aspects as \textbf{technical} vulnerabilities.\\
 
-Last but not least, a blockchain network is run by software which encodes the consensus rules, and this software is written by humans working for projects governed by humans. This means that the direction of a blockchain project, including the evolution of the consensus rules and algorithm, is subject to the weaknesses of human psychology and online communities. We call these aspects the social vulnerabilities.\\
+Last but not least, a \gls{blockchain} is run by software which encodes the consensus rules, and this software is written by humans working for projects governed by humans. This means that the direction of a blockchain project, including the evolution of the consensus rules and algorithm, is subject to the weaknesses of human psychology and online communities. We call these aspects the \textbf{social} vulnerabilities.\\
 
 \subsection{Risk Analysis}
 
-Our method for analysing risks is based on a systemic definition of the information security risk management domain. This nomencloture defines a risk as an event, occurring with a certain probability, leading to a certain impact on the security criteria of our asset. An event, in return, is a threat agent using an attack method to exploit a vulnerability.\\
+Our method for analysing risks is based on a systemic definition of the information security risk management domain \cite{domain}. This nomencloture defines a risk as an event, occurring with a certain probability, leading to a certain impact on the security criteria of our asset. An event, in turn, is a threat agent using an attack method to exploit a vulnerability.\\
 
-In this paper, we propose to extend the framework slightly to make a clear distinction between the attack method and the attacks themselves. Indeed, one attack method applied to one vulnerability can open the door to the execution of a variety of attacks in the context of blockchain. In general, this means that we address the vulnerability directly, rather than handling each attack on its own.\\
+In this paper, we propose to extend the framework slightly to make a clear distinction between the attack method and the attacks themselves. Indeed, one attack method applied to one vulnerability can open the door to the execution of a variety of attacks in the context of blockchain. In general, this means that most mitigations address the vulnerability directly, rather than handling each attack on its own.\\
 
-We therefore establish the following definition as the basis for our risk analysis: a risk is the event with certain probability of a threat agent using an attack method to exploit a vulnerability of the blockchain network in order to execute an attack, impacting the validity, accessibility or efficiency of the consensus state.\\
+We establish the following modified definition as the basis for our risk analysis: a risk is the event with certain probability of a threat agent using an attack method to exploit a vulnerability of the \gls{blockchain} in order to execute an attack, impacting the immutability, accessibility or stability of the \gls{consensus}.\\
 
-In general, attacks require either access to block generators (miners or validators), or they can be executed by an outside party; however, the threat agent is not identified as part of our analysis. Identification of the threat agent adds little value to risk management in the context of blockchain networks, which attempt to provide global security properties, and is thus beyond the scope of this paper.\\
+In general, attacks require either access to block generators, or they can be executed by an outside party; however, the threat agent is not identified as part of our analysis. Identification of the threat agent adds little value to risk management in the context of \glspl{blockchain}, which attempt to provide global security properties, and is thus beyond the scope of this paper.\\
 
 \subsection{Mitigation Controls}
 
-In general, the collapse of one security criterion will open up the door to a number of attacks which can be executed, regardless of the technique used to exploit the vulnerability. This means that the exploit of a vulnerability is the first component in any risk, while the execution of the attack is the second step. Often, the stability of one criterion is contingent on the stability of another.\\
+The collapse of one security criterion often opens up the door for a number of attacks, regardless of the attack method used to exploit the vulnerability. This means that the mere exploit of a vulnerability already undermines the security of the \gls{blockchain}. At the point where a \gls{blockchain}'s security is unreliable, it is broken even if no attack is executed against any victim. Often, the level of impact is relevant in this consideration.\\
 
-For instance, a narrow impact on immutability of specific transactions in the consensus state allows the execution of double spend attacks, but doesn't affect the rest of the blockchain network. In contrast, a wide impact on immutability allows the reversal of any transaction history and enables retroactive censorship of transactions, thus disrupting openness as well.\\
+For instance, a narrow impact on immutability of specific transactions in the \gls{consensus} allows the execution of \gls{double} attacks against one victim, but doesn't affect the rest of the \gls{blockchain}. In contrast, a wide impact on immutability allows the reversal of any transaction and thus makes the \gls{blockchain} unusable due to unacceptable risks.\\
 
-Similarly, a narrow impact on openness can simply mean that one network participant can not execute any transactions. In some cases, however, depriving a network participant of access to the current consensus state also allows the presentation a manipulated network view, which can effectively disrupt immutability from his subjective perspective.\\
+Similarly, a narrow impact on accessibility can simply mean that one network participant can not execute any transactions or has a wrong local view of the \gls{consensus}. However, if the accessibility to the \gls{blockchain} is globally disrupted, network participants can no longer rely on the \gls{consensus} and the \gls{blockchain} in no longer useful.\\
 
-It can therefore be said that the mere exploitation of a vulnerability can already lead to the collapse of the security criteria of the consensus state, thus making the blockchain network useless for its intended purposes, even if an attack isn't necessarily executed. In general, this means that controls need to mitigate vulnerabilities or attack methods, rather than just dealing with the attacks themselves.\\
+It can therefore be said that the mere exploitation of a vulnerability can already lead to the collapse of the security criteria of the \gls{consensus}, thus making the \gls{blockchain} useless for its intended purposes. This means that we can have controls on all levels: vulnerability, attack method or the attack itself.\\
 
 \section{Theoretical Vulnerabilities}
 
 \subsection{Hashrate Distribution}
 
-The security of proof-of-work blockchains relies on the the miners, which compete in a lottery to generate the next block in order to obtain the related reward. Through this design, all miners are incentivized to work on the latest valid version of the blockchain history, as they would otherwise run a higher risk of not obtaining said reward.\\
+The security of \acr{pow} blockchains relies on the the miners, which compete in a lottery to generate the next block in order to obtain the related reward. Through this design, all miners are incentivized to work on the latest valid version of the blockchain history, as they would otherwise run a higher risk of not obtaining said reward.\\
 
-However, this also creates a fundamental vulnerability of the blockchain network. If a single miner manages to overwhelm the combined hash power of all other miners, he can monopolize the block generation and thus control the consensus state changes. Obtaining a majority of the hash power undermines the security model and enables a multitude of serious attack vectors..\\
+However, this also creates a fundamental vulnerability of the \gls{blockchain}, as already noted in section 11 of the original Bitcoin white paper \cite{bitcoin}. With a sufficiently high hashrate, an attacker can overwhelm the consensus forming of the rest of the \gls{blockchain} and disable the security guarantees of the \gls{consensus} either temporarily or permanently.\\
+
+In cases where an attacker obtains an absolute majority of hash power of the network, none of these strategies are effective as he can rebuild any amount of blockchain history with a one hundred percent probability. As most miners participate in \glspl{pool}, on solution would be a mechanism to balance hash power across pools with an automated software tool.\\
+
+A final possibility to control the vulnerability itself would be to modify the selection algorithm for the valid chain. It would fundamentally change the network to not follow the longest valid chain of proof-of-work, but instead to take into account other factors, such as the significance of transactions included in the chain. This can be complemented by binding transactions to a specific chain. However, it's difficult to predict the impact of such changes to the economic equilibrium and thus the security guarantees of the \gls{blockchain}.\\
+
+\subsubsection{Majority Hashrate}
+
+The most fundamental breach of security for a \acr{pow} \gls{blockchain} is when one participant manages to acquire a majority of the hashrate on the network. It allows him to overpower the combined hashrate of all other participants and thus gives him the power to define the history of the \gls{consensus} on his own.\\
+
+\textit{Certain double spend}. With the absolute majority of the hashrate, an attacker can always overpower the competing hashrate. This allows him to reverse his own transaction and replace it with another transaction spending the same funds on another version of the history with absolute certainty. It disrupts the immutability of the \gls{consensus}.
+
+\textit{Block reversal}. Every time a competing participant generates a block, the attacker can generate an alternative version of the history. Due to his overwhelming hashrate, he will overcome and override the competing history. This allows him to both monopolize block generation and rewards on the \gls{blockchain}. It undermines the immutability and the stability.
+
+\textit{Censor transactions}. Due to his ability to reverse blocks at will, the attacker can decide to censor certain transactions by not including them in his blocks and reversing any block that contains them. This affects the accessibility of the \gls{consensus}.
+
+There are a number of possible mitigations for a majority hashpower exploit. The first set of controls is on the technical layer: participants on the network can run algorithms which automatically balance their hashrate between \glspl{pool}, which can eliminate the risk of any pool operator acquiring a majority hashpower.\\
+
+Unfortunately, this solution is outside of the consensus rules and not enforcable. An alternative solution would deploy a two-phase \acr{pow} model \cite{twophase}. It would require a second sophisticated cryptographic layer to be built between \glspl{pool}, but would at least be provably diminish the impact of a majority hashrate exlpoit.\\
+
+\subsubsection{Minority Hashrate}
 
 Due to the nature of the proof-of-work algorithm, which is a memoryless process, there is also significant variance during block discovery. This means that a number of attacks remain possible with a smaller share of the hash power on the network, allowing a malicious minority miner to exploit the vulnerability with a non-zero probability of success.\\
 
-Once an attacker is able to interfer with the basic mechanism of consensus finding on the blockchain network, all security criteria are affected to a certain degree. The history can be changed, thus affecting validity of the consensus state. The blocks of other participants can be invalidated, thus decreasing the efficiency of consensus finding. Finally, transactions can be censored, thus disrupting accessibility to the consensus functionality.\\
-
-In the end, the hash power vulnerability leaves little room for navigating once a majority of hash power has been acquired by an attacker. As it breaks the fundamental process of consensus fuinding, it presents the most immediate risk for proof-of-work blockchain networks, especially for smaller projects which have a comparatively smaller total amount of hash power.\\
-
-In cases where an attacker obtains an absolute majority of hash power of the network, none of these strategies are effective as he can rebuild any amount of blockchain history with a one hundred percent probability. As most miners participate in mining pools, on solution would be a mechanism to balance hash power across pools with an automated software tool.\\
-
-A final possibility to control the vulnerability itself would be to modify the selection algorithm for the valid chain. It would fundamentally change the network to not follow the longest valid chain of proof-of-work, but instead to take into account other factors, such as the significance of transactions included in the chain. This can be complemented by binding transactions to a specific chain. However, it's difficult to predict the impact of such changes to the economic equilibrium and thus the security guarantees of the blockchain network.\\
-
 \subsubsection{Double Spending}
 
-The double spend attack breaks the most fundamental purpose of blockchain consensus, but only does so for specific targeted transactions. It allows the attacker to convey one version of consensus state to the victim, where the victim receives the desired funds of a transaction. This consensus state is later reversed by replacing it with another version of the consensus state, which keeps the funds in the attacker's pocket. The attack thus selectively breaks the validity of the consensus state.\\
+The \gls{double} attack breaks the most fundamental purpose of blockchain consensus, but only does so for specific targeted transactions. It allows the attacker to convey one version of \gls{consensus} to the victim, where the victim receives the desired funds of a transaction. This \gls{consensus} is later reversed by replacing it with another version of the \gls{consensus}, which keeps the funds in the attacker's pocket. The attack thus selectively breaks the validity of the \gls{consensus}.\\
 
-A simple version of this attack is the zero-confirmation double spend, where the malicious miner simple includes a different version of the transaction in his block than the one submitted to the network when paying the victim. This can be done by either spreading both versions to the network or by withholding the second version for inclusion in the block.\\
+A simple version of this attack is the zero-confirmation \gls{double}, where the malicious miner simple includes a different version of the transaction in his block than the one submitted to the network when paying the victim. This can be done by either spreading both versions to the network or by withholding the second version for inclusion in the block.\\
 
-The attack can be detected and thus mitigated in two ways. First, the nodes on the blockchain network can be configured to relay conflicting transactions in the memory pool, thus allowing the detection of double spending. The same result can be achieved by creating a network of observers on the blockchain network to achieve a good view of all propagated transactions.\\
+The attack can be detected and thus mitigated in two ways. First, the nodes on the \gls{blockchain} can be configured to relay conflicting transactions in the memory pool, thus allowing the detection of \gls{double}ing. The same result can be achieved by creating a network of observers on the \gls{blockchain} to achieve a good view of all propagated transactions.\\
 
 This solution, however, does not work in case the miner is withholding the conflicting transaction until the block is mined. A simpler solution involves waiting for the pending transaction to be confirmed by a number of subsequent blocks. As the probability of being able to outperform the whole network diminishes exponentially with the number of confirmations, the adequate number can be derived from a simple formula.\\
 
 \subsubsection{Censoring Transactions}
 
-A miner can decide which transactions to include or exclude in each block. This naturally gives him the ability to throttle transactions of certain market participants. Once his hash power reaches absolute majority, he is able to generate the blockchain history on his own, allowing him to censor all transactions and all blocks by network participants other than himself. This attack therefore undermines the accessibility of the blockchain network.\\
+A miner can decide which transactions to include or exclude in each block. This naturally gives him the ability to throttle transactions of certain market participants. Once his hash power reaches absolute majority, he is able to generate the blockchain history on his own, allowing him to censor all transactions and all blocks by network participants other than himself. This attack therefore undermines the accessibility of the \gls{blockchain}.\\
 
 A possible approach to mitigate targeted censorship is the introduction of anonymous transactions. While still being able to achieve complete censorship with a hash power majority, the attacker can't target specific parties. Rather, the network would be affected as a whole, reducing its usefulness and thus making it harder for the attacker to achieve a monetary gain.\\
 
 \subsubsection{Rewriting History}
 
-If a miner were to acquire a majority of hash power on the network, he could execute an attack to damage the blockchain network viability itself by simply rewriting the history and making it invalid going far back into history. This would destroy the value proposition of the platform and spell its doom. This would destroy the consensus state validity.\\
+If a miner were to acquire a majority of hash power on the network, he could execute an attack to damage the \gls{blockchain} viability itself by simply rewriting the history and making it invalid going far back into history. This would destroy the value proposition of the platform and spell its doom. This would destroy the \gls{consensus} validity.\\
 
 In order to avoid this possibility, especially for blockchains that are vulnerable due to a low amount of total hash power, checkpoints can be introduced into the node software. A rewrite of history that does not include certain checkpoint blocks will simply be considered invalid by nodes on the network, thus hindering rewrites beyond a certain point.\\
 
 \subsection{Block Propagation}
 
-Every miner participating in a proof-of-work consensus finding algorithm relies on the propagation of valid blocks through the network in order to generate a state transition for the latest valid consensus state. The theoretical model assumes that all miners will freely share newly found blocks in order to obtain their reward.\\
+Every miner participating in a proof-of-work consensus finding algorithm relies on the propagation of valid blocks through the network in order to generate a state transition for the latest valid \gls{consensus}. The theoretical model assumes that all miners will freely share newly found blocks in order to obtain their reward.\\
 
-However, the option to withhold a discovered block and thus hide it from the network is a theoretical possibility. Depending on the motivation of an attacker, this opens up a vulnerability on the consensus state. An attacker can withhold a block to gain profit in some other way, while still conserving a significant probability of obtaining the block reward.\\
+However, the option to withhold a discovered block and thus hide it from the network is a theoretical possibility. Depending on the motivation of an attacker, this opens up a vulnerability on the \gls{consensus}. An attacker can withhold a block to gain profit in some other way, while still conserving a significant probability of obtaining the block reward.\\
 
 The vulnerability has the potential to disrupt the economic equilibrium between miners, by either letting them gain an extra profit, or by causing an extra loss to other miners, thus reducing the efficiency of the consensus finding. Additionally, it has potential to replace part of the blockchain history by a previously computed alternative hidden version, thus affecting validity as well.\\
 
 \subsubsection{Finney Attack}
 
-The Finney attack is a more sophisticated version of a double spend that does not rely on having a significant amount of hash power on the network. Instead, the miner waits to generate a block for whatever interval it takes and only starts the attack subsequently. Once the block is found, it's withheld from the network and thus hidden. It includes a transaction that sends certain funds from the attacker to the victim.\\
+The Finney attack is a more sophisticated version of a \gls{double} that does not rely on having a significant amount of hash power on the network. Instead, the miner waits to generate a block for whatever interval it takes and only starts the attack subsequently. Once the block is found, it's withheld from the network and thus hidden. It includes a transaction that sends certain funds from the attacker to the victim.\\
 
 The attacker now propagates a conflicting transaction that sends the funds to the victim as part of the transaction. As soon as the desired exchange has occurred in both directions, the attacker propagates his hidden block and reclaims the funds. It should be noted that the attacker risks another block being found before the attack was executed, thus risking to lose the block reward.\\
 
-The attack rewrites a small part of the blockchain history and can thus be considered to affect the validity of the consensus state. It can, however, be easily mitigated by introducing a waiting period for a certain amount of blocks, which makes it probabilistically unlikely that the attacker can derive an economic advantage from the execution on the attack, due to the lost block reward.\\
+The attack rewrites a small part of the blockchain history and can thus be considered to affect the validity of the \gls{consensus}. It can, however, be easily mitigated by introducing a waiting period for a certain amount of blocks, which makes it probabilistically unlikely that the attacker can derive an economic advantage from the execution on the attack, due to the lost block reward.\\
 
 \subsubsection{Block Discarding}
 
-The block discarding attack can be used to economically damage a mining pool. A lot of mining pools reward miners that contribute their work to the pool in proportion to the work completed. In order to get rewards, they submit proofs of work at a significantly smaller level of difficulty than the one required for a valid block. These so-called shares are only useful to estimate the work accomplished by each miner.\\
+The block discarding attack can be used to economically damage a \gls{pool}. A lot of \glspl{pool} reward miners that contribute their work to the pool in proportion to the work completed. In order to get rewards, they submit proofs of work at a significantly smaller level of difficulty than the one required for a valid block. These so-called shares are only useful to estimate the work accomplished by each miner.\\
 
-As they are found significantly more often than a valid block, a malicious participant of the mining pool can submit them and receive most of his mining reward. When he finds a valid block, however, he can simply discard it instead of submitting it to the pool operator. This will lead to a significant loss to the pool operator, while being negligible for the miner himself.\\
+As they are found significantly more often than a valid block, a malicious participant of the \gls{pool} can submit them and receive most of his mining reward. When he finds a valid block, however, he can simply discard it instead of submitting it to the pool operator. This will lead to a significant loss to the pool operator, while being negligible for the miner himself.\\
 
-Some pool operators mitigate the risk by using a reward structure that attributes extra rewards on submission of a valid block, thus making the loss non-significant for the malicious miner, while at the same time making it less costly for the mining pool operator.\\
+Some pool operators mitigate the risk by using a reward structure that attributes extra rewards on submission of a valid block, thus making the loss non-significant for the malicious miner, while at the same time making it less costly for the \gls{pool} operator.\\
 
 \subsubsection{Selfish Mining}
 
-The most sophisticated block withholding attack is the selfish mining strategy. A malicious miner who finds a block can simple withhold it from the network in order to gain a headstart looking for the next valid block. Once the network finds a block, he can simply release his block to contend for the block reward. However, he will significantly increase his own likelihood of finding the next valid block, which will allow him to propagate both blocks and thus obtain two block rewards at once: one at the normal probability and one at an increased probability.\\
+The most sophisticated block withholding attack is the selfish mining strategy \cite{selfish}. A malicious miner who finds a block can simple withhold it from the network in order to gain a headstart looking for the next valid block. Once the network finds a block, he can simply release his block to contend for the block reward. However, he will significantly increase his own likelihood of finding the next valid block, which allows him to optimize his profitability over other miners with a smart strategy \cite{optimal}.\\
 
 One counter to this strategy is to simply accept the economic incentive of employing the strategy as part of the consensus framework. One downside would be that miners with better connectivity would stand a better chance of contending block rewards when letting a block out of hiding. This can be countered by accepting all blockchain heads an randomly choosing one to mine on top of, giving all network participants an equal chance to content.\\
 
 \subsection{Cheap Validation}
 
-In the context of a proof-of-stake consensus algorithm, validators invest a negligible amount of resources into the generation of new blocks. This means that they can generate blocks for competing versions of the consensus state, thus weakening the consensus finding algorithm. This constitutes a serious vulnerability and is known as the nothing-at-stake problem.\\
+In the context of a proof-of-stake consensus algorithm, validators invest a negligible amount of resources into the generation of new blocks. This means that they can generate blocks for competing versions of the \gls{consensus}, thus weakening the consensus finding algorithm. This constitutes a serious vulnerability and is known as the nothing-at-stake problem.\\
 
 Each validator on a proof-of-stake network is incentivized to create blocks for all competing histories of the consensus stake, as this allows them to guarantee the reward linked to the generation of blocks. If they wouldn't generate a block for a fork, but this fork would end up being the accepted history, they would lose their block awards on all other forks. Validating on all forks is a zero-risk proposition.\\
 
 At the same time, the low cost of generating blocks allows anyone to produce a long history of blocks in a short amount of time. Practically no resources will be wasted in creating the competing history and all validators would extend the desired competing history. This means that even a low stake, and thus share in the block generation, would allow the attacker's fork to win eventually, as he would only generate blocks for the history he is interested in.\\
 
-On a basic level, this undermines the efficiency of finding consensus on the blockchain history completely, as any number of competing histories will exist and conflict between them is not resolved. Additionally, a complete rewrite of the history undermines the validity of the consensus state.\\
+On a basic level, this undermines the efficiency of finding consensus on the blockchain history completely, as any number of competing histories will exist and conflict between them is not resolved. Additionally, a complete rewrite of the history undermines the validity of the \gls{consensus}.\\
 
 \subsubsection{Nothing-At-Stake}
 
-While not strictly an attack with a specific victim, the nothing-at-stake problem still represents a significant risk for the security of the blockchain network, as it undermines the fundamental functioning of the consensus finding algorithm. Validators extend all branches of the blockchain history, thus never resolving conflicts and not fulfilling the basic premise of a blockchain network to have a single shared consensus state.\\
+While not strictly an attack with a specific victim, the nothing-at-stake problem still represents a significant risk for the security of the \gls{blockchain}, as it undermines the fundamental functioning of the consensus finding algorithm. Validators extend all branches of the blockchain history, thus never resolving conflicts and not fulfilling the basic premise of a \gls{blockchain} to have a single shared \gls{consensus}.\\
 
-Even when not exploited, a blockchain network in this state can no longer be considered as providing its security guarantees. The efficiency of the consensus finding is completely deteriorated and the existence of multiple blockchain history versions completely undermines the efficiency of the consensus by failing to resolve conflicts as designed.\\
+Even when not exploited, a \gls{blockchain} in this state can no longer be considered as providing its security guarantees. The efficiency of the consensus finding is completely deteriorated and the existence of multiple blockchain history versions completely undermines the efficiency of the consensus by failing to resolve conflicts as designed.\\
 
 While some early proof-of-stake networks don't address the issue, others chose a technical mitigation, which attempts to create blacklists on each node when detecting validators on malicious branches. Unfortunately, this approach is an out-of-band solution and not complete.\\
 
@@ -233,7 +271,7 @@ More advanced proof-of-stake projects introduce so-called slashing conditions,  
 
 As costs for generating blocks in a proof-of-stake algorithm are negligible, any validator can generate as many blocks as he wants. This allows the recreation of part of all of the blockchain history. A malicious group of validators can thus take over the network, starting at any point of the blockchain history where they collectively held a sufficient amount of the staked tokens.\\
 
-The impact of this attack method is similar to a majority hash power attack on a proof-of-stake network, which the difference of requiring negligible time to execute mostly the same attacks, making it significantly more severe. It completely undermines the validity, the accessibility and the efficiency of the blockchain network.\\
+The impact of this attack method is similar to a majority hash power attack on a proof-of-stake network, which the difference of requiring negligible time to execute mostly the same attacks, making it significantly more severe. It completely undermines the validity, the accessibility and the efficiency of the \gls{blockchain}.\\
 
 It can further be compounded by stake bleeding, which makes the attacking validator sacrifice his stake on the currently longest chain to slow down its growth and increase his probability of catching up with the validation power he managed to acquire at a point in the past. If the attack is successful, it means he will retrieve all of his tokens, as he will still have them on his alternative blockchain history version.\\
 
@@ -247,7 +285,7 @@ Finally, key-evolving cryptography can be used to make sure that each private ke
 
 \subsection{Network Topology}
 
-Blockchain networks generally rely on rudimentary peer-to-peer gossip protocols to propagate messages, such as blocks and transactions, to all of the nodes. This network topology can be exploited to isolate certain nodes on the network and control what messages they receive. This allows an attacker to manipulate the view of the consensus state for the victims.\\
+Blockchain networks generally rely on rudimentary peer-to-peer gossip protocols to propagate messages, such as blocks and transactions, to all of the nodes. This network topology can be exploited to isolate certain nodes on the network and control what messages they receive. This allows an attacker to manipulate the view of the \gls{consensus} for the victims.\\
 
 Similarly, rather than controlling a victims connection, an attacker could simply control certain edges of the network topology that have significance, severing it into various partitions. This would make the attacker the sole relay of messages, allowing him to choose which messages to let through from one partition to another, and by how much to delay them.\\
 
@@ -255,15 +293,15 @@ Similarly, rather than controlling a victims connection, an attacker could simpl
 
 During an eclipse attack, the attacker monopolizes all the connections of the targeted node, effectively controlling exactly which messages are relayed to the node. This allows a number of exploits to be executed in a second step.\\
 
-The attacker can effectively waste mining effort of the network by eclipsing miners and thus diminishing the efficiency of the consensus state. He can make the affected node believe that transactions happened when they didn't, hampering accessibility.\\
+The attacker can effectively waste mining effort of the network by eclipsing miners and thus diminishing the efficiency of the \gls{consensus}. He can make the affected node believe that transactions happened when they didn't, hampering accessibility.\\
 
-One countermeasure is to disable incoming connections and choose a number of specific outgoing connections to trusted nodes. This approaches, however, can not scale to the entire blockchain network, as it would make it impossible for new nodes to join the network and it would introduce a certain degree of centralization to the network, offering a new attack vector.\\
+One countermeasure is to disable incoming connections and choose a number of specific outgoing connections to trusted nodes. This approaches, however, can not scale to the entire \gls{blockchain}, as it would make it impossible for new nodes to join the network and it would introduce a certain degree of centralization to the network, offering a new attack vector.\\
 
 A more sophisticated set of countermeasures involve advanced algorithms when deciding which connections to allow, such as: randomizing address selection, randomly address expiry, skewing preference to older known addresses, banning suspect messages and more. In combination, they eliminate the risk of a node having all its connections monopolized by a single adversary, thus countering the attack.\\
 
 \subsubsection{Balance Attack}
 
-The balance attack doesn't involve isolating a node or a group of nodes from the main network; rather, it attempts to become the only relay for messages between different partitions of the blockchain network by placing the attacker's nodes at important edges of the network graph. This requires in-depth knowledge about the hashrate distribution and the communication topology of the underlying peer-to-peer network.\\
+The balance attack doesn't involve isolating a node or a group of nodes from the main network; rather, it attempts to become the only relay for messages between different partitions of the \gls{blockchain} by placing the attacker's nodes at important edges of the network graph. This requires in-depth knowledge about the hashrate distribution and the communication topology of the underlying peer-to-peer network.\\
 
 Rather than manipulating the view of the victims, the attacker can then play different network partitions against each other by deciding which progression of the blockhcain history to propagate and which one to delay or censor. While more difficult to exploit.\\
 
@@ -273,33 +311,29 @@ Tackling a balance attack is possible by withholding information about the netwo
 
 \subsection{Content Insertion}
 
-Many blockchain networks allow nodes to include arbitrary data into the transaction, which constitutes a clear vulnerability.\\
+Many \gls{blockchain}s allow nodes to include arbitrary data into transactions. A malicious actor can thus insert data of any form into the \gls{consensus}, which would exist in immutable form for the lifetime of the \gls{blockchain}. Depending on the data inserted, this can be abused in a number of ways.\\
 
-A malicious actor, of any form, who would desire to disrupt a blockchain network could inject illegal material into a blockchain, which would then exist in immutable form for the lifetime of the consensus state. This same actor could then use the existence of illegal material in the consensus state to scare other people away from the platform.\\
+In general, there is only one way to deal with illegal content insertion on \gls{blockchain}s: not storing the content in question. This can be put into practice by implementing the possibility of pruning blockchain data, as already described in section 7 of the Bitcoin white paper \cite{bitcoin}. They can then choose to discard certain content after validation of the related transactions and blocks has been completed.\\
 
-Having illegal material embedded into the blockchain is not any more of a legal issue that having hidden material in an image you load from a website, which is why the attack is part of the social category. However, scaring people away from a blockchain network affects the accessibility of the consensus.\\
+An alternative approach is the implementation of a light synchronization protocol for the network \cite{light}. It can take advantage of the properties of merkle trees in order to selectively validate blockchain data that the participant is interested in, without storing the full \gls{consensus} locally.\\
 
 \subsubsection{Illegal Content}
 
-The first way to abuse the possibility of inserting arbitrary data into a blockchain is to insert illegal content into the blockchain. While it is arguably not the case that a node is responsible for all the content in the blockchain, it can be an effective tool to drive fear, doubt and uncertainty in the market, thus diminishing the number of people willing to participate on the blockchain network and subjectively diminishing the accessibility.\\
-
-This simple approach can be countered by allowing nodes to prune certain parts of the blockchain history and thus discarding the non-desired data after initial verification.\\
+Illegal content can be inserted into the \gls{consensus} of \gls{blockchain}s. As has been demonstrated, this is not merely a theoretical possibility, but has been exploited on real \gls{blockchain}s before \cite{content}. It is a point of contention whether this can have legal implications for the participants of the network. However, it can at least be an effective tool to drive fear, \acrfull{fud} in a community, thus diminishing the number of participants on the \gls{blockchain}.\\
 
 \subsubsection{Data Volume}
 
-By including significant amounts of data into the blockchain, the consensus state can grow significantly and could expand beyond a size where normal nodes are comfortable with storing it. This would again affect the accessibility of the blockchain network for these users.\\
-
-The problem can be solved by implementing light synchronization protocols, which prune all data after verification, which is a viable security tradeoff. Additionally, limiting factors to the amount of data that can be inserted in the blockchain can be added to the consensus rules.\\
+By including significant amounts of data into the blockchain, the \gls{consensus} can grow significantly and can expand to a size where some network participants decide it's too expensive to store it. Resource limitations would thus put a barrier around access to the \gls{blockchain}, reducing the number of participants.\\
 
 \subsection{Community Organization}
 
 Blockchain networks are based on consensus rules enforced in a trustless manner between network participants. However, these consensus rules still need to be encoded in the software running the nodes of the network. If you manage to manipulate the governance of the project, you can change the direction of the project and the consensus rules themselves.\\
 
-Most blockchain projects are governed in a supposedly democratic way. This means that the community around a project is crucial for the exchange of ideas and the discussion of the roadmap. This makes blockchain networks arguable more susceptible to the manipulation of public opinion than any other project.\\
+Most blockchain projects are governed in a supposedly democratic way. This means that the community around a project is crucial for the exchange of ideas and the discussion of the roadmap. This makes \gls{blockchain}s arguable more susceptible to the manipulation of public opinion than any other project.\\
 
 Changes to consensus rules are difficult to achieve, but as past events have shown, they are not impossible. Depending on the original design, a change in the consensus rules has a high probability of affecting the validity of the consensus after the change has been done.\\
 
-Additionally, consensus rules can be drastic enough to affect the past blockchain history, even though it's unlikely that the impact will be big here. Finally, by implementing rules that many network participants don't agree with or which affect the functioning of the blockchain network, the accessibility of the consensus can be hampered as well.\\
+Additionally, consensus rules can be drastic enough to affect the past blockchain history, even though it's unlikely that the impact will be big here. Finally, by implementing rules that many network participants don't agree with or which affect the functioning of the \gls{blockchain}, the accessibility of the consensus can be hampered as well.\\
 
 As a first step, a consensus platform needs clear values to govern the surrounding software project and a transparent decision-making process that can be audited by anyone. It is thus important to ensure that all big discussion platforms are democratically governed.\\
 
@@ -325,13 +359,13 @@ Countering the spread of unauthentic content is more difficult as botnets become
 
 \subsection{Out-Of-Band Incentives}
 
-Consensus is achieved on blockchain networks through the use of economic incentives. If a malicious actor tries to act against the consensus rules, he will usually incur a more or less severe economic punishment. However, the fact that such a loss can be countered by out-of-band payments makes the system vulnerable to bribery.\\
+Consensus is achieved on \gls{blockchain}s through the use of economic incentives. If a malicious actor tries to act against the consensus rules, he will usually incur a more or less severe economic punishment. However, the fact that such a loss can be countered by out-of-band payments makes the system vulnerable to bribery.\\
 
 If a coalition of malicious actors, controlling less than a hash power majority, intends to compromise the network, they can incentivize the other actors to acquire their hash power and thus execute the desired attack.\\
 
 \subsubsection{Hashrate Renting}
 
-The simplest form of acquiring extra mining power is through direct payments in return for a certain hashrate. This can be done by using a cloud hashing provider, which will usually charge a premium of around 3\% on top of the expected earning capacity. Trust issues with this setup can be overcome by introducing a negative fee mining pool, where the operator actually controls the hash rate, but overpays the miners for their hashrate.\\
+The simplest form of acquiring extra mining power is through direct payments in return for a certain hashrate. This can be done by using a cloud hashing provider, which will usually charge a premium of around 3\% on top of the expected earning capacity. Trust issues with this setup can be overcome by introducing a negative fee \gls{pool}, where the operator actually controls the hash rate, but overpays the miners for their hashrate.\\
 
 This attack allows an attacker to lower the threshold for a successful attack on the validity of the blockhchain history.\\
 
@@ -341,7 +375,7 @@ As a miner accepting a bribe has no inherent economic downside and no consensus 
 
 A more advanced form of bribing miners is by doing it through a contractual agreement that is enforced on the blockchain. A simple version would simply create the desired forks with included bribery transactions; miners seeking profit would then mine this fork as it will make the competing history dominant, allowing them to receive the bribes contained in the transactions.\\
 
-A more advanced version uses one blockchain network with a smart contract to reward miners for solutions, while another blockchain network is the one the attack is run against. This will over-incentivize the creation of solutions that favour the attacker's intent, thus disrupting the economic equilibrium of the network and the underlying security guarantees.\\
+A more advanced version uses one \gls{blockchain} with a smart contract to reward miners for solutions, while another \gls{blockchain} is the one the attack is run against. This will over-incentivize the creation of solutions that favour the attacker's intent, thus disrupting the economic equilibrium of the network and the underlying security guarantees.\\
 
 Next to guaranteeing the attacker to outpace the public blockchain history with his private blockchain history if all miners behave rationally, this constellation can be profitable in an of itself, as it allows the attacker to outpace all other miners on the network, even with less than majority hash power, thus allowing him to censor competing blocks and receive all of the rewards.\\
 
@@ -351,7 +385,7 @@ The only discussed controls to avoid such bribery at this point is to create a p
 
 \subsection{Context Definition}
 
-The established risks for blockchain networks and their consensus state security have been established through research in the previous section. A summary of the identified risks is available in Appendix A for easy reference. The controls related to the mitigation of these strategies is available in Appendix B in the same way.\\
+The established risks for \gls{blockchain}s and their \gls{consensus} security have been established through research in the previous section. A summary of the identified risks is available in Appendix A for easy reference. The controls related to the mitigation of these strategies is available in Appendix B in the same way.\\
 
 We will use these created references to execute a risk management approach for a real blockchain project. During our analysis, we will be using the simple method of equating risk score to probability times impact, which each of them on a scale of one to five. We will then propose a number of controls in our recommendations to mitigate the biggest risks.\\
 
@@ -373,9 +407,9 @@ Impact
   \item 1 - Negligible
 \end{itemize}
 
-The risk management will be done for a real blockchain network, Alvalor, which is currently under active development. Little public public information is available, but the author is familiar with the technical design. This will allow the results of this paper to be put into practice and have a real use beyond the academic value.\\
+The risk management will be done for a real \gls{blockchain}, Alvalor, which is currently under active development. Little public public information is available, but the author is familiar with the technical design. This will allow the results of this paper to be put into practice and have a real use beyond the academic value.\\
 
-Alvalor is a minimalist blockchain network based on a simple proof-of-work mechanism. For our purposes, the transactions can be considered as limited, conveying no additional data other than the transfer details, thus rendering them fixed in size. Once the project launches, the hashrate of the blockchain network should be comparatively low.\\
+Alvalor is a minimalist \gls{blockchain} based on a simple proof-of-work mechanism. For our purposes, the transactions can be considered as limited, conveying no additional data other than the transfer details, thus rendering them fixed in size. Once the project launches, the hashrate of the \gls{blockchain} should be comparatively low.\\
 
 On the foundational layer, which is the one relevant for our analysis, it can thus be compared to a multitude of other small blockhain projects and a lot of considerations should be applicable to a decent range of them. The recommendations at the end of the section could therefore be translated and used widely.\\
 
@@ -502,7 +536,7 @@ Our first observation is that the fundamental stability of the proof-of-work con
 
 The second observation is that social vulnerabilities, which are not part of most blockchain's security considerations, rank on the same level as these fundamental issues.\\
 
-The third observation is that out-of-band incentives are a non-negligible risk to the stability of blockchain security guarantees and should be a part of the threat model surrounding blockchain networks.\\
+The third observation is that out-of-band incentives are a non-negligible risk to the stability of blockchain security guarantees and should be a part of the threat model surrounding \gls{blockchain}s.\\
 
 \subsubsection{Recommendations}
 
@@ -518,13 +552,13 @@ We do not recommend any current controls for the mitigation of out-of-bound. How
 
 \section{Conclusion}
 
-This paper took a look at risk management for blockchain networks from the perspective of protecting the security of the blockchain consensus and thus ensuring the security guarantees that make blockchain networks uniquely useful in the modern information technology world.\\
+This paper took a look at risk management for \gls{blockchain}s from the perspective of protecting the security of the blockchain consensus and thus ensuring the security guarantees that make \gls{blockchain}s uniquely useful in the modern information technology world.\\
 
 One interesting observation was that the author found vaste amounts of research literature on the theoretical soundness of the security model, a growing body of academic literature on the technical aspects of the peer-to-peer network, but almost no consideration for the social aspects of blockchain security.\\
 
 Indeed, no blockchain project has considered attacks on the consensus model through out-of-band incentives as part of their threat model. Nor has any community made an effort to create a platform for the exchange of ideas in a manner free of censorship and manipulation.\\
 
-In conclusion, it can be said that, as blockchain networks will grow in significance and the advantages to be gained from exploiting them will increase, significant challenges remain on the horizon and will have to be tackled in order to guarantee the continued usefulness of this disruptive new technology.\\
+In conclusion, it can be said that, as \gls{blockchain}s will grow in significance and the advantages to be gained from exploiting them will increase, significant challenges remain on the horizon and will have to be tackled in order to guarantee the continued usefulness of this disruptive new technology.\\
 
 \newpage
 \begin{thebibliography}{9}
@@ -600,6 +634,12 @@ Lear Bahack,
 "Theoretical Bitcoin Attacks with less than Half of the Computational Power",
 \url{http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.473.2485&rep=rep1&type=pdf},
 December 2013.
+
+\bibitem{light}
+Vitalik Buterin,
+"Light client protocol",
+\url{https://github.com/ethereum/wiki/wiki/Light-client-protocol},
+July 2014.
 
 \bibitem{tender}
 Jae Kwon,
@@ -683,6 +723,12 @@ December 2016.
 Reu Zhang and Bart Preneel,
 "Publish or Perish: A Backward-Compatible Defense against Selfish Mining in Bitcoin",
 \url{https://www.esat.kuleuven.be/cosic/publications/article-2746.pdf},
+April 2017.
+
+\bibitem{crypto}
+Vitalik Buterin,
+"Introduction to Cryptoeconomics",
+\url{https://vitalik.ca/files/intro_cryptoeconomics.pdf},
 April 2017.
 
 \bibitem{whale}
