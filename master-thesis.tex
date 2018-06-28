@@ -9,6 +9,7 @@
 \usepackage{graphicx}
 \usepackage{url}
 \usepackage{csquotes}
+\usepackage{float}
 
 \renewcommand{\abstractname}{}
 \renewcommand{\absnamepos}{empty}
@@ -413,148 +414,246 @@ Next to guaranteeing the attacker to outpace the public blockchain history with 
 
 \subsection{Context Definition}
 
-The established risks for \glspl{blockchain} and their \gls{consensus} security have been established through research in the previous section. A summary of the identified risks is available in Appendix A for easy reference. The controls related to the mitigation of these strategies is available in Appendix B in the same way.\\
+The risks for \glspl{blockchain} and their \gls{consensus} security have been established through research in the previous section. A summary of the identified risks is available in Appendix A for easy reference. The controls related to the mitigation of various vulnerabilities, attack methods and attacks is available as a list for each vulnerability in Appendix B.\\
 
-We will use these created references to execute a risk management approach for a real blockchain project. During our analysis, we will be using the simple method of equating risk score to probability times impact, which each of them on a scale of one to five. We will then propose a number of controls in our recommendations to mitigate the biggest risks.\\
+The created references will now be applied to a real blockchain project to get practical risk management results. During our analysis, the simple method of equating risk score to probability times impact will be used. We will use the scoring as specified below.\\
 
-Probability
-\begin{itemize}
-  \item 5 - Always
-  \item 4 - Likely
-  \item 3 - Possible
-  \item 2 - Unlikely
-  \item 1 - Never
-\end{itemize}
+\begin{figure}[H]
+\begin{center}
+\begin{tabular}{| l | l |}
+  \hline
+  \multicolumn{2}{| c |}{\textbf{Probability}}\\
+  \hline
+  5 & Always\\
+  \hline
+  4 & Likely\\
+  \hline
+  3 & Possible\\
+  \hline
+  2 & Unlikely\\
+  \hline
+  1 & Never\\
+  \hline
+\end{tabular}
+\qquad
+\begin{tabular}{| l | l |}
+  \hline
+  \multicolumn{2}{| c |}{\textbf{Impact}}\\
+  \hline
+  5 & Critical\\
+  \hline
+  4 & Significant\\
+  \hline
+  3 & Moderate\\
+  \hline
+  2 & Marginal\\
+  \hline
+  1 & Negligible\\
+  \hline
+\end{tabular}
+\end{center}
+\end{figure}
 
-Impact
-\begin{itemize}
-  \item 5 - Critical
-  \item 4 - Significant
-  \item 3 - Moderate
-  \item 2 - Marginal
-  \item 1 - Negligible
-\end{itemize}
+The risk management will be done for a real \gls{blockchain}, Alvalor, which is currently under active development. Little public information is available, but the author is familiar with the technical design. This will allow the results of this paper to be put into practice and have a real use beyond the academic value.\\
 
-The risk management will be done for a real \gls{blockchain}, Alvalor, which is currently under active development. Little public public information is available, but the author is familiar with the technical design. This will allow the results of this paper to be put into practice and have a real use beyond the academic value.\\
+Alvalor is a minimalist \gls{blockchain} based on a simple \acrlong{pow} mechanism. For our purposes, the \glspl{transaction} can be considered as simple, conveying no additional data other than the transfer details, thus rendering them fixed in size. Once the project launches, the \gls{hashrate} of the \gls{blockchain} should be comparatively low.\\
 
-Alvalor is a minimalist \gls{blockchain} based on a simple proof-of-work mechanism. For our purposes, the \glspl{transaction} can be considered as limited, conveying no additional data other than the transfer details, thus rendering them fixed in size. Once the project launches, the \gls{hashrate} of the \gls{blockchain} should be comparatively low.\\
-
-On the foundational layer, which is the one relevant for our analysis, it can thus be compared to a multitude of other small blockhain projects and a lot of considerations should be applicable to a decent range of them. The recommendations at the end of the section could therefore be translated and used widely.\\
+On the foundational layer, which is the only one relevant for our analysis, it can thus be compared to a multitude of other small blockhain projects and a lot of considerations should be applicable to a decent range of \glspl{blockchain}. The recommendations at the end of the section could therefore be translated and applied widely.\\
 
 \subsection{Risk Analysis}
 
 \subsubsection{Identification}
 
-In its current design, Alvalor uses a simple proof-of-work consensus algorithm, which means that all risks from A.1.1 and A.1.2 are applicable, while risks of section A.1.3 are not.\\
+In its current design, Alvalor uses a simple \acrshort{pow} consensus algorithm, which means that all risks from A.1.1 and A.1.2 are applicable, while risks of section A.1.3 are not.\\
 
-The network topology is based on a simple gossip protocol in a peer-to-peer network and therefore is subject to all of the risks listed under A.2.\\
+The network topology is based on a simple gossip protocol in a \acrlong{p2p} network and is therefore subject to all of the risks listed under A.2.\\
 
-No content insertion is possible, so section A.3.1 can be discarded. The community and project governance is organic, which makes it less susceptible to some of the factors listed under A.3.2, but we will still consider them for the sake of completeness. Finally, out-of-band incentives are possible, so we will also include A.3.3 in our considerations.\\
+No content insertion is possible, so section A.3.1 can be discarded. Section A.3.2 and A.3.3 merit consideration in our case.\\
 
-This leaves us with the following list of risks to consider:
+This leaves us with the following list of exploits to consider:
 \begin{enumerate}
-  \item Double spending
-  \item Censoring transactions
-  \item Rewriting history
-  \item Finney attack
-  \item Block discarding
-  \item Selfish mining
-  \item Eclipse attack
-  \item Balance attack
-  \item Personality cult
-  \item Censorship \& astroturfing
-  \item Hashrate renting
-  \item Contractual bribery
+  \item Majority \& minority hashrate
+  \item Finney attack, block discarding \& selfish mining
+  \item Eclipse \& balance attack
+  \item Governance hijacking \& community manipulation
+  \item Hashrate renting \& contractual bribery
 \end{enumerate}
 
 \subsubsection{Assessment}
 
-\textbf{Double spending.}
-Probability: 4
-Impact: 2
-Score: 8\\
+Rather than assessing the impact of each attack, we will assess the possible impact of each exploit that enables attacks. This is more meaningful in the context of blockchain as the mere possibility of a risk materializing already impacts the security guarantees of the \gls{blockchain}.\\
 
-\textbf{Censoring transactions.}
-Probability: 2
-Impact: 4
-Score: 8\\
+\begin{figure}[H]
+\begin{center}
+\begin{tabular}{| l | l |}
+  \hline
+  \multicolumn{2}{| c |}{\textbf{Majority hashrate}}\\
+  \hline
+  Probability & 2\\
+  \hline
+  Impact & 5\\
+  \hline
+  \underline{Total} & 10\\
+  \hline
+\end{tabular}
+\qquad
+\begin{tabular}{| l | l |}
+  \hline
+  \multicolumn{2}{| c |}{\textbf{Minority hashrate}}\\
+  \hline
+  Probability & 3\\
+  \hline
+  Impact & 3\\
+  \hline
+  \underline{Total} & 9\\
+  \hline
+\end{tabular}
+\end{center}
+\end{figure}
 
-\textbf{Rewriting history.}
-Probability: 1
-Impact: 5
-Score: 5\\
+\begin{figure}[H]
+\begin{center}
+\begin{tabular}{| l | l |}
+  \hline
+  \multicolumn{2}{| c |}{\textbf{Finney attack}}\\
+  \hline
+  Probability & 4\\
+  \hline
+  Impact & 2\\
+  \hline
+  \underline{Total} & 8\\
+  \hline
+\end{tabular}
+\qquad
+\begin{tabular}{| l | l |}
+  \hline
+  \multicolumn{2}{| c |}{\textbf{Block discarding}}\\
+  \hline
+  Probability & 2\\
+  \hline
+  Impact & 1\\
+  \hline
+  \underline{Total} & 2\\
+  \hline
+\end{tabular}
+\end{center}
+\end{figure}
 
-\textbf{Finney attack.}
-Probability: 2
-Impact: 2
-Score: 4\\
+\begin{figure}[H]
+\begin{center}
+\begin{tabular}{| l | l |}
+  \hline
+  \multicolumn{2}{| c |}{\textbf{Selfish mining}}\\
+  \hline
+  Probability & 3\\
+  \hline
+  Impact & 3\\
+  \hline
+  \underline{Total} & 9\\
+  \hline
+\end{tabular}
+\qquad
+\begin{tabular}{| l | l |}
+  \hline
+  \multicolumn{2}{| c |}{\textbf{Eclipse attack}}\\
+  \hline
+  Probability & 2\\
+  \hline
+  Impact & 2\\
+  \hline
+  \underline{Total} & 4\\
+  \hline
+\end{tabular}
+\end{center}
+\end{figure}
 
-\textbf{Block discarding.}
-Probability: 3
-Impact: 1
-Score: 3\\
+\begin{figure}[H]
+\begin{center}
+\begin{tabular}{| l | l |}
+  \hline
+  \multicolumn{2}{| c |}{\textbf{Balance attack}}\\
+  \hline
+  Probability & 1\\
+  \hline
+  Impact & 3\\
+  \hline
+  \underline{Total} & 3\\
+  \hline
+\end{tabular}
+\qquad
+\begin{tabular}{| l | l |}
+  \hline
+  \multicolumn{2}{| c |}{\textbf{Governance hijacking}}\\
+  \hline
+  Probability & 3\\
+  \hline
+  Impact & 3\\
+  \hline
+  \underline{Total} & 9\\
+  \hline
+\end{tabular}
+\end{center}
+\end{figure}
 
-\textbf{Selfish mining.}
-Probability: 3
-Impact: 3
-Score: 9\\
+\begin{figure}[H]
+\begin{center}
+\begin{tabular}{| l | l |}
+  \hline
+  \multicolumn{2}{| c |}{\textbf{Community manipulation}}\\
+  \hline
+  Probability & 2\\
+  \hline
+  Impact & 4\\
+  \hline
+  \underline{Total} & 8\\
+  \hline
+\end{tabular}
+\qquad
+\begin{tabular}{| l | l |}
+  \hline
+  \multicolumn{2}{| c |}{\textbf{Hashrate renting}}\\
+  \hline
+  Probability & 3\\
+  \hline
+  Impact & 2\\
+  \hline
+  \underline{Total} & 6\\
+  \hline
+\end{tabular}
+\end{center}
+\end{figure}
 
-\textbf{Eclipse attack.}
-Probability: 2
-Impact: 2
-Score: 4\\
-
-\textbf{Balance attack.}
-Probability: 1
-Impact: 3
-Score: 3\\
-
-\textbf{Personality cult.}
-Probability: 3
-Impact: 3
-Score: 9\\
-
-\textbf{Censorship \& astroturfing.}
-Probability: 2
-Impact: 4
-Score: 8\\
-
-\textbf{Hashrate renting.}
-Probability: 3
-Impact: 2
-Score: 6\\
-
-\textbf{Contractual bribery.}
-Probability: 2
-Impact: 3
-Score: 6\\
+\begin{figure}[H]
+\begin{center}
+\begin{tabular}{| l | l |}
+  \hline
+  \multicolumn{2}{| c |}{\textbf{Contractual bribery}}\\
+  \hline
+  Probability & 2\\
+  \hline
+  Impact & 3\\
+  \hline
+  \underline{Total} & 6\\
+  \hline
+\end{tabular}
+\end{center}
+\end{figure}
 
 \subsubsection{Triage}
 
-We define the following ranges for criticality of risks:
+In our risk treatment, we want to focus on high and medium exploits for mitigation, while choosing risk acceptance for the risks at the low end of the scale. We will use the following categorization for the exploits.
+
 \begin{itemize}
   \item Low: 1-4
   \item Medium: 5-7
   \item High: 8+
 \end{itemize}
 
-In our risk treatment, we choose to only deal with risks of medium or high criticality. We are therefore left with the following risks to address:\\
+The following high risk exploits should be addressed with controls: majority hashrate, minority hashrate, selfish mining, governance hijacking, finney attack and community manipulation.\\
 
-High criticality
-\begin{itemize}
-  \item Selfish mining: 9
-  \item Personality cult: 9
-  \item Double spending: 8
-  \item Censoring transactions: 8
-  \item Censorship \& astroturfing: 8
-\end{itemize}
+The following medium risk exploits should be address with controls: hashrate renting and contractual bribery.\\
 
-Medium criticality
-\begin{itemize}
-  \item Hashrate renting: 6
-  \item Contractual bribery: 6
-  \item Rewriting history: 5
-\end{itemize}
+The following low risk exploits will be accepted: eclipse, balance attack and block discarding.\\
 
 \subsection{Security Conclusions}
 
@@ -564,29 +663,31 @@ Our first observation is that the fundamental stability of the proof-of-work con
 
 The second observation is that social vulnerabilities, which are not part of most blockchain's security considerations, rank on the same level as these fundamental issues.\\
 
-The third observation is that out-of-band incentives are a non-negligible risk to the stability of blockchain security guarantees and should be a part of the threat model surrounding \gls{blockchain}s.\\
+The third observation is that out-of-band incentives are a non-negligible risk to the stability of blockchain security guarantees and should be a part of the threat model surrounding \glspl{blockchain}.\\
 
 \subsubsection{Recommendations}
 
-In order to mitigate \gls{hashrate} and block propagation risks, we recommend the implementation of the following controls: relay conflicting transactions, waiting for confirmations, introduce automatic checkpoints, relay all valid blocks.\\
+In order to mitigate vulnerabilities around hashrate distribution and block propagation, we recommend the implementation of the following controls: B1.3 Confirmation wait period, B.1.5 Memory pool monitoring, B.1.7 Blockchain checkpoints and B.2.3 Extended block relaying.\\
 
-While not directly mitigating all risks, it puts the power into the hand of the users and miners, which will be able to design and compete on the best strategies, while making the best tradeoff for their respective situation. A good default implementation of such strategies should be provided for non-power users.\\
+While not directly mitigating all risks, it puts the power into the hand of the network participants, which will be able to design the best strategies for their use case while making the necessary tradeoffs for their situation. A good default implementation of such strategies should be provided.\\
 
-In order to mitigate community manipulation, we recommend the implementation of the following controls: define project values, purse transparent governance, create idea platform.\\
+In order to mitigate vulnerabilities around the project organization, we recommend the implementation of the following controls: B.6.1 Definition of values, B.6.2 Transparent governance and B.6.3 Onchain voting.\\
 
-The idea platform for the project should take into account both the need for democratic and auditable moderation, as well as offering the possibility to discuss ideas purely on merrit and content in an anonymous way. More research should be done to discover additional controls to counter social disruption of the project.\\
+While novel approaches such as the evaluation of authenticity of social media messages seem promising, more work in the area is needed before an implementation is possible without spending tremendous resources. Using a human-centered approach seems like the most pragmatic way at this point in time.\\
 
-We do not recommend any current controls for the mitigation of out-of-bound. However, we recommend to define these risks as relevant concern in the threat model for the project and to lead ongoing research efforts to discover more efficient controls to mitigate the related risks.\\
+We do not recommend currently recommend the implementation of any controls regarding the out-of-bound incentive vulnerabilities. However, we strongly recommend defining them as a relevant concern in the threat model of the project.\\
+
+Indeed, none of the current approaches seems to be satisfactory for the time being and additional work in the area is required. However, the progress should be continuously monitored and it is recommend to keep an eye on the surfacing of such practices in the wild.\\
 
 \section{Conclusion}
 
-This paper took a look at risk management for \gls{blockchain}s from the perspective of protecting the security of the blockchain consensus and thus ensuring the security guarantees that make \gls{blockchain}s uniquely useful in the modern information technology world.\\
+This paper took a look at risk management for \glspl{blockchain} from the perspective of protecting the security of the \gls{consensus} and thus ensuring the security guarantees that make \glspl{blockchain} uniquely useful in the modern information technology world.\\
 
-One interesting observation was that the author found vaste amounts of research literature on the theoretical soundness of the security model, a growing body of academic literature on the technical aspects of the peer-to-peer network, but almost no consideration for the social aspects of blockchain security.\\
+One interesting observation was that the author found vaste amounts of research literature on the theoretical soundness of the security model, a growing body of academic literature on the technical aspects of the \acrshort{p2p} network, but almost no consideration for the social aspects of blockchain security.\\
 
-Indeed, no blockchain project has considered attacks on the consensus model through out-of-band incentives as part of their threat model. Nor has any community made an effort to create a platform for the exchange of ideas in a manner free of censorship and manipulation.\\
+Indeed, no blockchain project has considered attacks on the consensus model through out-of-band incentives as part of their threat model. Nor has any community made an effort to create a platform for the exchange of ideas that is resistent censorship and manipulation.\\
 
-In conclusion, it can be said that, as \gls{blockchain}s will grow in significance and the advantages to be gained from exploiting them will increase, significant challenges remain on the horizon and will have to be tackled in order to guarantee the continued usefulness of this disruptive new technology.\\
+In conclusion, it can be said that, as \glspl{blockchain} will grow in significance and the advantages to be gained from exploiting them will increase, significant challenges remain on the horizon and will have to be tackled in order to guarantee the continued usefulness of this disruptive new technology.\\
 
 \newpage
 \begin{thebibliography}{9}
@@ -887,13 +988,13 @@ May 2018.
 
   \multicolumn{3}{| l |}{\underline{\smash{A.3.2 Project Organization}}}\\
   \hline
-     Governance structure & \textit{Change consensus rules} & Stability\\
+     Governance hijacking & \textit{Change consensus rules} & Stability\\
   \hline
-     Governance structure & \textit{Block project progress} & Accessibility\\
+     Governance hijacking & \textit{Block project progress} & Accessibility\\
   \hline
-     Community influence & \textit{Personality cult} & --\\
+     Community manipulation & \textit{Personality cult} & --\\
   \hline
-     Community influence & \textit{Social media manipulation} & --\\
+     Community manipulation & \textit{Social media manipulation} & --\\
   \hline
 
   \multicolumn{3}{| l |}{\underline{\smash{A.3.3 Out-Of-Band Incentives}}}\\
@@ -976,9 +1077,9 @@ May 2018.
   \hline
   \textit{B.6.3 Onchain voting}\\
   \hline
-  \textit{B.6.3 Behaviour scoring}\\
+  \textit{B.6.4 Behaviour scoring}\\
   \hline
-  \textit{B.6.3 Authenticity evaluation}\\
+  \textit{B.6.5 Authenticity evaluation}\\
   \hline
 
   \textbf{B.7 Out-Of-Band Incentives}\\
