@@ -84,6 +84,12 @@ name=hashrate,
 description={The hashrate is the amount of hashing operations a miner can execute on a blockchain network in one second. The higher the hashrate, the higher the chance for the miner to discover a valid hash for the next block generation, thus increasing the chance of gaining the block reward.}
 }
 
+\newglossaryentry{effect}
+{
+name=network effect,
+description={The network effect explains the phenomenon of a network exponentially gaining in usefulness with a linearly growing number of participants.}
+}
+
 \newacronym{pow}{PoW}{proof-of-work}
 \newacronym{pos}{PoS}{proof-of-stake}
 \newacronym{dag}{DAG}{directed acyclical graph}
@@ -169,9 +175,9 @@ Fundamentally, a \gls{blockchain} are provides and open, (mostly) transparent \&
 
 First, we need to conserve the integrity of the cryptography which protects the events in the past. Once the participants have agreed on a the history of the \gls{consensus}, it needs to be reliable. One important security criterion for a \gls{blockchain} is therefore the \textbf{immutability} of its \gls{consensus}.\\
 
-Second, we need to make sure that all participants of the \gls{blockchain} can access the \gls{consensus} in the designed way. This implies being able to read the latest valid \gls{consensus} and being able to write to the \gls{consensus} according to the consensus rules. We call this criterion the \textbf{accessibility} of the \gls{consensus}.
+Second, we need to make sure that all participants of the \gls{blockchain} can access the \gls{consensus} in the designed way. This implies being able to read the latest valid \gls{consensus} and being able to write to the \gls{consensus} according to the consensus rules. We call this criterion the \textbf{accessibility} of the \gls{consensus}.\\
 
-Last but not least, we need to conserve the balance between the cryptography and the economics of the platform in order to conserve a viable theoretical model. Disrupting the economic equilibrium of a \gls{blockchain} will undermine its incentive structure and make the security guarantees weaker. We call this aspect the \textbf{stability} of the \gls{consensus}.
+Last but not least, we need to conserve the balance between the cryptography and the economics of the platform in order to conserve a viable theoretical model. Disrupting the economic equilibrium of a \gls{blockchain} will undermine its incentive structure and make the security guarantees weaker. We call this aspect the \textbf{stability} of the \gls{consensus}.\\
 
 \subsection{Vulnerability Categories}
 
@@ -221,11 +227,11 @@ Finally, a more fundamental change to the \gls{consensus} could make it harder t
 
 The most fundamental breach of security for a \acrshort{pow} \gls{blockchain} is when one participant manages to acquire a majority of the \gls{hashrate} on the network. It allows him to overpower the combined \gls{hashrate} of all other participants and thus gives him the power to define the history of the \gls{consensus} on his own.\\
 
-\textit{Certain double spend}. With the absolute majority of the \gls{hashrate}, an attacker can always overpower the competing \gls{hashrate}. This allows him to reverse his own \gls{transaction} and replace it with another \gls{transaction} spending the same funds on another version of the history with absolute certainty. It impacts the immutability of the \gls{consensus}.
+\textit{Certain double spend}. With the absolute majority of the \gls{hashrate}, an attacker can always overpower the competing \gls{hashrate}. This allows him to reverse his own \gls{transaction} and replace it with another \gls{transaction} spending the same funds on another version of the history with absolute certainty. It impacts the immutability of the \gls{consensus}.\\
 
-\textit{History reversal}. Every time a competing participant generates a block, the attacker can generate an alternative version of the history. Due to his overwhelming \gls{hashrate}, he will overcome and override the competing history. This allows him to both monopolize block generation and rewards on the \gls{blockchain}. It impacts the immutability and the stability of the \gls{consensus}.
+\textit{History reversal}. Every time a competing participant generates a block, the attacker can generate an alternative version of the history. Due to his overwhelming \gls{hashrate}, he will overcome and override the competing history. This allows him to both monopolize block generation and rewards on the \gls{blockchain}. It impacts the immutability and the stability of the \gls{consensus}.\\
 
-\textit{Transaction censorship}. Due to his ability to reverse blocks at will, the attacker can decide to censor certain \glspl{transaction} by not including them in his blocks and reversing any block that contains them. This impacts the accessibility of the \gls{consensus}.
+\textit{Transaction censorship}. Due to his ability to reverse blocks at will, the attacker can decide to censor certain \glspl{transaction} by not including them in his blocks and reversing any block that contains them. This impacts the accessibility of the \gls{consensus}.\\
 
 \subsubsection{Minority Hashrate}
 
@@ -243,7 +249,7 @@ However, the option to withhold a discovered block and thus hide it from the net
 
 One mitigation of the vulnerability itself is the \textit{ZeroBlock} algorithm \cite{zeroblock}, which suggests that blocks need to be received within a maximum acceptable time interval. Otherwise, a dummy block is generated and no one receives the reward. This is resilient to any form of withholding attack.\\
 
-Another possible solution is the \textit{publish or perish} strategy \cite{perish}. It uses a similar approach where miners choose the block history based on the time that \glspl{block} were published, rather than the time where the \glspl{block} were generated. This means that unpublished \glspl{block} will become less attractive and thus earn less \glspl{reward}.
+Another possible solution is the \textit{publish or perish} strategy \cite{perish}. It uses a similar approach where miners choose the block history based on the time that \glspl{block} were published, rather than the time where the \glspl{block} were generated. This means that unpublished \glspl{block} will become less attractive and thus earn less \glspl{reward}.\\
 
 \subsubsection{Finney Attack}
 
@@ -267,7 +273,7 @@ Some pool operators mitigate the risk by using a reward structure that attribute
 
 The most sophisticated block withholding attack is the selfish mining strategy \cite{selfish}. A malicious miner who finds a block can withhold it from the network in order to gain a headstart for next block. Once the network finds a block, he can still release his block to contend for the block reward. However, he will significantly increase his own likelihood of finding the next valid block.\\
 
-\textit{Unfair economic gain}. An attacking miner can increase his profitability over other participants on the network by optimizing his mining strategy according to the selfish mining principle \cite{optimal}. He will thus gain an unfair economic advantage that was not accounted for in the original model. It impacts the stability of the \gls{consensus}.
+\textit{Unfair economic gain}. An attacking miner can increase his profitability over other participants on the network by optimizing his mining strategy according to the selfish mining principle \cite{optimal}. He will thus gain an unfair economic advantage that was not accounted for in the original model. It impacts the stability of the \gls{consensus}.\\
 
 The authors of the original paper suggest accepting the new optimal mining strategy as the default for the network. In order to reduce the advantage for well-connected miners, they suggest propagating all competing block histories and \textit{randomizing the choice} of parent. This would create a level playing field once more.\\
 
@@ -335,7 +341,7 @@ In addition to previous mitigation strategies, we can use the fact that a balanc
 
 \subsection{Discourage Participation}
 
-Blockchain technology is a complex topic and many average users do not have the background to fully understand the technical aspects of \glspl{blockchain} they use. As \glspl{blockchain} rely on the \gls{network effect} to increase their usefulness, lowering participation in them has a significant impact. This can be done by discouraging potential network participants in a number of ways.\\
+Blockchain technology is a complex topic and many average users do not have the background to fully understand the technical aspects of \glspl{blockchain} they use. As \glspl{blockchain} rely on the \gls{effect} to increase their usefulness, lowering participation in them has a significant impact. This can be done by discouraging potential network participants in a number of ways.\\
 
 \subsubsection{Content Insertion}
 
@@ -349,61 +355,57 @@ In general, there is only one way to deal with undesired content insertion on \g
 
 An alternative approach is the implementation of a \textit{light synchronization protocol} for the network \cite{light}. It can take advantage of the properties of merkle trees in order to selectively validate blockchain data that the participant is interested in, without storing the full \gls{consensus} locally.\\
 
-\subsection{Community Organization}
+\subsection{Project Organization}
 
-Blockchain networks are based on consensus rules enforced in a trustless manner between network participants. However, these consensus rules still need to be encoded in the software running the nodes of the network. If you manage to manipulate the governance of the project, you can change the direction of the project and the consensus rules themselves.\\
+\Glspl{blockchain} are based on consensus rules enforced in a trustless manner between network participants. However, these consensus rules still need to be encoded in the software running the nodes of the network. If you manage to disrupt the organization of the project, you can change its direction and affect the usefulness of the \gls{blockchain}.\\
 
-Most blockchain projects are governed in a supposedly democratic way. This means that the community around a project is crucial for the exchange of ideas and the discussion of the roadmap. This makes \gls{blockchain}s arguable more susceptible to the manipulation of public opinion than any other project.\\
+\subsubsection{Governance Structure}
 
-Changes to consensus rules are difficult to achieve, but as past events have shown, they are not impossible. Depending on the original design, a change in the consensus rules has a high probability of affecting the validity of the consensus after the change has been done.\\
+Each blockchain project has a governance structure. In many cases, they are run in a mostly democratic way. This makes blockchain projects susceptible to be manipulated in the same way as modern elections in politics in order to affect certain changes \cite{fakenews}.\\
 
-Additionally, consensus rules can be drastic enough to affect the past blockchain history, even though it's unlikely that the impact will be big here. Finally, by implementing rules that many network participants don't agree with or which affect the functioning of the \gls{blockchain}, the accessibility of the consensus can be hampered as well.\\
+\textit{Change consensus rules}. The community around a project is crucial for the exchange of ideas and the discussion of the roadmap. This makes \glspl{blockchain} arguable more susceptible to the manipulation of public opinion than any other project. The past has shown that even consensus rule changes are not impossible \cite{forks}. It impacts the stability of the \gls{consensus}.\\
 
-As a first step, a consensus platform needs clear values to govern the surrounding software project and a transparent decision-making process that can be audited by anyone. It is thus important to ensure that all big discussion platforms are democratically governed.\\
+\textit{Block project progress}. By adopting changes which many community members disagree with, a conflict which drives many network participants away con be created at the heart of a blockchain project. This has happened previously in Bitcoin and has basically split the project in two \cite{cash}. It impacts the accessibility of the \gls{consensus}.\\
 
-Alternatively, an official discussion platform that is governed through decisions made at the heart of the consensus itself would make every network participant a true stakeholder in how the community and the project is run, thus avoiding any form of hostile takeover to influence processes.\\
+One initial defense against unexpected consensus rule changes and blocked progress is the clear \textit{definition of the values} behind a blockchain project. This philosophy can serve as a guide for future decisions and can be the basis for the project roadmap.\\
 
-\subsubsection{Personality Cult}
+A second important step is to create a \textit{transparent project governance}, which serves as a way to achieve accountability by allowing all community members to audit the decisions and the related processes.\\
 
-According to authority principle of persuasion defined by Dr. Robert Cialdini \cite{influence}, people attribute higher value to the opinion of experts. The principle of liking states that people prefer to follow those they like. Combining them, we could create personas in a blockchain community that appeals to a wide range of individuals, helping to shape their opinion in a way favourable to the attacker.\\
+Finally, mechanisms to implement some sort of \textit{voting on the blockchain} to gauge the opinion of community stakeholders is a valuable tool to avoid making decisions which will upset or aleniate a significant portion of the network participants.\\
 
-Cialdini suggest that a good defense against the authority princilpe is questioning whether the authority is attributed due to merit. Unfortunately, evaluating this is the context of blockchain technology is a difficult matter for the average user. Similarly, in order to counter the liking principle, it is recommended to separate request from requester. Both of these imply making community members responsible for the well-being of the community.\\
+\subsubsection{Community Influence}
 
-However, as the governing body behind a blockchain project, awareness raising and pushing responsibility onto your users is not an attractive approach to ensure security. As such, we would suggest that eliminating the source of the persuasion success is a more objectively viable approach. A platform should be created where ideas and reputation are both present, but separated. Ideas are discussed based anonymously purely on content and merit, while user profiles gather reputation.\\
+Most blockchain projects are governed in a supposedly democratic way. This means that the community around a project is crucial for the exchange of ideas and the discussion of the roadmap. This makes \glspl{blockchain} arguable more susceptible to the manipulation of public opinion than any other project.\\
 
-\subsubsection{Opinion Shaping}
+\textit{Personality cult}. According to authority principle of persuasion defined by Dr. Robert Cialdini, people attribute higher value to the opinion of experts \cite{influence}. The principle of liking states that people prefer to follow those they like. Combining them, we could create leader personas shaping community opinion in a way favourable to the attacker. No criterion is directly impacted.\\
 
-Two other principles exposed by Cialdini are those of commitment and social proof. Human beings are driven to stay consistent in their choices once committed to a decision, as they become part of their identity. In times of uncertainty, they also refer to the social consensus as an indicator for making and confirming choices.\\
+\textit{Social media manipulation}. Two other principles exposed by Cialdini are those of commitment and social proof. Censorship and astroturfing can be used to create a wrong impression of the public opinion \cite{astroturf}. This can lead to pressure by the public to implement certain changes in the project. No criterion is directly impacted.\\
 
-Abusing the latter principle, social media platforms can be manipulated by using censorship and astroturfing \cite{astroturf} as tools to simulate a social consenus that doesn't exist and which is conductive to the desired agenda of the attacker. The former principle then causes these positions to get more and more stable, making it increasingly difficult to break the cycle and create open dialogue about ideas.\\
+There is a lot of ongoing research into social media manipulation techniques using botnets \cite{botnet}. Additionally, human beings are bad at being objective about the degree they are influenced \cite{echo}. As techniques become increasingly popular, techniques that use simple \textit{scoring and thresholds} for punishment become less and less efficient \cite{countering}.\\
 
-Countermeasures to the censorship of ideas opposed to the desired agenda consist of keeping a transparent log of all governance decisions and moderation actions in order to create a complete audit trail. This can then be analyzed for bias and consistency with rules.\\
-
-Countering the spread of unauthentic content is more difficult as botnets becomes increasingly sophisticated and impactful with the sheer size of social media networks. Some algorithms exclude users when they cross a certain threshold, but are not very reliable. A promising approach is the analysis of discussions to attribute an authenticity score.\\
+On the other hand, it seems possible that some old techniques were good at identifying groups of users acting in synchronized manner \cite{copycatch}. Combined with a newer approach evaluating the \textit{authenticity of messages} on social media \cite{authenticity}, we believe a platform assisting network participants in forming an informed opinion could be built.\\
 
 \subsection{Out-Of-Band Incentives}
 
-Consensus is achieved on \gls{blockchain}s through the use of economic incentives. If a malicious actor tries to act against the consensus rules, he will usually incur a more or less severe economic punishment. However, the fact that such a loss can be countered by out-of-band payments makes the system vulnerable to bribery.\\
+Consensus is achieved on \glspl{blockchain} through the use of economic incentives. If a malicious actor tries to act against the consensus rules, he will usually incur a more or less severe economic punishment. However, the fact that such a loss can be countered by out-of-band payments makes the system vulnerable. As long as the counter-incentives are sufficient, the economic incentives of the system can be circumvented.\\
 
-If a coalition of malicious actors, controlling less than a \gls{hashrate} majority, intends to compromise the network, they can incentivize the other actors to acquire their \gls{hashrate} and thus execute the desired attack.\\
+\textit{Attacks}. In general, any form of acquiring extra hashrate allows an easier execution of attacks related to \gls{hashrate}: double spends, history reversal and transaction censorship. However, they also directly impact the stability of the \gls{consensus}, even when not achieving sufficient \gls{hashrate} accumulation to execute an attack.\\
+
+One of the only suggested solutions for out-of-band incentives is currently to \textit{counter-bribe} the miners in order to keep them away from the original briber and potentially get them back to mining normally \cite{ethcc}. This works because miners have incentive to preserve their block in the history in order to not lose their \gls{reward}.\\
+
+Another suggested solution is to change to another \acrshort{pow} algorithm. This would allow the choice of an algorithm that is difficult to verify in smart contracts, making bribery more difficult. It would also punish miners for being bribed. This would however not be viable long term.\\
 
 \subsubsection{Hashrate Renting}
 
-The simplest form of acquiring extra mining power is through direct payments in return for a certain \gls{hashrate}. This can be done by using a cloud hashing provider, which will usually charge a premium of around 3\% on top of the expected earning capacity. Trust issues with this setup can be overcome by introducing a negative fee \gls{pool}, where the operator actually controls the hash rate, but overpays the miners for their \gls{hashrate}.\\
-
-This attack allows an attacker to lower the threshold for a successful attack on the validity of the blockhchain history.\\
-
-As a miner accepting a bribe has no inherent economic downside and no consensus rules are broken, it is difficult to counter such simple bribery. However, there is a party with incentive to stop the bribery, even beyond the potential victim: the miners who created blocks on the blockchain history that should be reversed, as they would lose their reward. A possible countermeasure would thus be for them to counter-bribe miners at a sufficient amount to make mining on top of the attacker's branch too risky. As their history would already be longer, these bribes would be significantly lower than the bribes on the competing branch.\\
+The simplest form of acquiring extra mining power is through direct payments in return for acquiring a certain \gls{hashrate} \cite{bribery}. This can be done by using a cloud hashing provider, where you can rent \gls{hashrate} as a service. Trust issues with this setup can be overcome by introducing a negative fee \gls{pool}, where the operator overpays the miners to get them to join, so he gets to directly control the \gls{hashrate}.\\
 
 \subsubsection{Contractual Bribery}
 
-A more advanced form of bribing miners is by doing it through a contractual agreement that is enforced on the blockchain. A simple version would simply create the desired forks with included bribery \glspl{transaction}; miners seeking profit would then mine this fork as it will make the competing history dominant, allowing them to receive the bribes contained in the \glspl{transaction}.\\
+A more advanced form of bribing miners can be executed by contractual agreement that is enforced on the blockchain. A simple version would simply create the desired forks with included bribery \glspl{transaction}; miners seeking profit would then mine this fork as it will make the competing history dominant, allowing them to receive the bribes contained in the \glspl{transaction}.\\
 
-A more advanced version uses one \gls{blockchain} with a smart contract to reward miners for solutions, while another \gls{blockchain} is the one the attack is run against. This will over-incentivize the creation of solutions that favour the attacker's intent, thus disrupting the economic equilibrium of the network and the underlying security guarantees.\\
+A more advanced version uses one \gls{blockchain} with a smart contract to reward miners for solutions, while another \gls{blockchain} is the one the attack is run against \cite{puzzles}. This will over-incentivize the creation of solutions that favour the attacker's intent, thus disrupting the economic equilibrium of the network and the underlying security guarantees.\\
 
 Next to guaranteeing the attacker to outpace the public blockchain history with his private blockchain history if all miners behave rationally, this constellation can be profitable in an of itself, as it allows the attacker to outpace all other miners on the network, even with less than majority \gls{hashrate}, thus allowing him to censor competing blocks and receive all of the rewards.\\
-
-The only discussed controls to avoid such bribery at this point is to create a proof-of-work algorithm that is difficult to verify in the context of smart contracts. However, this can effectively be overcome. There is no known effective counter at this point.\\
 
 \section{Case Study}
 
@@ -605,12 +607,6 @@ Satoshi Nakamoto,
 \url{https://bitcoin.org/bitcoin.pdf},
 October 2008.
 
-\bibitem{boomerang}
-Sara Byrne and Philip Solomon Hart,
-"The boomerang effect: A synthesis of findings and a preliminary theoretical framework",
-\textit{Communication Yearbook 33},
-Routledge, 2009.
-
 \bibitem{threat}
 Carlos Laorden, Borja Sanz, Gonzalo Alvarez and Pablo García Bringas,
 "A Threat Model Approach to Threats and Vulnerabilities in On-line Social Networks",
@@ -671,12 +667,6 @@ Vitalik Buterin,
 \url{https://github.com/ethereum/wiki/wiki/Light-client-protocol},
 July 2014.
 
-\bibitem{tender}
-Jae Kwon,
-"Tendermint: Consensus without Mining",
-\url{https://tendermint.com/static/docs/tendermint.pdf},
-January 2015.
-
 \bibitem{twophase}
 Martijn Bastiaan,
 "Preventing the 51\%-Attack: a Stochastic Analysis of Two Phase Proof of Work in Bitcoin",
@@ -693,6 +683,12 @@ July 2015.
 Ethan Heilman, Alison Kendler, Aviv Zohar and Sharon Golberg,
 "Eclipse Attacks on Bitcoin’s Peer-to-Peer Network",
 \url{https://eprint.iacr.org/2015/263.pdf},
+August 2015.
+
+\bibitem{forks}
+Mike Hearn,
+"On consensus and forks",
+\url{https://medium.com/@octskyward/on-consensus-and-forks-c6a050c792e7},
 August 2015.
 
 \bibitem{bribery}
@@ -737,6 +733,12 @@ Christopher Natoli and Vincent Gramoli,
 \url{https://arxiv.org/pdf/1612.09426.pdf},
 December 2016.
 
+\bibitem{fakenews}
+Hunt Allcott and Matthew Gentzkow,
+"Social Media and Fake News in the 2016 Election",
+\url{https://web.stanford.edu/~gentzkow/research/fakenews.pdf},
+January 2017.
+
 \bibitem{perish}
 Reu Zhang and Bart Preneel,
 "Publish or Perish: A Backward-Compatible Defense against Selfish Mining in Bitcoin",
@@ -749,35 +751,11 @@ Vitalik Buterin,
 \url{https://vitalik.ca/files/intro_cryptoeconomics.pdf},
 April 2017.
 
-\bibitem{whale}
-Kevin Liao and Jonathan Katz,
-"Incentivizing Blockchain Forks via Whale Transactions",
-\url{http://kevinliao.me/publications/incentivizing-blockchain-forks-bitcoin2017.pdf},
-April 2017.
-
-\bibitem{refund}
-Patrick McCorry, Siama F. Shahandashti and Feng Hao,
-"Refund attacks on Bitcoin's Payment Protocol",
-\url{https://eprint.iacr.org/2016/024.pdf},
-May 2017.
-
 \bibitem{survey}
 Mauro Conti, Sandeep Kumar E, Chhagan Lal and Sushmita Ruj,
 "A Survey on Security and Privacy Issues of Bitcoin",
 \url{https://arxiv.org/pdf/1706.00916.pdf},
 June 2017.
-
-\bibitem{ada}
-Aggelos Kiayias, Alexander Russell, Bernardo David and Roman Oliynykov,
-"Ouroboros: A Provably Secure Proof-of-Stake Blockchain Protocol",
-\url{https://eprint.iacr.org/2016/889.pdf},
-August 2017.
-
-\bibitem{stale}
-Loi Luu, Yaron Velner, Jason Teutsch and Prateek Saxena,
-"SmartPool: Practical Decentralized Pooled Mining",
-\url{https://www.comp.nus.edu.sg/~loiluu/papers/SmartPool.pdf},
-August 2017.
 
 \bibitem{authenticity}
 Aviad Elyashar, Jorge Bendahan and Rami Puzis,
@@ -820,6 +798,12 @@ Nabeel Gillani, Ann Yuan, Martin Saveski, Soroush Vosoughi and Deb Roy,
 "Me, My Echo Chamber, and I: Introspection on Social Media Polarization",
 \url{https://arxiv.org/pdf/1803.01731.pdf},
 April 2018.
+
+\bibitem{cash}
+Alyssa Hertig,
+"Bitcoin Cash Fork Leaves Users Behind, But Does It Matter?",
+\url{https://www.coindesk.com/bitcoin-cash-fork-leaves-users-behind-matter/},
+May 2018.
 
 \end{thebibliography}
 
