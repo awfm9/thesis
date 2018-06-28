@@ -231,7 +231,11 @@ The most fundamental breach of security for a \acrshort{pow} \gls{blockchain} is
 
 \textit{History reversal}. Every time a competing participant generates a block, the attacker can generate an alternative version of the history. Due to his overwhelming \gls{hashrate}, he will overcome and override the competing history. This allows him to both monopolize block generation and rewards on the \gls{blockchain}. It impacts the immutability and the stability of the \gls{consensus}.\\
 
+In order to mitigate history reversals, \textit{checkpoints} can be introduced at certain depths of the blockchain history. They can be broadcasted through the \acrshort{p2p} network or exchanged through a trusted out-of-band system.\\
+
 \textit{Transaction censorship}. Due to his ability to reverse blocks at will, the attacker can decide to censor certain \glspl{transaction} by not including them in his blocks and reversing any block that contains them. This impacts the accessibility of the \gls{consensus}.\\
+
+Targeted censorship can be avoided on blockchains that offer \textit{anonymous transactions}. Due to the fact that nobody knows who is transacting, it's not possible to target any specific victims and only random or complete censorship  of transactions is possible.\\
 
 \subsubsection{Minority Hashrate}
 
@@ -247,9 +251,7 @@ Every miner participating in a \gls{pow} consensus finding algorithm relies on t
 
 However, the option to withhold a discovered block and thus hide it from the network is a theoretical possibility. Depending on the intentions of an attacker, this opens up a vulnerability on the \gls{consensus}. An attacker can withhold a block to gain profit in some other way, while still conserving a significant probability of obtaining the \gls{reward}.\\
 
-One mitigation of the vulnerability itself is the \textit{ZeroBlock} algorithm \cite{zeroblock}, which suggests that blocks need to be received within a maximum acceptable time interval. Otherwise, a dummy block is generated and no one receives the reward. This is resilient to any form of withholding attack.\\
-
-Another possible solution is the \textit{publish or perish} strategy \cite{perish}. It uses a similar approach where miners choose the block history based on the time that \glspl{block} were published, rather than the time where the \glspl{block} were generated. This means that unpublished \glspl{block} will become less attractive and thus earn less \glspl{reward}.\\
+One mitigation of the vulnerability itself is to make sure blocks not on the recent history are somehow punished. One implementation suggests suggests that blocks need to be received within a maximum acceptable time interval \cite{zeroblock}. Another similar one relies on publishing time rather than generation time for blocks \cite{perish}.\\
 
 \subsubsection{Finney Attack}
 
@@ -259,7 +261,7 @@ The attacker now propagates a conflicting \gls{transaction} that sends the funds
 
 \textit{Unconfirmed double spend}. As the block with the \gls{transaction} is already mined, the attacker can execute a \gls{double} on an unconfirmed \gls{transaction} instantly. However, the attacker risks losing the \gls{reward} if another network participant generates another valid block during the execution of the attack. It impacts the immutability of the \gls{consensus}.\\
 
-As previously mentioned, \textit{waiting for confirmations} addresses the risks related to blockchain immutability and \glspl{double}.\\
+A previously unmentioned method to counter double spends in the case of the unconfirmed kind, which is the easiest to execute, is to \textit{monitor the memory pool} of nodes on the network, either by placing observers or by relaying conflicting transactions.\\
 
 \subsubsection{Block Discarding}
 
@@ -878,27 +880,27 @@ May 2018.
 
   \multicolumn{3}{| l |}{\underline{\smash{A.3.1 Node Owners}}}\\
   \hline
-    Content insertion & Illegal content insertion & Accessibility\\
+    Content insertion & \textit{Illegal content insertion} & Accessibility\\
   \hline
-    Content insertion & Data growth acceleration & Accessibility\\
+    Content insertion & \textit{Data growth acceleration} & Accessibility\\
   \hline
 
   \multicolumn{3}{| l |}{\underline{\smash{A.3.2 Project Organization}}}\\
   \hline
-     Governance structure & Change consensus rules & Stability\\
+     Governance structure & \textit{Change consensus rules} & Stability\\
   \hline
-     Governance structure & Block project progress & Accessibility\\
+     Governance structure & \textit{Block project progress} & Accessibility\\
   \hline
-     Community influence & Personality cult & --\\
+     Community influence & \textit{Personality cult} & --\\
   \hline
-     Community influence & Social media manipulation & --\\
+     Community influence & \textit{Social media manipulation} & --\\
   \hline
 
   \multicolumn{3}{| l |}{\underline{\smash{A.3.3 Out-Of-Band Incentives}}}\\
   \hline
-    Hashrate renting & -- & Stability\\
+    Hashrate renting & \textit{--} & Stability\\
   \hline
-    Contractual Bribery & -- & Stability\\
+    Contractual Bribery & \textit{--} & Stability\\
   \hline
 
 \end{tabular}
@@ -911,83 +913,79 @@ May 2018.
 
   \textbf{B.1 Hashrate Distribution}\\
   \hline
-  \textit{B.1.1 Automatic Hashrate Balancing}\\
+  \textit{B.1.1 Automatic hashrate balancing}\\
   \hline
-  \textit{B.1.2 Alternative chain selection rule}\\
+  \textit{B.1.2 Two-phase proof-of-work}\\
   \hline
-  \textit{B.1.3 Relay conflicting transactions}\\
+  \textit{B.1.3 Confirmation wait period}\\
   \hline
-  \textit{B.1.4 Monitor network memory pools}\\
+  \textit{B.1.4 History transaction weighting}\\
   \hline
-  \textit{B.1.5 Wait for confirmations}\\
+  \textit{B.1.5 Memory pool monitoring}\\
   \hline
   \textit{B.1.6 Anonymous transactions}\\
   \hline
-  \textit{B.1.7 Introduce checkpoints}\\
+  \textit{B.1.7 Blockchain checkpoints}\\
   \hline
 
   \textbf{B.2 Block Propagation}\\
   \hline
-  \textit{B.2.1 Wait for confirmations}\\
+  \textit{B.2.1 Unpublished block punishment}\\
   \hline
-  \textit{B.2.2 Reward block finding in pools}\\
+  \textit{B.2.2 Pool block rewards}\\
   \hline
-  \textit{B.2.3 Relay all blockchain heads}\\
+  \textit{B.2.3 Extended block relaying}\\
   \hline
-  \textit{B.2.4 Randomize head mining algorithm}\\
+  \textit{B.2.4 Mining parent randomization}\\
   \hline
 
   \textbf{B.3 Cheap validation}\\
   \hline
-  \textit{B.3.1 Blacklist misbehaving validators}\\
+  \textit{B.3.1 Validator blacklist}\\
   \hline
-  \textit{B.3.2 Introduce slashing conditions}\\
+  \textit{B.3.2 Slashing conditions}\\
   \hline
-  \textit{B.3.3 Introduce moving checkpoints}\\
+  \textit{B.3.3 Moving checkpoints}\\
   \hline
-  \textit{B.3.4 Introduce out-of-band checkpoint validation}\\
+  \textit{B.3.4 Out-of-band verification}\\
   \hline
-  \textit{B.3.5 Implement key-evolving signatures}\\
+  \textit{B.3.5 Key-evolving signatures}\\
   \hline
 
   \textbf{B.4 Network Topology}\\
   \hline
-  \textit{B.4.1 Disable incoming transactions}\\
+  \textit{B.4.1 Trusted connections}\\
   \hline
-  \textit{B.4.2 Connect to trusted nodes}\\
+  \textit{B.4.2 Randomized connections}\\
   \hline
-  \textit{B.4.3 Randomize connection selection}\\
-  \hline
-  \textit{B.4.4 Favorize old connections}\\
-  \hline
-  \textit{B.4.5 Encrypt network communication}\\
+  \textit{B.4.3 Encrypted communication}\\
   \hline
 
-  \textbf{B.5 Content Insertion}\\
+  \textbf{B.5 Node Owners}\\
   \hline
-  \textit{B.5.1 Allow selective pruning}\\
+  \textit{B.5.1 Blockchain pruning}\\
   \hline
-  \textit{B.5.2 Create light synchronization protocol}\\
-  \hline
-  \textit{B.5.3 Limit data size}\\
+  \textit{B.5.2 Light synchronization}\\
   \hline
 
-  \textbf{B.6 Community Manipulation}\\
+  \textbf{B.6 Project Organization}\\
   \hline
-  \textit{B.6.1 Define project values}\\
+  \textit{B.6.1 Definition of values}\\
   \hline
-  \textit{B.6.2 Make governance transparent}\\
+  \textit{B.6.2 Transparent governance}\\
   \hline
-  \textit{B.6.3 Create anonymous discussion platform}\\
+  \textit{B.6.3 Onchain voting}\\
   \hline
-  \textit{B.6.4 Moderate social media platforms}\\
+  \textit{B.6.3 Behaviour scoring}\\
+  \hline
+  \textit{B.6.3 Authenticity evaluation}\\
   \hline
 
   \textbf{B.7 Out-Of-Band Incentives}\\
   \hline
-  \textit{B.7.1 Detection \& counter-bribery}\\
+  \textit{B.7.1 Counter-bribery}\\
   \hline
-  \textit{B.7.2 Use expensive PoW algorithm}\\
+  \textit{B.7.2 Proof-of-work change}\\
   \hline
 
 \end{tabular}
