@@ -333,21 +333,21 @@ In addition to previous mitigation strategies, we can use the fact that a balanc
 
 \section{Social Vulnerabilities}
 
-\subsection{Content Insertion}
+\subsection{Discourage Participation}
 
-Many \gls{blockchain}s allow nodes to include arbitrary data into \glspl{transaction}. A malicious actor can thus insert data of any form into the \gls{consensus}, which would exist in immutable form for the lifetime of the \gls{blockchain}. Depending on the data inserted, this can be abused in a number of ways.\\
+Blockchain technology is a complex topic and many average users do not have the background to fully understand the technical aspects of \glspl{blockchain} they use. As \glspl{blockchain} rely on the \gls{network effect} to increase their usefulness, lowering participation in them has a significant impact. This can be done by discouraging potential network participants in a number of ways.\\
 
-In general, there is only one way to deal with illegal content insertion on \gls{blockchain}s: not storing the content in question. This can be put into practice by implementing the possibility of pruning blockchain data, as already described in section 7 of the Bitcoin white paper \cite{bitcoin}. They can then choose to discard certain content after validation of the related \glspl{transaction} and blocks has been completed.\\
+\subsubsection{Content Insertion}
 
-An alternative approach is the implementation of a light synchronization protocol for the network \cite{light}. It can take advantage of the properties of merkle trees in order to selectively validate blockchain data that the participant is interested in, without storing the full \gls{consensus} locally.\\
+Many \glspl{blockchain} allow \glspl{node} to include arbitrary data into \glspl{transaction}. A malicious actor can thus insert data of any form into the \gls{consensus}, which would exist in immutable form for the lifetime of the \gls{blockchain}. Depending on the data inserted, this can be abused in a number of ways.\\
 
-\subsubsection{Illegal Content}
+\textit{Illegal content insertion}. Illegal content can be inserted into the \gls{consensus} of \glspl{blockchain}. As has been demonstrated, this is not merely a theoretical possibility, but has been exploited in real \glspl{blockchain} before \cite{content}. It is a point of contention whether this can have legal implications for the participants of the network. However, it can at least be an effective tool to drive \acrfull{fud} in a community. It impacts the accessibility of the \gls{consensus}.\\
 
-Illegal content can be inserted into the \gls{consensus} of \gls{blockchain}s. As has been demonstrated, this is not merely a theoretical possibility, but has been exploited on real \gls{blockchain}s before \cite{content}. It is a point of contention whether this can have legal implications for the participants of the network. However, it can at least be an effective tool to drive fear, \acrfull{fud} in a community, thus diminishing the number of participants on the \gls{blockchain}.\\
+\textit{Unnatural blockchain growth}. By including significant amounts of data into the blockchain, the \gls{consensus} can grow significantly and can expand to a size where some network participants decide it's too expensive to store it. Resource limitations would thus put a barrier around access to the \gls{blockchain}, reducing the number of participants. It impacts the accessibility of the \gls{consensus}.\\
 
-\subsubsection{Data Volume}
+In general, there is only one way to deal with undesired content insertion on \gls{blockchain}: not storing the content in question. This can be put into practice by implementing the possibility of \textit{pruning blockchain data}, as already described in section 7 of the Bitcoin white paper \cite{bitcoin}. They can then choose to discard certain content after validation of the related \glspl{transaction} and \glspl{block} has been completed.\\
 
-By including significant amounts of data into the blockchain, the \gls{consensus} can grow significantly and can expand to a size where some network participants decide it's too expensive to store it. Resource limitations would thus put a barrier around access to the \gls{blockchain}, reducing the number of participants.\\
+An alternative approach is the implementation of a \textit{light synchronization protocol} for the network \cite{light}. It can take advantage of the properties of merkle trees in order to selectively validate blockchain data that the participant is interested in, without storing the full \gls{consensus} locally.\\
 
 \subsection{Community Organization}
 
