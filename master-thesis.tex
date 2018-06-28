@@ -339,7 +339,7 @@ In addition to previous mitigation strategies, we can use the fact that a balanc
 
 \section{Social Vulnerabilities}
 
-\subsection{Discourage Participation}
+\subsection{Node Owners}
 
 Blockchain technology is a complex topic and many average users do not have the background to fully understand the technical aspects of \glspl{blockchain} they use. As \glspl{blockchain} rely on the \gls{effect} to increase their usefulness, lowering participation in them has a significant impact. This can be done by discouraging potential network participants in a number of ways.\\
 
@@ -349,7 +349,7 @@ Many \glspl{blockchain} allow \glspl{node} to include arbitrary data into \glspl
 
 \textit{Illegal content insertion}. Illegal content can be inserted into the \gls{consensus} of \glspl{blockchain}. As has been demonstrated, this is not merely a theoretical possibility, but has been exploited in real \glspl{blockchain} before \cite{content}. It is a point of contention whether this can have legal implications for the participants of the network. However, it can at least be an effective tool to drive \acrfull{fud} in a community. It impacts the accessibility of the \gls{consensus}.\\
 
-\textit{Unnatural blockchain growth}. By including significant amounts of data into the blockchain, the \gls{consensus} can grow significantly and can expand to a size where some network participants decide it's too expensive to store it. Resource limitations would thus put a barrier around access to the \gls{blockchain}, reducing the number of participants. It impacts the accessibility of the \gls{consensus}.\\
+\textit{Data growth acceleration}. By including significant amounts of data into the blockchain, the \gls{consensus} can grow significantly and can expand to a size where some network participants decide it's too expensive to store it. Resource limitations would thus put a barrier around access to the \gls{blockchain}, reducing the number of participants. It impacts the accessibility of the \gls{consensus}.\\
 
 In general, there is only one way to deal with undesired content insertion on \gls{blockchain}: not storing the content in question. This can be put into practice by implementing the possibility of \textit{pruning blockchain data}, as already described in section 7 of the Bitcoin white paper \cite{bitcoin}. They can then choose to discard certain content after validation of the related \glspl{transaction} and \glspl{block} has been completed.\\
 
@@ -411,7 +411,7 @@ Next to guaranteeing the attacker to outpace the public blockchain history with 
 
 \subsection{Context Definition}
 
-The established risks for \gls{blockchain}s and their \gls{consensus} security have been established through research in the previous section. A summary of the identified risks is available in Appendix A for easy reference. The controls related to the mitigation of these strategies is available in Appendix B in the same way.\\
+The established risks for \glspl{blockchain} and their \gls{consensus} security have been established through research in the previous section. A summary of the identified risks is available in Appendix A for easy reference. The controls related to the mitigation of these strategies is available in Appendix B in the same way.\\
 
 We will use these created references to execute a risk management approach for a real blockchain project. During our analysis, we will be using the simple method of equating risk score to probability times impact, which each of them on a scale of one to five. We will then propose a number of controls in our recommendations to mitigate the biggest risks.\\
 
@@ -846,9 +846,13 @@ May 2018.
 
   \multicolumn{3}{| l |}{\underline{\smash{A.1.3 Cheap Validation}}}\\
   \hline
-    \textit{Nothing-At-Stake} & Disrupt conflict resolution & Efficiency\\
+    Nothing-at-stake & \textit{Follow multiple histories} & Stability\\
   \hline
-    \textit{Long-Range Attack} & Reverse consensus state history & Validity\\
+    Long-range attack & \textit{Certain double spend} & Immutability\\
+  \hline
+    Long-range attack & \textit{History reversal} & Immutability, stability\\
+  \hline
+    Long-range attack & \textit{Transaction censorship} & Accessibility\\
   \hline
 
   \multicolumn{3}{| l |}{\textbf{A.2 Technical Risks}}\\
@@ -856,47 +860,45 @@ May 2018.
 
   \multicolumn{3}{| l |}{\underline{\smash{A.2.1 Network Topology}}}\\
   \hline
-    \textit{Eclipse Attack} & Double spend against victim & Validity\\
+    Eclipse attack & \textit{Block race engineering} & Stability\\
   \hline
-    \textit{Eclipse Attack} & Disrupt victim block generation & Efficiency\\
+    Eclipse attack & \textit{Miner removal} & Stability\\
   \hline
-    \textit{Balance Attack} & Double spend against victim & Validity\\
+    Eclipse attack & \textit{Confirmed double spend} & Immutability\\
   \hline
-    \textit{Balance Attack} & Disrupt victim block generation & Efficiency\\
+    Balance attack & \textit{Block race engineering} & Stability\\
+  \hline
+    Balance attack & \textit{Miner removal} & Stability\\
+  \hline
+    Balance attack & \textit{Confirmed double spend} & Immutability\\
   \hline
 
   \multicolumn{3}{| l |}{\textbf{A.3 Social Risks}}\\
   \hline
 
-  \multicolumn{3}{| l |}{\underline{\smash{A.3.1 Content Insertion}}}\\
+  \multicolumn{3}{| l |}{\underline{\smash{A.3.1 Node Owners}}}\\
   \hline
-    \textit{Illegal Content} & Create usage barrier & Accessibility\\
+    Content insertion & Illegal content insertion & Accessibility\\
   \hline
-    \textit{Data Volume} & Create usage barrier & Accessibility\\
+    Content insertion & Data growth acceleration & Accessibility\\
   \hline
 
-  \multicolumn{3}{| l |}{\underline{\smash{A.3.2 Community Manipulation}}}\\
+  \multicolumn{3}{| l |}{\underline{\smash{A.3.2 Project Organization}}}\\
   \hline
-    \textit{Personality Cult} & Manipulate consensus rules & Efficiency\\
+     Governance structure & Change consensus rules & Stability\\
   \hline
-    \textit{Personality Cult} & Create usage barrier & Accessibility\\
+     Governance structure & Block project progress & Accessibility\\
   \hline
-    \textit{Censorship \& Astroturfing} & Manipulate consensus rules & Efficiency\\
+     Community influence & Personality cult & --\\
   \hline
-    \textit{Censorship \& Astroturfing} & Create usage barriers & Accessibility\\
+     Community influence & Social media manipulation & --\\
   \hline
 
   \multicolumn{3}{| l |}{\underline{\smash{A.3.3 Out-Of-Band Incentives}}}\\
   \hline
-    \textit{Hashrate Renting} & Double spend against victim & Validity\\
+    Hashrate renting & -- & Stability\\
   \hline
-    \textit{Hashrate Renting} & Block victim transactions & Accessibility\\
-  \hline
-    \textit{Contractual Bribery} & Double spend against victim & Validity\\
-  \hline
-    \textit{Contractual Bribery} & Disrupt economic equilibrium & Efficiency\\
-  \hline
-    \textit{Contractual Bribery} & Block victim transactions & Accessibility\\
+    Contractual Bribery & -- & Stability\\
   \hline
 
 \end{tabular}
