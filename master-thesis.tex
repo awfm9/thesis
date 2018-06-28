@@ -18,34 +18,58 @@
 
 \makeglossaries
 
+\newglossaryentry{transaction}
+{
+name=transaction,
+description={A transaction in the context of a blockchain network is a transfer of value from one account to another account in the consensus state. It can optionally include data and manipulate data stored in the consensus state. It is always applied atomically as part of a state transition.}
+}
+
+\newglossaryentry{block}
+{
+name=block,
+description={A block represents a bundle of transactions which represent a non-conflicting valid state transaction for the current consensus state on a blockchain network. It is secured with a hash that contains a certain number of zero bits at the beginning in order to make it difficult to find a valid solution.}
+}
+
+\newglossaryentry{reward}
+{
+name=block reward,
+description={The block reward is an economic incentive given to the generator of a valid block in exchange for the hashrate he invested to discover a block with the necessary amount of zero bits at the beginning of the validation hash.}
+}
+
 \newglossaryentry{double}
 {
-name=Double spend,
+name=double spend,
 description={A double spend is the action of spending the same funds on a blockchain network more than once. Fundamentally, this is the problem that consensus algorithms try to solve by deciding between conflicting transactions. A successful double spend allows a malicious actor to trick a recipient of a transaction into delivering value for funds that will later become void}
 }
 
 \newglossaryentry{blockchain}
 {
-name=Blockchain network,
+name=blockchain network,
 description={A blockchain network is a peer-to-peer network where the participants run a consensus algorithm with a number of consensus rules in order to find agreement on the state of the data in the system.}
 }
 
 \newglossaryentry{consensus}
 {
-name=Consensus state,
+name=consensus state,
 description={The consensus state of a blockchain network describes the part of the state which all participants have agreed on in their common blockchain history and which is therefore shared amongst all participants on the network.}
 }
 
 \newglossaryentry{miner}
 {
-name=Miner,
+name=miner,
 description={A miner is a block generator in a proof-of-work blockchain network. A miner will execute a hash algorithm repeatedly to find a valid solution for the block header puzzle, thus the comparison to "mining".}
 }
 
 \newglossaryentry{pool}
 {
-name=Mining pool,
+name=mining pool,
 description={When mining alone, miners are subject to significant variance between block discoveries. Pooling hashrate allows them to diminish variance and receive income at more predictable intervals. Some protocols were specifically designed to make communal mining possible with auditable reward distributions.}
+}
+
+\newglossaryentry{hashrate}
+{
+name=hashrate,
+description={The hashrate is the amount of hashing operations a miner can execute on a blockchain network in one second. The higher the hashrate, the higher the chance for the miner to discover a valid hash for the next block generation, thus increasing the chance of gaining the block reward.}
 }
 
 \newacronym{pow}{PoW}{proof-of-work}
@@ -83,7 +107,7 @@ description={When mining alone, miners are subject to significant variance betwe
 \section*{Abstract}
 
 \begin{abstract}
-  This paper explores the feasability of a modern risk management approach in the context of blockchain consensus networks. A framework is created on the basis of a theoretical, technical and social analysis of vulnerabilities on \gls{blockchain}s. The result is then applied to a real-world blockchain project with a method similar to popular risk management approaches.
+  This paper explores the feasability of a modern risk management approach in the context of blockchain consensus networks. A framework is created on the basis of a theoretical, technical and social analysis of vulnerabilities on \glspl{blockchain}. The result is then applied to a real-world blockchain project with a method similar to popular risk management approaches.
 \end{abstract}
 
 \newpage
@@ -169,83 +193,71 @@ It can therefore be said that the mere exploitation of a vulnerability can alrea
 
 \subsection{Hashrate Distribution}
 
-The security of \acr{pow} blockchains relies on the the miners, which compete in a lottery to generate the next block in order to obtain the related reward. Through this design, all miners are incentivized to work on the latest valid version of the blockchain history, as they would otherwise run a higher risk of not obtaining said reward.\\
+The security of \acrshort{pow} blockchains relies on the the miners, which compete in a lottery to generate the next block in order to obtain the related \gls{reward}. Through this design, all miners are incentivized to work on the latest valid version of the blockchain history, as they would otherwise run a higher risk of not obtaining said \gls{reward}.\\
 
-However, this also creates a fundamental vulnerability of the \gls{blockchain}, as already noted in section 11 of the original Bitcoin white paper \cite{bitcoin}. With a sufficiently high hashrate, an attacker can overwhelm the consensus forming of the rest of the \gls{blockchain} and disable the security guarantees of the \gls{consensus} either temporarily or permanently.\\
+However, this also creates a fundamental vulnerability of the \gls{blockchain}, as already noted in section 11 of the original Bitcoin white paper \cite{bitcoin}. With a sufficiently high \gls{hashrate}, an attacker can overwhelm the consensus forming of the rest of the \gls{blockchain} and disable the security guarantees of the \gls{consensus} either temporarily or permanently.\\
 
-In cases where an attacker obtains an absolute majority of hash power of the network, none of these strategies are effective as he can rebuild any amount of blockchain history with a one hundred percent probability. As most miners participate in \glspl{pool}, on solution would be a mechanism to balance hash power across pools with an automated software tool.\\
+There are a number of possible mitigations for a hashrate exploit. On the social layer, participants on the network can run algorithms which \textit{automatically balance} their \gls{hashrate} between \glspl{pool}, which can eliminate the risk of any pool operator acquiring a majority hashpower. Unfortunately, this solution is hard to monitor.\\
 
-A final possibility to control the vulnerability itself would be to modify the selection algorithm for the valid chain. It would fundamentally change the network to not follow the longest valid chain of proof-of-work, but instead to take into account other factors, such as the significance of transactions included in the chain. This can be complemented by binding transactions to a specific chain. However, it's difficult to predict the impact of such changes to the economic equilibrium and thus the security guarantees of the \gls{blockchain}.\\
+An alternative solution would deploy a \textit{two-phase \acrshort{pow}} model \cite{twophase}. It would require a second sophisticated cryptographic layer using Markov chains to be built between \glspl{pool}, but would at least be provably diminish the impact of a majority \gls{hashrate} exploit.\\
+
+A much simpler and more complete solution is to simply wait for a certain \textit{number of confirmations}. Indeed, the deeper in the history a transaction is found, the harder it is to overwhelm the previously accomplished \acrshort{pow} even with a majority \gls{hashrate} \cite{double}. Unless an attacker permanently has a majorty hashrate, this strategy will always work at some point in time.\\
+
+Finally, a more fundamental change to the \gls{consensus} could make it harder to reverse already written blockchain history. Instead of enforcing the consensus rule of always following the longest chain of valid blocks, transactions could be bound to a history of the blockchain and the \textit{transaction weight}, using different algorithms, could be a deciding factor between conflicting histories \cite{weight}.\\
 
 \subsubsection{Majority Hashrate}
 
-The most fundamental breach of security for a \acr{pow} \gls{blockchain} is when one participant manages to acquire a majority of the hashrate on the network. It allows him to overpower the combined hashrate of all other participants and thus gives him the power to define the history of the \gls{consensus} on his own.\\
+The most fundamental breach of security for a \acrshort{pow} \gls{blockchain} is when one participant manages to acquire a majority of the \gls{hashrate} on the network. It allows him to overpower the combined \gls{hashrate} of all other participants and thus gives him the power to define the history of the \gls{consensus} on his own.\\
 
-\textit{Certain double spend}. With the absolute majority of the hashrate, an attacker can always overpower the competing hashrate. This allows him to reverse his own transaction and replace it with another transaction spending the same funds on another version of the history with absolute certainty. It disrupts the immutability of the \gls{consensus}.
+\textit{Certain double spend}. With the absolute majority of the \gls{hashrate}, an attacker can always overpower the competing \gls{hashrate}. This allows him to reverse his own transaction and replace it with another transaction spending the same funds on another version of the history with absolute certainty. It impacts the immutability of the \gls{consensus}.
 
-\textit{Block reversal}. Every time a competing participant generates a block, the attacker can generate an alternative version of the history. Due to his overwhelming hashrate, he will overcome and override the competing history. This allows him to both monopolize block generation and rewards on the \gls{blockchain}. It undermines the immutability and the stability.
+\textit{History reversal}. Every time a competing participant generates a block, the attacker can generate an alternative version of the history. Due to his overwhelming \gls{hashrate}, he will overcome and override the competing history. This allows him to both monopolize block generation and rewards on the \gls{blockchain}. It impacts the immutability and the stability of the \gls{consensus}.
 
-\textit{Censor transactions}. Due to his ability to reverse blocks at will, the attacker can decide to censor certain transactions by not including them in his blocks and reversing any block that contains them. This affects the accessibility of the \gls{consensus}.
-
-There are a number of possible mitigations for a majority hashpower exploit. The first set of controls is on the technical layer: participants on the network can run algorithms which automatically balance their hashrate between \glspl{pool}, which can eliminate the risk of any pool operator acquiring a majority hashpower.\\
-
-Unfortunately, this solution is outside of the consensus rules and not enforcable. An alternative solution would deploy a two-phase \acr{pow} model \cite{twophase}. It would require a second sophisticated cryptographic layer to be built between \glspl{pool}, but would at least be provably diminish the impact of a majority hashrate exlpoit.\\
+\textit{Transaction censorship}. Due to his ability to reverse blocks at will, the attacker can decide to censor certain transactions by not including them in his blocks and reversing any block that contains them. This impacts the accessibility of the \gls{consensus}.
 
 \subsubsection{Minority Hashrate}
 
-Due to the nature of the proof-of-work algorithm, which is a memoryless process, there is also significant variance during block discovery. This means that a number of attacks remain possible with a smaller share of the hash power on the network, allowing a malicious minority miner to exploit the vulnerability with a non-zero probability of success.\\
+Due to the nature of the \acrshort{pow} algorithm, which is a memoryless process, there is also significant time variance during block generation. This means that a number of attacks remain possible with a non-majority share of the \gls{hashrate} on the network, allowing a malicious minority miner to exploit the vulnerability with a non-zero probability of success.\\
 
-\subsubsection{Double Spending}
+\textit{Probabilistic double spend}. With a minority \gls{hashrate}, an attacker still has a probability at generating one or several block at any point in time. This allows him to attempt generating a sufficient amount of blocks in time to reverse his own unconfirmed or even confirmed transaction at a non-zero probability. It impacts the immutability of the \gls{consensus}.\\
 
-The \gls{double} attack breaks the most fundamental purpose of blockchain consensus, but only does so for specific targeted transactions. It allows the attacker to convey one version of \gls{consensus} to the victim, where the victim receives the desired funds of a transaction. This \gls{consensus} is later reversed by replacing it with another version of the \gls{consensus}, which keeps the funds in the attacker's pocket. The attack thus selectively breaks the validity of the \gls{consensus}.\\
-
-A simple version of this attack is the zero-confirmation \gls{double}, where the malicious miner simple includes a different version of the transaction in his block than the one submitted to the network when paying the victim. This can be done by either spreading both versions to the network or by withholding the second version for inclusion in the block.\\
-
-The attack can be detected and thus mitigated in two ways. First, the nodes on the \gls{blockchain} can be configured to relay conflicting transactions in the memory pool, thus allowing the detection of \gls{double}ing. The same result can be achieved by creating a network of observers on the \gls{blockchain} to achieve a good view of all propagated transactions.\\
-
-This solution, however, does not work in case the miner is withholding the conflicting transaction until the block is mined. A simpler solution involves waiting for the pending transaction to be confirmed by a number of subsequent blocks. As the probability of being able to outperform the whole network diminishes exponentially with the number of confirmations, the adequate number can be derived from a simple formula.\\
-
-\subsubsection{Censoring Transactions}
-
-A miner can decide which transactions to include or exclude in each block. This naturally gives him the ability to throttle transactions of certain market participants. Once his hash power reaches absolute majority, he is able to generate the blockchain history on his own, allowing him to censor all transactions and all blocks by network participants other than himself. This attack therefore undermines the accessibility of the \gls{blockchain}.\\
-
-A possible approach to mitigate targeted censorship is the introduction of anonymous transactions. While still being able to achieve complete censorship with a hash power majority, the attacker can't target specific parties. Rather, the network would be affected as a whole, reducing its usefulness and thus making it harder for the attacker to achieve a monetary gain.\\
-
-\subsubsection{Rewriting History}
-
-If a miner were to acquire a majority of hash power on the network, he could execute an attack to damage the \gls{blockchain} viability itself by simply rewriting the history and making it invalid going far back into history. This would destroy the value proposition of the platform and spell its doom. This would destroy the \gls{consensus} validity.\\
-
-In order to avoid this possibility, especially for blockchains that are vulnerable due to a low amount of total hash power, checkpoints can be introduced into the node software. A rewrite of history that does not include certain checkpoint blocks will simply be considered invalid by nodes on the network, thus hindering rewrites beyond a certain point.\\
+\textit{Transaction throttling}. Being able to generate a portion of the blocks for the blockchain history, an attacker with a relevant amount of \gls{hashrate} can slow down the confirmation of transactions he wants excluded from the \gls{consensus}; he even has a chance to reverse confirmation with a non-zero probability. It impacts the accessibility of the \gls{consensus}.\\
 
 \subsection{Block Propagation}
 
-Every miner participating in a proof-of-work consensus finding algorithm relies on the propagation of valid blocks through the network in order to generate a state transition for the latest valid \gls{consensus}. The theoretical model assumes that all miners will freely share newly found blocks in order to obtain their reward.\\
+Every miner participating in a \gls{pow} consensus finding algorithm relies on the propagation of valid blocks through the network in order to generate a state transition for the latest valid \gls{consensus}. The theoretical model assumes that all miners will freely share newly found blocks in order to obtain their \glspl{reward}.\\
 
-However, the option to withhold a discovered block and thus hide it from the network is a theoretical possibility. Depending on the motivation of an attacker, this opens up a vulnerability on the \gls{consensus}. An attacker can withhold a block to gain profit in some other way, while still conserving a significant probability of obtaining the block reward.\\
+However, the option to withhold a discovered block and thus hide it from the network is a theoretical possibility. Depending on the intentions of an attacker, this opens up a vulnerability on the \gls{consensus}. An attacker can withhold a block to gain profit in some other way, while still conserving a significant probability of obtaining the \gls{reward}.\\
 
-The vulnerability has the potential to disrupt the economic equilibrium between miners, by either letting them gain an extra profit, or by causing an extra loss to other miners, thus reducing the efficiency of the consensus finding. Additionally, it has potential to replace part of the blockchain history by a previously computed alternative hidden version, thus affecting validity as well.\\
+One mitigation of the vulnerability itself is the \textit{ZeroBlock} algorithm \cite{zeroblock}, which suggests that blocks need to be received within a maximum acceptable time interval. Otherwise, a dummy block is generated and no one receives the reward. This is resilient to any form of withholding attack.\\
+
+Another possible solution is the \textit{publish or perish} strategy \cite{perish}. It uses a similar approach where miners choose the block history based on the time that \glspl{block} were published, rather than the time where the \glspl{block} were generated. This means that unpublished \glspl{block} will become less attractive and thus earn less \glspl{reward}.
 
 \subsubsection{Finney Attack}
 
-The Finney attack is a more sophisticated version of a \gls{double} that does not rely on having a significant amount of hash power on the network. Instead, the miner waits to generate a block for whatever interval it takes and only starts the attack subsequently. Once the block is found, it's withheld from the network and thus hidden. It includes a transaction that sends certain funds from the attacker to the victim.\\
+The Finney attack is a more sophisticated version of a \gls{double} that does not rely on having a significant amount of \gls{hashrate} on the network \cite{survey}. Instead, the miner waits to generate a block during an arbitrary interval and only starts the attack subsequently. Once the block is found, it's withheld from the network and thus hidden. It includes a transaction that sends certain funds from the attacker to the victim.\\
 
-The attacker now propagates a conflicting transaction that sends the funds to the victim as part of the transaction. As soon as the desired exchange has occurred in both directions, the attacker propagates his hidden block and reclaims the funds. It should be noted that the attacker risks another block being found before the attack was executed, thus risking to lose the block reward.\\
+The attacker now propagates a conflicting transaction that sends the funds to the victim as part of the transaction. As soon as the desired exchange has occurred in both directions, the attacker propagates his hidden block and reclaims the funds. It should be noted that the attacker risks another block being found before the attack was executed, thus risking to lose the \gls{reward}.\\
 
-The attack rewrites a small part of the blockchain history and can thus be considered to affect the validity of the \gls{consensus}. It can, however, be easily mitigated by introducing a waiting period for a certain amount of blocks, which makes it probabilistically unlikely that the attacker can derive an economic advantage from the execution on the attack, due to the lost block reward.\\
+\textit{Unconfirmed double spend}. As the block with the transaction is already mined, the attacker can execute a \gls{double} on an unconfirmed transaction instantly. However, the attacker risks losing the \gls{reward} if another network participant generates another valid block during the execution of the attack. It impacts the immutability of the \gls{consensus}.\\
+
+As previously mentioned, \textit{waiting for confirmations} addresses the risks related to blockchain immutability and \glspl{double}.\\
 
 \subsubsection{Block Discarding}
 
-The block discarding attack can be used to economically damage a \gls{pool}. A lot of \glspl{pool} reward miners that contribute their work to the pool in proportion to the work completed. In order to get rewards, they submit proofs of work at a significantly smaller level of difficulty than the one required for a valid block. These so-called shares are only useful to estimate the work accomplished by each miner.\\
+When a miner finds a block, he can simply discard it \cite{less}. A lot of \glspl{pool} reward \glspl{miner} who contribute their work to the \gls{pool} in proportion to the work completed. In order to get rewards, \glspl{miner} submit proofs for completed work to the \gls{pool}. These so-called shares are significantly more frequent than finding a valid \gls{block}, which makes the incured loss negligible.\\
 
-As they are found significantly more often than a valid block, a malicious participant of the \gls{pool} can submit them and receive most of his mining reward. When he finds a valid block, however, he can simply discard it instead of submitting it to the pool operator. This will lead to a significant loss to the pool operator, while being negligible for the miner himself.\\
+\textit{Unfair economic loss.} A malicious participant of the \gls{pool} can submit his shares and receive most of his \gls{reward}. When he finds a valid \gls{block} he discards it instead of submitting it to the \gls{pool}. This will cause a significant loss to the pool operator, who will award the same rewards but see lower returns. It impacts the stability of the \gls{consensus}.\\
 
-Some pool operators mitigate the risk by using a reward structure that attributes extra rewards on submission of a valid block, thus making the loss non-significant for the malicious miner, while at the same time making it less costly for the \gls{pool} operator.\\
+Some pool operators mitigate the risk by using a reward structure that attributes extra \textit{rewards for blocks}, thus making the loss non-negligible for the malicious miner, while at the same time making it less costly for the \gls{pool} operator, as he will pay out less rewards overall.\\
 
 \subsubsection{Selfish Mining}
 
-The most sophisticated block withholding attack is the selfish mining strategy \cite{selfish}. A malicious miner who finds a block can simple withhold it from the network in order to gain a headstart looking for the next valid block. Once the network finds a block, he can simply release his block to contend for the block reward. However, he will significantly increase his own likelihood of finding the next valid block, which allows him to optimize his profitability over other miners with a smart strategy \cite{optimal}.\\
+The most sophisticated block withholding attack is the selfish mining strategy \cite{selfish}. A malicious miner who finds a block can withhold it from the network in order to gain a headstart for next block. Once the network finds a block, he can still release his block to contend for the block reward. However, he will significantly increase his own likelihood of finding the next valid block.\\
 
-One counter to this strategy is to simply accept the economic incentive of employing the strategy as part of the consensus framework. One downside would be that miners with better connectivity would stand a better chance of contending block rewards when letting a block out of hiding. This can be countered by accepting all blockchain heads an randomly choosing one to mine on top of, giving all network participants an equal chance to content.\\
+\textit{Unfair economic gain}. An attacking miner can increase his profitability over other participants on the network by optimizing his mining strategy according to the selfish mining principle \cite{optimal}. He will thus gain an unfair economic advantage that was not accounted for in the original model. It impacts the stability of the \gls{consensus}.
+
+The authors of the original paper suggest accepting the new optimal mining strategy as the default for the network. In order to reduce the advantage for well-connected miners, they suggest propagating all competing block histories and \textit{randomizing the choice} of parent. This would create a level playing field once more.\\
 
 \subsection{Cheap Validation}
 
@@ -271,7 +283,7 @@ More advanced proof-of-stake projects introduce so-called slashing conditions,  
 
 As costs for generating blocks in a proof-of-stake algorithm are negligible, any validator can generate as many blocks as he wants. This allows the recreation of part of all of the blockchain history. A malicious group of validators can thus take over the network, starting at any point of the blockchain history where they collectively held a sufficient amount of the staked tokens.\\
 
-The impact of this attack method is similar to a majority hash power attack on a proof-of-stake network, which the difference of requiring negligible time to execute mostly the same attacks, making it significantly more severe. It completely undermines the validity, the accessibility and the efficiency of the \gls{blockchain}.\\
+The impact of this attack method is similar to a majority \gls{hashrate} attack on a proof-of-stake network, which the difference of requiring negligible time to execute mostly the same attacks, making it significantly more severe. It completely undermines the validity, the accessibility and the efficiency of the \gls{blockchain}.\\
 
 It can further be compounded by stake bleeding, which makes the attacking validator sacrifice his stake on the currently longest chain to slow down its growth and increase his probability of catching up with the validation power he managed to acquire at a point in the past. If the attack is successful, it means he will retrieve all of his tokens, as he will still have them on his alternative blockchain history version.\\
 
@@ -301,11 +313,11 @@ A more sophisticated set of countermeasures involve advanced algorithms when dec
 
 \subsubsection{Balance Attack}
 
-The balance attack doesn't involve isolating a node or a group of nodes from the main network; rather, it attempts to become the only relay for messages between different partitions of the \gls{blockchain} by placing the attacker's nodes at important edges of the network graph. This requires in-depth knowledge about the hashrate distribution and the communication topology of the underlying peer-to-peer network.\\
+The balance attack doesn't involve isolating a node or a group of nodes from the main network; rather, it attempts to become the only relay for messages between different partitions of the \gls{blockchain} by placing the attacker's nodes at important edges of the network graph. This requires in-depth knowledge about the \gls{hashrate} distribution and the communication topology of the underlying peer-to-peer network.\\
 
 Rather than manipulating the view of the victims, the attacker can then play different network partitions against each other by deciding which progression of the blockhcain history to propagate and which one to delay or censor. While more difficult to exploit.\\
 
-Tackling a balance attack is possible by withholding information about the network from the attacker, by making it harder to execute the required initial steps, such as BGP hijacking or DNS poisoning. Indeed, creating a more anonymous network with encrypted messages and unknown hashrates between miners would contribute greatly to mitigating the risks presented.\\
+Tackling a balance attack is possible by withholding information about the network from the attacker, by making it harder to execute the required initial steps, such as BGP hijacking or DNS poisoning. Indeed, creating a more anonymous network with encrypted messages and unknown \gls{hashrate}s between miners would contribute greatly to mitigating the risks presented.\\
 
 \section{Social Vulnerabilities}
 
@@ -341,7 +353,7 @@ Alternatively, an official discussion platform that is governed through decision
 
 \subsubsection{Personality Cult}
 
-According to authority principle of persuasion defined by Dr. Robert Cialdini \cite{persuasion}, people attribute higher value to the opinion of experts. The principle of liking states that people prefer to follow those they like. Combining them, we could create personas in a blockchain community that appeals to a wide range of individuals, helping to shape their opinion in a way favourable to the attacker.\\
+According to authority principle of persuasion defined by Dr. Robert Cialdini \cite{influence}, people attribute higher value to the opinion of experts. The principle of liking states that people prefer to follow those they like. Combining them, we could create personas in a blockchain community that appeals to a wide range of individuals, helping to shape their opinion in a way favourable to the attacker.\\
 
 Cialdini suggest that a good defense against the authority princilpe is questioning whether the authority is attributed due to merit. Unfortunately, evaluating this is the context of blockchain technology is a difficult matter for the average user. Similarly, in order to counter the liking principle, it is recommended to separate request from requester. Both of these imply making community members responsible for the well-being of the community.\\
 
@@ -361,11 +373,11 @@ Countering the spread of unauthentic content is more difficult as botnets become
 
 Consensus is achieved on \gls{blockchain}s through the use of economic incentives. If a malicious actor tries to act against the consensus rules, he will usually incur a more or less severe economic punishment. However, the fact that such a loss can be countered by out-of-band payments makes the system vulnerable to bribery.\\
 
-If a coalition of malicious actors, controlling less than a hash power majority, intends to compromise the network, they can incentivize the other actors to acquire their hash power and thus execute the desired attack.\\
+If a coalition of malicious actors, controlling less than a \gls{hashrate} majority, intends to compromise the network, they can incentivize the other actors to acquire their \gls{hashrate} and thus execute the desired attack.\\
 
 \subsubsection{Hashrate Renting}
 
-The simplest form of acquiring extra mining power is through direct payments in return for a certain hashrate. This can be done by using a cloud hashing provider, which will usually charge a premium of around 3\% on top of the expected earning capacity. Trust issues with this setup can be overcome by introducing a negative fee \gls{pool}, where the operator actually controls the hash rate, but overpays the miners for their hashrate.\\
+The simplest form of acquiring extra mining power is through direct payments in return for a certain \gls{hashrate}. This can be done by using a cloud hashing provider, which will usually charge a premium of around 3\% on top of the expected earning capacity. Trust issues with this setup can be overcome by introducing a negative fee \gls{pool}, where the operator actually controls the hash rate, but overpays the miners for their \gls{hashrate}.\\
 
 This attack allows an attacker to lower the threshold for a successful attack on the validity of the blockhchain history.\\
 
@@ -377,7 +389,7 @@ A more advanced form of bribing miners is by doing it through a contractual agre
 
 A more advanced version uses one \gls{blockchain} with a smart contract to reward miners for solutions, while another \gls{blockchain} is the one the attack is run against. This will over-incentivize the creation of solutions that favour the attacker's intent, thus disrupting the economic equilibrium of the network and the underlying security guarantees.\\
 
-Next to guaranteeing the attacker to outpace the public blockchain history with his private blockchain history if all miners behave rationally, this constellation can be profitable in an of itself, as it allows the attacker to outpace all other miners on the network, even with less than majority hash power, thus allowing him to censor competing blocks and receive all of the rewards.\\
+Next to guaranteeing the attacker to outpace the public blockchain history with his private blockchain history if all miners behave rationally, this constellation can be profitable in an of itself, as it allows the attacker to outpace all other miners on the network, even with less than majority \gls{hashrate}, thus allowing him to censor competing blocks and receive all of the rewards.\\
 
 The only discussed controls to avoid such bribery at this point is to create a proof-of-work algorithm that is difficult to verify in the context of smart contracts. However, this can effectively be overcome. There is no known effective counter at this point.\\
 
@@ -409,7 +421,7 @@ Impact
 
 The risk management will be done for a real \gls{blockchain}, Alvalor, which is currently under active development. Little public public information is available, but the author is familiar with the technical design. This will allow the results of this paper to be put into practice and have a real use beyond the academic value.\\
 
-Alvalor is a minimalist \gls{blockchain} based on a simple proof-of-work mechanism. For our purposes, the transactions can be considered as limited, conveying no additional data other than the transfer details, thus rendering them fixed in size. Once the project launches, the hashrate of the \gls{blockchain} should be comparatively low.\\
+Alvalor is a minimalist \gls{blockchain} based on a simple proof-of-work mechanism. For our purposes, the transactions can be considered as limited, conveying no additional data other than the transfer details, thus rendering them fixed in size. Once the project launches, the \gls{hashrate} of the \gls{blockchain} should be comparatively low.\\
 
 On the foundational layer, which is the one relevant for our analysis, it can thus be compared to a multitude of other small blockhain projects and a lot of considerations should be applicable to a decent range of them. The recommendations at the end of the section could therefore be translated and used widely.\\
 
@@ -540,7 +552,7 @@ The third observation is that out-of-band incentives are a non-negligible risk t
 
 \subsubsection{Recommendations}
 
-In order to mitigate hash power and block propagation risks, we recommend the implementation of the following controls: relay conflicting transactions, waiting for confirmations, introduce automatic checkpoints, relay all valid blocks.\\
+In order to mitigate \gls{hashrate} and block propagation risks, we recommend the implementation of the following controls: relay conflicting transactions, waiting for confirmations, introduce automatic checkpoints, relay all valid blocks.\\
 
 While not directly mitigating all risks, it puts the power into the hand of the users and miners, which will be able to design and compete on the best strategies, while making the best tradeoff for their respective situation. A good default implementation of such strategies should be provided for non-power users.\\
 
@@ -611,6 +623,12 @@ Michael D. Conover, Jacob Ratkiewicz, Matthew Francisco, Bruno Goncalves, Filipp
 \url{https://www.aaai.org/ocs/index.php/ICWSM/ICWSM11/paper/viewFile/2847/3275},
 July 2011.
 
+\bibitem{weight}
+Gavin Andresen,
+"Neutralizing a 51\% attack",
+\url{http://gavintech.blogspot.com/2012/05/neutralizing-51-attack.html},
+May 2012.
+
 \bibitem{double}
 Meni Rosenfeld,
 "Analysis of hashrate-based double-spending",
@@ -677,23 +695,11 @@ Jason Teutsch, Sanjay Jain and Prateek Saxena,
 \url{https://people.cs.uchicago.edu/~teutsch/papers/repurposing_miners.pdf},
 February 2016.
 
-\bibitem{stubborn}
-Kartik Nayak, Srijan Kumar, Andrew Miller and Elaine Shi,
-"Stubborn Mining: Generalizing Selfish Mining and Combining with an Eclipse Attack",
-\url{https://eprint.iacr.org/2015/796.pdf},
-March 2016.
-
 \bibitem{botnet}
 Norah Abokhodair, Daisy Yoo and David W. McDonald,
 "Dissecting a Social Botnet: Growth, Content and Influence in Twitter",
 \url{http://www.pensivepuffin.com/dwmcphd/papers/Abokhodair.SocialBotnet.CSCW2015.pdf},
 April 2016.
-
-\bibitem{model}
-Yonatan Sompolinsky and Aviv Zohar,
-"Bitcoin's Security Model Revisited",
-\url{http://www.cs.huji.ac.il/~yoni_sompo/pubs/16/security_model.pdf},
-May 2016.
 
 \bibitem{zeroblock}
 Siamak Solat and Maria Potop-Butucaru,
@@ -824,20 +830,24 @@ April 2018.
 
   \multicolumn{3}{| l |}{\underline{\smash{A.1.1 Hashrate Distribution}}}\\
   \hline
-    \textit{Double Spending} & Double spend against victim & Validity\\
+    Majority hashrate & \textit{Certain double spend} & Immutability\\
   \hline
-    \textit{Censoring Transactions} & Block victim transactions & Accessibility\\
+    Majority hashrate & \textit{History reversal} & Immutability, stability\\
   \hline
-    \textit{Rewriting History} & Rewrite consensus state history & Validity\\
+    Majority hashrate & \textit{Transaction censorship} & Accessibility\\
+  \hline
+    Minority hashrate & \textit{Probabilistic double spend} & Immutability\\
+  \hline
+    Minority hashrate & \textit{Transaction throttling} & Accessibility\\
   \hline
 
   \multicolumn{3}{| l |}{\underline{\smash{A.1.2 Block Propagation}}}\\
   \hline
-    \textit{Finney Attack} & Double spend against victim & Validity\\
+    Finney attack & \textit{Unconfirmed double spend} & Immutability\\
   \hline
-    \textit{Block Discarding} & Disrupt economic equilibrium & Efficiency\\
+    Block discarding & \textit{Unfair economic loss} & Stability\\
   \hline
-    \textit{Selfish Mining} & Disrupt economic equilibrium & Efficienty\\
+    Selfish mining & \textit{Unfair economic gain} & Stability\\
   \hline
 
   \multicolumn{3}{| l |}{\underline{\smash{A.1.3 Cheap Validation}}}\\
